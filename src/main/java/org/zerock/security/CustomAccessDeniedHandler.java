@@ -18,7 +18,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		log.error("Access Denied Handler");
-		log.error("Redirect...");
+		log.error("Redirect.........");
 		
 		// 필요한 정보를 더 처리를 해야 한다.
 		// 해커가 자꾸 접근한다. -> 행동을 해야 한다....
