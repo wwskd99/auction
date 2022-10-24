@@ -150,7 +150,7 @@ function prev() {
 		<div class = "title"><H1>${productView.title}</H1></div>
 		<div class = "startPrice"><h2>${productView.start_price}</h2></div>
 		<div class = "currentPrice"><h2>${productView.current_price}</h2></div>
-		<div class = "remaining_time">${productView.date}</div>
+		<div class = "remaining_time">${productView.date}남은시간체킹</div>
 	</div>
 	
 	</div>
