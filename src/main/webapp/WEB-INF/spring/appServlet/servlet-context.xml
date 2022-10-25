@@ -37,7 +37,7 @@
 	<!-- WebSocket -->
     
     <websocket:handlers>
-    	<websocket:mapping handler="sockethandler" path="/chat"/>
+    	<websocket:mapping handler="sockethandler" path="/chatting/chating/{roomNumber}"/>
     </websocket:handlers>
     
     <beans:bean id="sockethandler" class="org.zerock.handler.SocketHandler" >
