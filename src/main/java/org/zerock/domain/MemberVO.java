@@ -14,5 +14,5 @@ public class MemberVO {
 
 	private Date regDate;
 	private Date updateDate;
-	private List<AuthVO> authList;	// 권한
+
 }
