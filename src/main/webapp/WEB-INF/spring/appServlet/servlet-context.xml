@@ -42,4 +42,5 @@
     
     <beans:bean id="sockethandler" class="org.zerock.handler.SocketHandler" >
     </beans:bean>
+
 </beans:beans>
