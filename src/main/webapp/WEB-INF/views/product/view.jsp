@@ -73,15 +73,19 @@ left : 55%;
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
+// 시작시, 슬라이드위한
 $(document).ready( function() {
+	
+	// 슬라이드
 	var first = $('.piclist_wrap').children('img:eq(0)');
 	first.attr('id','index');
 	$("#index").css("opacity",1);
+	
 });
 
 var imgLen = ${piccount}-1;
 
-
+//사진 다음버튼
 function next() {
 	var imgLen = ${piccount}-1;
 	var index = $("#index").index();
@@ -100,8 +104,9 @@ function next() {
 	$("#index").css("opacity",1);
 
 
-};
+}
 
+// 사진 이전버튼
 function prev() {
 	var imgLen = ${piccount}-1;
 	var index = $("#index").index();
@@ -120,8 +125,84 @@ function prev() {
 	nextImg.attr('id','index');
 	$("#index").css("opacity",1);
 	
-};
+}
 
+//남은시간 함수
+function remainTime() {
+	
+	var currentDate = new Date();
+	var regDate = new Date(${regDate});
+	var endDate = new Date(${regDate});
+	endDate.setDate(endDate.getDate() + 30);
+	
+	var currentTime = currentDate.getTime();
+	var endTime = endDate.getTime();
+	
+	if(currentTime < endTime){
+		
+		var sec = parseInt(endTime - currentTime) / 1000;  
+		var day = parseInt(sec/60/60/24);
+		sec = sec - day*60*60*24;
+		var hour = parseInt(sec/60/60);
+		sec = sec - hour*60*60;
+		var min = parseInt(sec/60);
+		sec = parseInt(sec - min*60);
+		
+		var sDay = String(day);
+		var sHour = String(hour);
+		var sMin = String(min);
+		var sSec = String(sec);
+		
+		var remainTime = '남은시간 : ' + sDay + '일 ' + sHour + '시간 ' + sMin + '분 ' + sSec + '초';
+		
+		$(".remainTime").html(remainTime);
+		
+	}
+	
+}
+
+// 남은 시작시 + 반복
+$(document).ready( function() {
+	remainTime();
+});
+setInterval(remainTime,1000);
+
+
+// 텍스트박스 숫자고정 + 백스페이스 탭 엔터 같은거 가능하게
+function checkNumber(event) {	
+	var code = event.keyCode;
+	if(code>47&&code<58 || code==8 || code == 9 || code == 46 || code == 37 || code == 39) {
+	    return true;
+	}
+	return false;	
+}
+
+
+
+//한글막기
+$( function(){
+	$( '#bidCheck' ).on("blur keyup", function() {
+		$(this).val( $(this).val().replace( /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '' ) );
+	});
+});
+
+// 텍스트박스 +버튼
+$( function(){
+	$(".bidTextBoxUp").on("click", function(){
+		var bidTextBox = document.getElementById('bidCheck').value;
+		console.log(bidTextBox);
+	});
+});
+
+//텍스트박스 -버튼
+$( function(){
+	$(".bidTextBoxDown").on("click", function(){
+		var bidTextBox = document.getElementById('bidCheck').value;
+		console.log(bidTextBox);
+	});
+});
+
+</script>
 
 </script>
 <meta charset="UTF-8">
@@ -150,7 +231,15 @@ function prev() {
 		<div class = "title"><H1>${productView.title}</H1></div>
 		<div class = "startPrice"><h2>${productView.start_price}</h2></div>
 		<div class = "currentPrice"><h2>${productView.current_price}</h2></div>
-		<div class = "remaining_time">${productView.date}남은시간체킹</div>
+		<div class = "remainDate"><h3 class = "remainTime"></h3></div>
+ 		<div class = "bidTotal">
+ 			<div class = "bidTextBoxWrap">
+ 			<div class = "bidTextBoxDown">-</div>
+ 			<div class = "bidTextBox"><input id = "bidCheck" type ="text" onkeydown='return checkNumber(event)' value = "0"></div>
+ 			<div class = "bidTextBoxUp">+</div>
+ 			</div>
+ 			<div class = "bidButton">입찰 하기</div>
+ 		</div>
 	</div>
 	
 	</div>

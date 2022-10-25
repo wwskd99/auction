@@ -1,5 +1,7 @@
 package org.zerock.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -36,7 +38,12 @@ public class ProductController {
 		
 		ProductVO pVo = pService.productRead(product_id);
 		model.addAttribute("productView",pVo);		
-
+		
+		Date date = pVo.getDate();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:MM:ss"); 
+		String regDate = "'" + simpleDateFormat.format(date) + "'";
+		
+		model.addAttribute("regDate",regDate);
 		
 	}
 
