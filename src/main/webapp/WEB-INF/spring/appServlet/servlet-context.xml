@@ -29,12 +29,6 @@
 	<beans:bean id="multipartResolver" 
 		class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
 	</beans:bean>
-	
-	<!-- WebSocket -->
-    <beans:bean id="sockethandler" class="org.zerock.handler.SocketHandler" />
-    
-    <websocket:handlers>
-    	<websocket:mapping handler="sockethandler" path="/chatting/chating/{roomNumber}"/>
-    </websocket:handlers>
+
 
 </beans:beans>

@@ -48,4 +48,17 @@ public class ProductServiceImpl implements ProductService {
 		
 		return pMapper.readCP(product_id);
 	}
+	
+	
+	@Override
+	public void currentPriceInsert(int product_id, int current_price, String user_id) {
+		
+		pMapper.insertCP(product_id, current_price, user_id);
+	}
+	
+	@Override
+	public String currentPriceUserRead(int product_id) {
+		
+		return pMapper.readCPU(product_id);
+	}
 }
