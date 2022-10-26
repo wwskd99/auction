@@ -189,22 +189,120 @@ $( function(){
 // 텍스트박스 +버튼
 $( function(){
 	$(".bidTextBoxUp").on("click", function(){
-		var bidTextBox = document.getElementById('bidCheck').value;
-		console.log(bidTextBox);
+		
+		var bidTextBox = parseInt(document.getElementById('bidCheck').value);
+		
+		if (bidTextBox == 0){
+			if(${productView.current_price == 0}){
+				bidTextBox = ${productView.start_price};			
+			} else {
+				bidTextBox = ${productView.current_price};
+			}
+		}
+		
+		
+		if(bidTextBox < 10000 && bidTextBox >= 1000){
+			bidTextBox = bidTextBox + 100;
+			document.getElementById('bidCheck').setAttribute('value',bidTextBox)
+		} else if (bidTextBox < 50000 && bidTextBox >= 10000){
+			bidTextBox = bidTextBox + 500;
+			document.getElementById('bidCheck').setAttribute('value',bidTextBox)
+		} else if (bidTextBox < 100000 && bidTextBox >= 50000){
+			bidTextBox = bidTextBox + 1000;
+			document.getElementById('bidCheck').setAttribute('value',bidTextBox)
+		} else if (bidTextBox < 500000 && bidTextBox >= 100000){
+			bidTextBox = bidTextBox + 5000;
+			document.getElementById('bidCheck').setAttribute('value',bidTextBox)
+		} else if (bidTextBox < 1000000 && bidTextBox >= 500000){
+			bidTextBox = bidTextBox + 10000;
+			document.getElementById('bidCheck').setAttribute('value',bidTextBox)
+		} else {
+			bidTextBox = bidTextBox + 100000;
+			document.getElementById('bidCheck').setAttribute('value',bidTextBox)
+		}	
 	});
 });
+
 
 //텍스트박스 -버튼
 $( function(){
 	$(".bidTextBoxDown").on("click", function(){
-		var bidTextBox = document.getElementById('bidCheck').value;
-		console.log(bidTextBox);
+	var bidTextBox = parseInt(document.getElementById('bidCheck').value);
+		
+		if (bidTextBox == 0){
+			if(${productView.current_price == 0}){
+				bidTextBox = ${productView.start_price};			
+			} else {
+				bidTextBox = ${productView.current_price};
+			}
+		}
+		
+		if (bidTextBox == 0){
+			bidTextBox = ${productView.start_price};
+		}
+		
+		if(bidTextBox < 10000 && bidTextBox >= 1000){
+			bidTextBox = bidTextBox - 100;
+			document.getElementById('bidCheck').setAttribute('value',bidTextBox)
+		} else if (bidTextBox < 50000 && bidTextBox >= 10000){
+			bidTextBox = bidTextBox - 500;
+			document.getElementById('bidCheck').setAttribute('value',bidTextBox)
+		} else if (bidTextBox < 100000 && bidTextBox >= 50000){
+			bidTextBox = bidTextBox - 1000;
+			document.getElementById('bidCheck').setAttribute('value',bidTextBox)
+		} else if (bidTextBox < 500000 && bidTextBox >= 100000){
+			bidTextBox = bidTextBox - 5000;
+			document.getElementById('bidCheck').setAttribute('value',bidTextBox)
+		} else if (bidTextBox < 1000000 && bidTextBox >= 500000){
+			bidTextBox = bidTextBox - 10000;
+			document.getElementById('bidCheck').setAttribute('value',bidTextBox)
+		} else {
+			bidTextBox = bidTextBox - 100000;
+			document.getElementById('bidCheck').setAttribute('value',bidTextBox)
+		}			
 	});
 });
 
+// form ajax submit
+$( function(){
+	$(".bidButton").on("click", function(){
+		var current_price = ${productView.current_price};
+		var start_price = ${productView.start_price};
+		var bid = parseInt(document.getElementById('bidCheck').value);
+		if(bid <= start_price){
+			
+			alert ("입찰 가격이 경매 시작가보다 같거나 낮습니다. 더 높게 입찰해주세요");
+			
+		} else if(bid <= current_price) {
+			
+			alert ("입찰 가격이 현재 최고 입찰가보다 같거나 낮습니다. 더 높게 입찰해주세요");
+			
+		} else {
+			var bid = parseInt(document.getElementById('bidCheck').value);
+			var product_id = ${productView.product_id};
+			$.ajax({
+	            url : "currentPrice", 
+	            type : 'POST', 
+	            data : {'current_price':bid, 'product_id':product_id},
+	            dataType : 'json',
+	            success : function(data) {
+	            	var a = "현재 가격 : " + data;
+	                $("#currentPriceH2").text(a);
+	                location.reload();
+	            }, 
+	            error : function(xhr, status) {
+	               alert("에러");
+	            }
+	        });
+
+		}
+		
+	
+	});
+});
 </script>
 
-</script>
+
 <meta charset="UTF-8">
 <title></title>
 </head>
@@ -229,14 +327,18 @@ $( function(){
 	<div class = "info_wrap">
 		<div class ="memberinfo">${productView.user_id}님의 경매 횟수</div>
 		<div class = "title"><H1>${productView.title}</H1></div>
-		<div class = "startPrice"><h2>${productView.start_price}</h2></div>
-		<div class = "currentPrice"><h2>${productView.current_price}</h2></div>
+		<div class = "startPrice"><h2>시작 가격 : ${productView.start_price}</h2></div>
+		<div class = "currentPrice"><h2 id = "currentPriceH2">현재 가격 : ${productView.current_price}</h2></div>
 		<div class = "remainDate"><h3 class = "remainTime"></h3></div>
  		<div class = "bidTotal">
  			<div class = "bidTextBoxWrap">
- 			<div class = "bidTextBoxDown">-</div>
- 			<div class = "bidTextBox"><input id = "bidCheck" type ="text" onkeydown='return checkNumber(event)' value = "0"></div>
- 			<div class = "bidTextBoxUp">+</div>
+ 				<div class = "bidTextBoxDown">-</div>
+ 				<div class = "bidTextBox">
+ 					<form id = "bidSubmit">
+ 					<input id = "bidCheck" type ="text" onkeydown='return checkNumber(event)' value = "0">
+ 					</form>
+ 				</div>
+ 				<div class = "bidTextBoxUp">+</div>
  			</div>
  			<div class = "bidButton">입찰 하기</div>
  		</div>

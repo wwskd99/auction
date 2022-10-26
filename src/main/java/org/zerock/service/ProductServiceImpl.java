@@ -38,4 +38,14 @@ public class ProductServiceImpl implements ProductService {
 		
 		return pMapper.read(product_id);
 	}
+	@Override
+	public void currentPriceUpdate(int product_id, int current_price) {
+		pMapper.updateCP(product_id, current_price);
+	}
+	
+	@Override
+	public int currentPriceRead(int product_id) {
+		
+		return pMapper.readCP(product_id);
+	}
 }
