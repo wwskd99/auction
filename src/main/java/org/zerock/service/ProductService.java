@@ -12,4 +12,6 @@ public interface ProductService {
 	public ProductVO productRead(int product_id);
 	public void currentPriceUpdate(int product_id, int current_price);
 	public int currentPriceRead(int product_id);
+	public void currentPriceInsert(int product_id, int current_price,String user_id);
+	public String currentPriceUserRead(int product_id);
 }
