@@ -1,7 +1,8 @@
+<%@page import="org.zerock.domain.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ include file="../includes/header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,16 +11,19 @@
 .viewpage_wrap {
 position : relative;
 left : 20%;
-margin-top : 5%;
-width : 60vw;
+margin-top : 2%;
+width : 70%;
+min-width : 1000px;
 height : 100vw;
+min-height : 1000px;
 }
 
 .info_wrap{
 position : absolute;
-width : 45%;
-height : 30%;
-left : 55%;
+width : 50%;
+height : 50%;
+left : 50%;
+font-size : 1rem;
 }
 
 .info_wrap div {
@@ -70,6 +74,11 @@ left : 55%;
   cursor : pointer;
   color : white;
 }
+
+.desc_wrap {
+  clear:both;
+  padding-top : 5%;
+}
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
@@ -81,6 +90,23 @@ $(document).ready( function() {
 	first.attr('id','index');
 	$("#index").css("opacity",1);
 	
+	var mVo = "<%=(MemberVO)session.getAttribute("sessionMember")%>";
+	console.log(mVo);
+	
+	if(mVo == "null"){
+		console.log("여기안오나");
+		 $(".bidButton").text("로그인 후 이용해주세요");
+		 $(".bidButton").attr('class','requestLogin');
+	}else{
+		console.log("왜여기로옴");
+	}
+	
+});
+
+$( function(){
+	$( '.requestLogin' ).on("click", function() {
+		window.location.href='../member/login';
+	});
 });
 
 var imgLen = ${piccount}-1;
@@ -168,24 +194,6 @@ $(document).ready( function() {
 setInterval(remainTime,1000);
 
 
-// 텍스트박스 숫자고정 + 백스페이스 탭 엔터 같은거 가능하게
-function checkNumber(event) {	
-	var code = event.keyCode;
-	if(code>47&&code<58 || code==8 || code == 9 || code == 46 || code == 37 || code == 39) {
-	    return true;
-	}
-	return false;	
-}
-
-
-
-//한글막기
-$( function(){
-	$( '#bidCheck' ).on("blur keyup", function() {
-		$(this).val( $(this).val().replace( /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '' ) );
-	});
-});
-
 // 텍스트박스 +버튼
 $( function(){
 	$(".bidTextBoxUp").on("click", function(){
@@ -227,7 +235,7 @@ $( function(){
 //텍스트박스 -버튼
 $( function(){
 	$(".bidTextBoxDown").on("click", function(){
-	var bidTextBox = parseInt(document.getElementById('bidCheck').value);
+		var bidTextBox = parseInt(document.getElementById('bidCheck').value);
 		
 		if (bidTextBox == 0){
 			if(${productView.current_price == 0}){
@@ -235,10 +243,6 @@ $( function(){
 			} else {
 				bidTextBox = ${productView.current_price};
 			}
-		}
-		
-		if (bidTextBox == 0){
-			bidTextBox = ${productView.start_price};
 		}
 		
 		if(bidTextBox < 10000 && bidTextBox >= 1000){
@@ -264,41 +268,82 @@ $( function(){
 });
 
 // form ajax submit
+
 $( function(){
 	$(".bidButton").on("click", function(){
 		var current_price = ${productView.current_price};
 		var start_price = ${productView.start_price};
-		var bid = parseInt(document.getElementById('bidCheck').value);
-		if(bid <= start_price){
-			
-			alert ("입찰 가격이 경매 시작가보다 같거나 낮습니다. 더 높게 입찰해주세요");
-			
-		} else if(bid <= current_price) {
-			
-			alert ("입찰 가격이 현재 최고 입찰가보다 같거나 낮습니다. 더 높게 입찰해주세요");
-			
-		} else {
-			var bid = parseInt(document.getElementById('bidCheck').value);
-			var product_id = ${productView.product_id};
-			$.ajax({
-	            url : "currentPrice", 
-	            type : 'POST', 
-	            data : {'current_price':bid, 'product_id':product_id},
-	            dataType : 'json',
-	            success : function(data) {
-	            	var a = "현재 가격 : " + data;
-	                $("#currentPriceH2").text(a);
-	                location.reload();
-	            }, 
-	            error : function(xhr, status) {
-	               alert("에러");
-	            }
-	        });
+		var bid = parseInt(document.getElementById('bidCheck').value);		
+	
+		var sessionUser = "<%=session.getAttribute("sessionUser")%>";
+		var user = "${currentPriceUser}";
 
+		if(sessionUser != user){
+					
+			if(bid <= start_price){
+			
+				alert ("입찰 가격이 경매 시작가보다 같거나 낮습니다. 더 높게 입찰해주세요");
+			
+			} else if(bid <= current_price) {
+			
+				alert ("입찰 가격이 현재 최고 입찰가보다 같거나 낮습니다. 더 높게 입찰해주세요");
+			
+			} else {
+				var bid = parseInt(document.getElementById('bidCheck').value);
+				var product_id = ${productView.product_id};
+				$.ajax({
+	         	   url : "currentPrice", 
+	          	  type : 'POST', 
+	            	data : {'current_price':bid, 'product_id':product_id},
+	            	dataType : 'json',
+	            	success : function(data) {
+	            	//	var a = "현재 가격 : " + data;
+	             	//   $("#currentPriceH2").text(a);
+	              	  location.reload();
+	          	  }, 
+	          	  error : function(xhr, status) {
+	           	    alert("에러");
+	          	  }
+	       	 });
+
+			}
+		
+		}else if(sessionUser == user) {
+			
+			alert("이미 최상위 입찰자입니다.");			
+			
 		}
 		
-	
+
 	});
+});
+
+$(document).ready( function bidUnit(){
+	var bidTextBox = 0;
+	var bid_unit = 0;
+	if (bidTextBox == 0){
+		if(${productView.current_price == 0}){
+			bidTextBox = ${productView.start_price};			
+		} else {
+			bidTextBox = ${productView.current_price};
+		}
+	}
+	
+	if(bidTextBox < 10000 && bidTextBox >= 1000){
+		bid_unit = 100;
+	} else if (bidTextBox < 50000 && bidTextBox >= 10000){
+		bid_unit = 500;
+	} else if (bidTextBox < 100000 && bidTextBox >= 50000){
+		bid_unit = 1000;
+	} else if (bidTextBox < 500000 && bidTextBox >= 100000){
+		bid_unit = 5000;
+	} else if (bidTextBox < 1000000 && bidTextBox >= 500000){
+		bid_unit = 10000;
+	} else {
+		bid_unit = 100000;
+	}	
+	
+	 $(".bid_unit").text("호가단위 : " + bid_unit);
 });
 </script>
 
@@ -307,7 +352,7 @@ $( function(){
 <title></title>
 </head>
 <body>
-
+	<main>
 	<div class = "viewpage_wrap">
 	<div class="piclist_hidden">
 		<div class="piclist_wrap">
@@ -326,16 +371,17 @@ $( function(){
 	
 	<div class = "info_wrap">
 		<div class ="memberinfo">${productView.user_id}님의 경매 횟수</div>
-		<div class = "title"><H1>${productView.title}</H1></div>
-		<div class = "startPrice"><h2>시작 가격 : ${productView.start_price}</h2></div>
+		<div class = "title">${productView.title}</div>
+		<div class = "startPrice">시작 가격 : ${productView.start_price}</div>
 		<div class = "currentPrice"><h2 id = "currentPriceH2">현재 가격 : ${productView.current_price}</h2></div>
+		<div class = "bid_unit"></div>
 		<div class = "remainDate"><h3 class = "remainTime"></h3></div>
  		<div class = "bidTotal">
  			<div class = "bidTextBoxWrap">
  				<div class = "bidTextBoxDown">-</div>
  				<div class = "bidTextBox">
  					<form id = "bidSubmit">
- 					<input id = "bidCheck" type ="text" onkeydown='return checkNumber(event)' value = "0">
+ 					<input id = "bidCheck" readonly value = "0">
  					</form>
  				</div>
  				<div class = "bidTextBoxUp">+</div>
@@ -344,6 +390,10 @@ $( function(){
  		</div>
 	</div>
 	
+	<div class = "desc_wrap">
+		<div class = "desc">${productView.description}</div>
 	</div>
+	</div>
+	</main>
 </body>
 </html>

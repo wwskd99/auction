@@ -4,19 +4,18 @@
 <!-- Java interface와 namespace를 맞추어준다. -->
 <mapper namespace="org.zerock.mapper.ProductMapper">
 
-<select id="piclist" resultType="org.zerock.domain.ProductPicVO">
-	select * from picture where product_id = #{product_id}
-</select>
-<select id="picCount" resultType="int">
-	select count(picture_id) from picture where product_id = #{product_id}
-</select>
-<select id="read" resultType="org.zerock.domain.ProductVO">
-	select * from product where product_id = #{product_id}
-</select>
-<update id="updateCP">
-update product set current_price = #{current_price} where product_id = #{product_id}
-</update>
-<select id="readCP" resultType="int">
-	select current_price from product where product_id = #{product_id}
-</select>
+<select resultType="org.zerock.domain.ProductPicVO" id="piclist">select * from picture where product_id = #{product_id} </select>
+
+<select resultType="int" id="picCount">select count(picture_id) from picture where product_id = #{product_id} </select>
+
+<select resultType="org.zerock.domain.ProductVO" id="read">select * from product where product_id = #{product_id} </select>
+
+<update id="updateCP"> update product set current_price = #{current_price} where product_id = #{product_id} </update>
+
+<select resultType="int" id="readCP">select current_price from product where product_id = #{product_id} </select>
+
+<insert id="insertCP">insert into bid_history (user_id, current_price, product_id) values (#{user_id},#{current_price},#{product_id}); </insert>
+
+<select resultType="String" id="readCPU">select user_id from bid_history where product_id = #{product_id} order by current_price desc limit 1; </select>
+
 </mapper>
