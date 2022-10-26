@@ -123,18 +123,19 @@
 			if(msg != null && msg.trim() != ''){
 				var d = JSON.parse(msg);
 				if(d.type == "getId"){
-					console.log(d.sessionId);
-					console.log($("#sessionId").val());
+
 					var si = d.sessionId != null ? d.sessionId : "";
 					if(si != ''){
 						$("#sessionId").val(si); 
 					}
-					console.log($("#sessionId").val());
+
 				}else if(d.type == "message"){
 					if(d.sessionId == $("#sessionId").val()){
 						$("#chating").append("<p class='me'>나 :" + d.msg + "</p>");	
 					}else{
 						$("#chating").append("<p class='others'>" + d.userName + " :" + d.msg + "</p>");
+						let x = document.getElementsByClassName("otherId")[0];
+						   x.innerText=" 상대방 id: "+d.userName; 
 					}
 						
 				}else{
@@ -176,6 +177,10 @@
 	
 </script>
 <body>
+<%
+	session = request.getSession();
+	String userid = (String)session.getAttribute("userid");
+%>	
 	<div id="container" class="container">
 		<h1>${roomName}의 채팅방</h1>
 		<input type="hidden" id="sessionId" value="">
@@ -187,28 +192,41 @@
 
 		<div id="modal" class="modal-overlay">
 			<div class="modal-window">
-				<div class="title">
-					<h2>상대방 평가하기</h2>
-				</div>
 				<div class="close-area">×</div>
-				<div class="content">
-					<p>가나다라마바사 아자차카타파하</p>
-					<p>가나다라마바사 아자차카타파하</p>
-					<p>가나다라마바사 아자차카타파하</p>
-					<p>가나다라마바사 아자차카타파하</p>
-
+				<div class="title">
+					<h2>평가창</h2><br>
+					<h2><span class="otherId"> 상대방 id: </span></h2>
+					<br><br>
 				</div>
+				<form method="get" action="/chatting/score">
+					<input type="hidden" name="user_id" value="<%=userid%>">
+					<input type="hidden" name="product_id" value="14">
+					<div>
+						<input type="range" name="user_score" class="user_score" min="0" max="5" step="1">
+						<h3>
+							평점:<font id="slider_value_view">0</font>
+						</h3>
+						<br><br>
+					</div>
+					<div>
+						<h3>간단한 이유:</h3>
+						<textarea id="cause" name="cause" rows="15" cols="54"></textarea>
+					</div>
+					<br>
+					<div>
+						<input type="submit" value="제출">
+					</div>
+				</form>
 			</div>
 		</div>
 
 		<div id="chating" class="chating">
-		</div>
-		
+		</div>	
 		<div id="yourName">
 			<table class="inputTable">
 				<tr>
 					<th>사용자명</th>
-					<th><input type="text" name="userName" id="userName"></th>
+					<th><input type="text" name="userName" id="userName" value="<%=userid%>"></th>
 					<th><button onclick="chatName()" id="startBtn">이름 등록</button></th>
 				</tr>
 			</table>
@@ -254,5 +272,19 @@ window.addEventListener("keyup", e => {
         modalOff()
     }
 })
+
+function ShowSliderValue(sVal){	
+	var obValueView = document.getElementById("slider_value_view");	
+	obValueView.innerHTML = sVal
+}
+var RangeSlider = function(){	
+	var range = $('.user_score');    	
+	range.on('input', function(){				
+		ShowSliderValue(this.value);	
+	});
+};
+	
+RangeSlider();
+
 </script>
 </html>

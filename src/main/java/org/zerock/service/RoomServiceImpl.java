@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.zerock.domain.Room;
+import org.zerock.domain.ScoreVO;
 import org.zerock.mapper.RoomMapper;
 
 import lombok.AllArgsConstructor;
@@ -28,5 +29,11 @@ public class RoomServiceImpl implements RoomService{
 	public List<Room> selectSellerRoom(String seller) {
 		// TODO Auto-generated method stub
 		return roomMapper.selectSellerRoom(seller);
+	}
+
+	@Override
+	public void insertScore(ScoreVO score) {
+		roomMapper.insertScore(score);
+		
 	}
 }

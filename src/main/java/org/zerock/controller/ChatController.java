@@ -6,15 +6,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import org.zerock.domain.Room;
+import org.zerock.domain.ScoreVO;
 import org.zerock.service.RoomService;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 @Controller
 @RequestMapping("/chatting/*")
 public class ChatController {
@@ -94,6 +98,20 @@ public class ChatController {
 		}else {
 			mv.setViewName("chatting/room");
 		}
+		return mv;
+	}
+	
+	@GetMapping("/score")
+	public ModelAndView score(@RequestParam("user_id") String user_id, @RequestParam("product_id") int product_id, @RequestParam("user_score") int user_score, @RequestParam("cause") String cause) {
+
+		ModelAndView mv = new ModelAndView();
+		ScoreVO score = new ScoreVO();
+		score.setUser_id(user_id);
+		score.setProduct_id(product_id);
+		score.setUser_score(user_score);
+		score.setCause(cause);
+		rService.insertScore(score);
+		mv.setViewName("chatting/room");
 		return mv;
 	}
 }
