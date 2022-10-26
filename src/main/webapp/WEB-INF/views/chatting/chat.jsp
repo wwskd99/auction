@@ -44,6 +44,62 @@
 		#yourMsg{
 			display: none;
 		}
+		
+		#modal.modal-overlay {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(1.5px);
+            -webkit-backdrop-filter: blur(1.5px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        #modal .modal-window {
+            background: #FFBB00;
+            box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+            backdrop-filter: blur( 13.5px );
+            -webkit-backdrop-filter: blur( 13.5px );
+            border-radius: 10px;
+            border: 1px solid rgba( 255, 255, 255, 0.18 );
+            width: 400px;
+            height: 500px;
+            position: relative;
+            top: 0px;
+            padding: 10px;
+        }
+        #modal .title {
+            padding-left: 10px;
+            display: inline;
+            text-shadow: 1px 1px 2px gray;
+            color: white;
+            
+        }
+        #modal .title h2 {
+            display: inline;
+        }
+        #modal .close-area {
+            display: inline;
+            float: right;
+            padding-right: 10px;
+            cursor: pointer;
+            text-shadow: 1px 1px 2px gray;
+            color: white;
+        }
+        
+        #modal .content {
+            margin-top: 20px;
+            padding: 0px 10px;
+            text-shadow: 1px 1px 2px gray;
+            color: white;
+        }
 	</style>
 </head>
 
@@ -67,10 +123,13 @@
 			if(msg != null && msg.trim() != ''){
 				var d = JSON.parse(msg);
 				if(d.type == "getId"){
+					console.log(d.sessionId);
+					console.log($("#sessionId").val());
 					var si = d.sessionId != null ? d.sessionId : "";
 					if(si != ''){
 						$("#sessionId").val(si); 
 					}
+					console.log($("#sessionId").val());
 				}else if(d.type == "message"){
 					if(d.sessionId == $("#sessionId").val()){
 						$("#chating").append("<p class='me'>나 :" + d.msg + "</p>");	
@@ -114,13 +173,34 @@
 		ws.send(JSON.stringify(option))
 		$('#chatting').val("");
 	}
+	
 </script>
 <body>
 	<div id="container" class="container">
 		<h1>${roomName}의 채팅방</h1>
 		<input type="hidden" id="sessionId" value="">
 		<input type="hidden" id="room_id" value="${room_id}">
-		
+
+		<div id="container">
+			<button id="btn-modal">거래 완료</button>
+		</div>
+
+		<div id="modal" class="modal-overlay">
+			<div class="modal-window">
+				<div class="title">
+					<h2>상대방 평가하기</h2>
+				</div>
+				<div class="close-area">×</div>
+				<div class="content">
+					<p>가나다라마바사 아자차카타파하</p>
+					<p>가나다라마바사 아자차카타파하</p>
+					<p>가나다라마바사 아자차카타파하</p>
+					<p>가나다라마바사 아자차카타파하</p>
+
+				</div>
+			</div>
+		</div>
+
 		<div id="chating" class="chating">
 		</div>
 		
@@ -144,4 +224,35 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+const modal = document.getElementById("modal")
+function modalOn() {
+    modal.style.display = "flex"
+}
+function isModalOn() {
+    return modal.style.display === "flex"
+}
+function modalOff() {
+    modal.style.display = "none"
+}
+const btnModal = document.getElementById("btn-modal")
+btnModal.addEventListener("click", e => {
+    modalOn()
+})
+const closeBtn = modal.querySelector(".close-area")
+closeBtn.addEventListener("click", e => {
+    modalOff()
+})
+modal.addEventListener("click", e => {
+    const evTarget = e.target
+    if(evTarget.classList.contains("modal-overlay")) {
+//        modalOff()	// 외부 클릭 시
+    }
+})
+window.addEventListener("keyup", e => {
+    if(isModalOn() && e.key === "Escape") {
+        modalOff()
+    }
+})
+</script>
 </html>
