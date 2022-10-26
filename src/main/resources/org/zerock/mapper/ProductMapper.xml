@@ -13,4 +13,10 @@
 <select id="read" resultType="org.zerock.domain.ProductVO">
 	select * from product where product_id = #{product_id}
 </select>
+<update id="updateCP">
+update product set current_price = #{current_price} where product_id = #{product_id}
+</update>
+<select id="readCP" resultType="int">
+	select current_price from product where product_id = #{product_id}
+</select>
 </mapper>

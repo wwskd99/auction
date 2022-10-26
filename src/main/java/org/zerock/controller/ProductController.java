@@ -7,8 +7,10 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.service.ProductService;
@@ -46,6 +48,14 @@ public class ProductController {
 		model.addAttribute("regDate",regDate);
 		
 	}
-
+	
+	@ResponseBody
+	@PostMapping("/currentPrice")
+	public int currentPriceUpdate(@RequestParam("product_id") int product_id, @RequestParam("current_price") int current_price, Model model) {
+		pService.currentPriceUpdate(product_id,current_price);
+		int currentPrice = pService.currentPriceRead(product_id);
+		model.addAttribute("currentPrice",currentPrice);
 		
+		return currentPrice;
+	}
 }
