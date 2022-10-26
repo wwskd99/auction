@@ -33,7 +33,7 @@ public class MemberController {
 				
 				HttpSession session = request.getSession();
 				session.setAttribute("sessionMember", mVo);
-				
+				session.setAttribute("userid", mVo.getUser_id());
 				return "home";
 				
 			}else {
