@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public ProductVO productRead(int product_id) {
 		
-		return pMapper.read(product_id);
+		return pMapper.readProduct(product_id);
 	}
 	@Override
 	public void currentPriceUpdate(int product_id, int current_price) {
@@ -61,4 +61,44 @@ public class ProductServiceImpl implements ProductService {
 		
 		return pMapper.readCPU(product_id);
 	}
+	
+	// 아래 동길
+	@Override
+	public void register(ProductVO product) {
+		log.info("register..." + product);
+		pMapper.insertSelectKey(product);
+
+	}
+
+	@Override
+	public ProductVO get(int product_id) {
+		log.info("get..." + product_id);
+		return pMapper.read(product_id);
+	}
+
+	@Override
+	public boolean modify(ProductVO product) {
+		log.info("modify..." + product);
+		return pMapper.update(product) == 1;
+	}
+
+	@Override
+	public boolean remove(int product_id) {
+		log.info("remove..." + product_id);
+		return pMapper.delete(product_id) == 1;
+	}
+
+	@Override
+	public List<ProductVO> getList() {
+		log.info("getList");
+		return pMapper.getList();
+	}
+	@Override
+	public ProductVO read(int product_id) {
+		
+		return pMapper.read(product_id);
+	}
+	
+	
+	
 }

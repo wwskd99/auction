@@ -11,7 +11,6 @@
 .viewpage_wrap {
 position : relative;
 left : 20%;
-margin-top : 2%;
 width : 70%;
 min-width : 1000px;
 height : 100vw;
@@ -349,7 +348,7 @@ $(document).ready( function bidUnit(){
 
 
 <meta charset="UTF-8">
-<title></title>
+<title>${productView.title}</title>
 </head>
 <body>
 	<main>

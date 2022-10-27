@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.MemberVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
@@ -70,4 +71,51 @@ public class ProductController {
 		
 		return currentPrice;
 	}
+	
+	//// 아래 동길
+	
+	@GetMapping("/list")
+	public void list(Model model) {
+		log.info("list");
+		model.addAttribute("list", pService.getList());
+	}
+
+	@GetMapping("/register")
+	public void register() {
+
+	}
+
+	@PostMapping("/register")
+	public String register(ProductVO product, RedirectAttributes rttr) {
+		log.info("register: " + product);
+		pService.register(product);
+		rttr.addFlashAttribute("result", product.getProduct_id());
+		return "redirect:/product/list";
+	}
+
+	@GetMapping({ "/get", "/modify" })
+	public void get(@RequestParam("product_id") Integer product_id, Model model) {
+		log.info("/get or /modify");
+		model.addAttribute("product", pService.get(product_id));
+	}
+
+	@PostMapping("/modify")
+	public String modify(ProductVO product, RedirectAttributes rttr) {
+		log.info("modify:" + product);
+		if (pService.modify(product)) {
+			rttr.addFlashAttribute("result", "success");
+		}
+		return "redirect:/product/list";
+	}
+
+	@PostMapping("/remove")
+	public String remove(@RequestParam("product_id") Integer product_id, RedirectAttributes rttr) {
+		log.info("remove..." + product_id);
+		if(pService.remove(product_id)) {
+			rttr.addFlashAttribute("result","success");
+		}
+		return "redirect:/product/list";
+	}
+	
+	
 }
