@@ -93,11 +93,8 @@ $(document).ready( function() {
 	console.log(mVo);
 	
 	if(mVo == "null"){
-		console.log("여기안오나");
 		 $(".bidButton").text("로그인 후 이용해주세요");
 		 $(".bidButton").attr('class','requestLogin');
-	}else{
-		console.log("왜여기로옴");
 	}
 	
 });
