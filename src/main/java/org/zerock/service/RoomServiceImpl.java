@@ -27,7 +27,6 @@ public class RoomServiceImpl implements RoomService{
 
 	@Override
 	public List<Room> selectSellerRoom(String seller) {
-		// TODO Auto-generated method stub
 		return roomMapper.selectSellerRoom(seller);
 	}
 
