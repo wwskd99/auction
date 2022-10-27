@@ -4,18 +4,68 @@
 <!-- Java interface와 namespace를 맞추어준다. -->
 <mapper namespace="org.zerock.mapper.ProductMapper">
 
-<select resultType="org.zerock.domain.ProductPicVO" id="piclist">select * from picture where product_id = #{product_id} </select>
+<select resultType="org.zerock.domain.ProductPicVO" id="piclist">
+select * from picture where product_id = #{product_id}
+ </select>
 
-<select resultType="int" id="picCount">select count(picture_id) from picture where product_id = #{product_id} </select>
+<select resultType="int" id="picCount">
+select count(picture_id) from picture where product_id = #{product_id}
+ </select>
 
-<select resultType="org.zerock.domain.ProductVO" id="read">select * from product where product_id = #{product_id} </select>
+<select resultType="org.zerock.domain.ProductVO" id="readProduct">
+select * from product where product_id = #{product_id} 
+</select>
 
-<update id="updateCP"> update product set current_price = #{current_price} where product_id = #{product_id} </update>
+<update id="updateCP"> 
+update product set current_price = #{current_price} where product_id = #{product_id} 
+</update>
 
-<select resultType="int" id="readCP">select current_price from product where product_id = #{product_id} </select>
+<select resultType="int" id="readCP">
+select current_price from product where product_id = #{product_id} 
+</select>
 
-<insert id="insertCP">insert into bid_history (user_id, current_price, product_id) values (#{user_id},#{current_price},#{product_id}); </insert>
+<insert id="insertCP">
+insert into bid_history (user_id, current_price, product_id) values (#{user_id},#{current_price},#{product_id});
+</insert>
 
-<select resultType="String" id="readCPU">select user_id from bid_history where product_id = #{product_id} order by current_price desc limit 1; </select>
+
+<select resultType="String" id="readCPU">
+select user_id from bid_history where product_id = #{product_id} order by current_price desc limit 1; 
+</select>
+
+<!-- 아래 동길 -->
+
+<select id="getList" resultType="org.zerock.domain.ProductVO">
+<![CDATA[
+select * from product where product_id > 0 order by product_id desc
+]]>
+	</select>
+	<insert id="insert">
+		insert into product (title, description, start_price,current_price) 
+		values (#{title}, #{description}, #{ start_price},#{current_price})
+	</insert>
+	<insert id="insertSelectKey" useGeneratedKeys="true"
+		keyProperty="product_id" keyColumn="product_id">
+		insert into product (title, description, start_price,current_price)
+		values (#{title}, #{description}, #{ start_price}, #{current_price})
+		<selectKey keyProperty="product_id" order="AFTER"
+			resultType="Integer">
+			select last_insert_id() as product_id
+		</selectKey>
+	</insert>
+	<select id="read" resultType="org.zerock.domain.ProductVO">
+		select * from product where product_id = #{product_id}
+	</select>
+	<delete id="delete">
+		delete from product where product_id = #{product_id}
+	</delete>
+	<update id="update">
+		update product
+		set title=#{title}, description=#{description}, start_price=#{
+		start_price}, current_price=#{current_price}
+		where product_id = #{product_id}
+	</update>
+
+
 
 </mapper>
