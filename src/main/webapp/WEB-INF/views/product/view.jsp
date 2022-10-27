@@ -7,26 +7,154 @@
 <html>
 <head>
 <style>
+main {
 
+}
 .viewpage_wrap {
+margin: 0 auto;
 position : relative;
-left : 20%;
 width : 70%;
-min-width : 1000px;
-height : 100vw;
+min-width : 900px;
+height : 50vw;
 min-height : 1000px;
+overflow : visible;
 }
 
 .info_wrap{
-position : absolute;
+position : relative;
 width : 50%;
-height : 50%;
-left : 50%;
+height : 100%;
 font-size : 1rem;
+float : left;
 }
 
 .info_wrap div {
-	margin : 2%;
+	left : 5%;
+}
+
+.memberinfo {
+	font-size : 1.0em;
+	color : #6c757d;
+	width : 95%;
+	height : 5%;
+	padding-bottom: 1%;
+	position : absolute;
+	border-bottom : 1px solid #E4E4E4;
+}
+.title {
+	text-align : left;
+	font-weight : 600;
+	font-size : 1.4em;
+	height : 10%;
+	top : 9%;	
+	position : absolute;
+	width : 95%;
+	padding-top : 1%;
+	padding-bottom : 1%;
+	border-bottom : 1px solid #E4E4E4;
+}
+.startPrice {
+	padding-top : 1%;
+	height : 8%;
+	top : 25%;
+	position : absolute;
+	width : 95%;
+	color : #343a40;
+	font-size : 1.1em;
+	font-weight : 500;
+}
+.currentPrice {
+	height : 8%;
+	top : 33%;
+	position : absolute;
+	width : 95%;
+	color : #343a40;
+	font-size : 1.1em;
+	font-weight : 500;
+}
+
+.bid_unit{
+height : 8%;
+top : 40%;
+position : absolute;
+width : 95%;
+color : #343a40;
+color : #343a40;
+	font-size : 1.1em;
+	font-weight : 500;
+	padding-bottom : 1%;
+	border-bottom : 1px solid #E4E4E4;
+
+}
+
+.remainDate{
+	height : 10%;
+	top : 54%;
+	position : absolute;
+	width : 95%;
+	font-size : 1.4em;
+	font-weight : 700;
+	padding-bottom : 1%;
+	border-bottom : 1px solid #E4E4E4;
+}
+.bidTotal{
+	top : 70%;
+	height : 30%;
+	position : absolute;
+	width : 95%;
+}
+
+#bidCheck{
+	font-size : 1.3em;
+	text-align : center;
+	width : 100%;
+	border-top : none;
+	border-left : none;
+	border-right : none;
+	border-bottom : 3px solid;
+
+}
+.bidTextBoxWrap{
+	position : absolute;
+	width : 95%;
+	height : 50%;
+	top : 12%;
+}
+
+.bidTextBoxUp{
+	font-size : 1.5em;
+	margin-left : 2%;
+	width : 5%;
+	height : 100%;
+	float : left;
+}
+.bidTextBoxDown{
+	font-size : 1.5em;
+	width : 5%;
+	height : 100%;
+	left : 75%;
+	float : left;	
+}
+.bidTextBox{
+
+	width : 50%;
+	height : 100%;
+	left : 50%;
+	float : left;
+}
+
+.bidButton {
+	border-radius: 10px;
+	text-align : center;
+	line-height : 230%;
+	background-color : black;
+	color : white;
+	font-size : 1.3em;
+	font-weight : 600;
+	position : absolute;
+	width : 60%;
+	height : 35%;
+	top : 55%;
 }
 
 .piclist_img {
@@ -34,21 +162,41 @@ font-size : 1rem;
 	width: 100%;
 	height : 100%;
 	-webkit-transition: opacity 1s ease-in-out;
-      -moz-transition: opacity 1s ease-in-out;
-      -o-transition: opacity 1s ease-in-out;
-      transition: opacity 1s ease-in-out;
-      opacity: 0;
-      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-      filter: alpha(opacity=0);
+    -moz-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+    opacity: 0;
+   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+   filter: alpha(opacity=0);
+   border-radius: 20px;
 }
 
 .piclist_wrap {
+width : 100%;
+height : 100%;
+}
+
+.viewpage_wrap_top {
+width : 100%;
+height : 60%;
+position : absolute;
+top : 3%;
+padding-top : 1%;
+padding-bottom : 1%;
+border-top: solid	 1px #E4E4E4;
+border-bottom: solid	 1px #E4E4E4;
+}
+.viewpage_wrap_bottom {
+width : 100%;
+height : 40%;
+position : absolute;
+top :65%;
 
 }
 .piclist_hidden {
 	float : left;
 	width: 50%;
-	height: 30%;
+	height: 100%;
 	overflow: hidden;
 	position : relative;
 }
@@ -75,9 +223,25 @@ font-size : 1rem;
 }
 
 .desc_wrap {
+  height : 100%;
   clear:both;
-  padding-top : 5%;
+  padding-top : 2%;
 }
+.desc_title {
+ font-size : 1.3em;
+	font-weight : 600;
+	padding-bottom : 2%;
+	border-bottom : 1px solid #E4E4E4;
+	
+}
+
+.desc {
+	margin-top : 2%;
+	padding-bottom : 2%;
+	border-bottom : 1px solid #E4E4E4;
+	
+}
+
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
@@ -339,7 +503,7 @@ $(document).ready( function bidUnit(){
 		bid_unit = 100000;
 	}	
 	
-	 $(".bid_unit").text("호가단위 : " + bid_unit);
+	 $(".bid_unit").text("호가단위 : " + bid_unit + "원");
 });
 </script>
 
@@ -350,6 +514,8 @@ $(document).ready( function bidUnit(){
 <body>
 	<main>
 	<div class = "viewpage_wrap">
+	
+	<div class = "viewpage_wrap_top">
 	<div class="piclist_hidden">
 		<div class="piclist_wrap">
 			<c:forEach items="${piclist}" var="pic">
@@ -368,10 +534,10 @@ $(document).ready( function bidUnit(){
 	<div class = "info_wrap">
 		<div class ="memberinfo">${productView.user_id}님의 경매 횟수</div>
 		<div class = "title">${productView.title}</div>
-		<div class = "startPrice">시작 가격 : ${productView.start_price}</div>
-		<div class = "currentPrice"><h2 id = "currentPriceH2">현재 가격 : ${productView.current_price}</h2></div>
+		<div class = "startPrice">시작가 : ${productView.start_price}원</div>
+		<div class = "currentPrice"><a id = "currentPriceH2">현재가 : ${productView.current_price}원</a></div>
 		<div class = "bid_unit"></div>
-		<div class = "remainDate"><h3 class = "remainTime"></h3></div>
+		<div class = "remainDate"><a class = "remainTime"></a></div>
  		<div class = "bidTotal">
  			<div class = "bidTextBoxWrap">
  				<div class = "bidTextBoxDown">-</div>
@@ -385,9 +551,12 @@ $(document).ready( function bidUnit(){
  			<div class = "bidButton">입찰 하기</div>
  		</div>
 	</div>
-	
+	</div>
+	<div class = "viewpage_wrap_bottom">
 	<div class = "desc_wrap">
+		<div class = "desc_title"> 물품 정보 </div>
 		<div class = "desc">${productView.description}</div>
+	</div>
 	</div>
 	</div>
 	</main>

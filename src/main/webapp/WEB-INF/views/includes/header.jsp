@@ -13,7 +13,7 @@ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica N
 }
 
 main{
- width : 100vw;
+ width : 100%;
  
 }
 
