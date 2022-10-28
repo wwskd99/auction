@@ -35,7 +35,7 @@ public class MemberController {
 				session.setAttribute("sessionMember", mVo);
 				session.setAttribute("userid", mVo.getUser_id());
 				session.setAttribute("sessionUser", mVo.getUser_id());
-				return "home";
+				return "main";
 				
 			}else {
 				//pw 불일치
