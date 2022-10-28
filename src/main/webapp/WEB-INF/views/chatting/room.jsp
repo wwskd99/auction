@@ -88,10 +88,12 @@
 	
 	function createRoom(){
 		$("#createRoom").click(function(){
-			var msg = {	roomName : $('#roomName').val(),
-						buyer : "buyer",
-						seller : "seller"
-						};
+			var msg = {	
+				roomName : $('#roomName').val(),
+				product_id : $('#product_id').val(),
+				buyer : $('#buyer').val(),
+				seller : $('#seller').val()
+			};
 
 			commonAjax('/chatting/createRoom.json', msg, 'post', function(result){
 				createChatingRoom(result);
@@ -101,8 +103,8 @@
 		});
 	}
 
-	function goRoom(number, name){
-		location.href="/chatting/moveChating?roomName="+name+"&"+"room_id="+number;
+	function goRoom(number, name, user){
+		location.href="/chatting/moveChating?roomName="+name+"&"+"room_id="+number + "&" + "user_id=" + user;
 	}
 
 	function createChatingRoom(res){
@@ -111,10 +113,11 @@
 			res.forEach(function(d, idx){
 				var rn = d.roomName.trim();
 				var room_id = d.room_id;
+				var user_id = '${sessionScope.userid}';
 				tag += "<tr>"+
 							"<td class='num'>"+(idx+1)+"</td>"+
 							"<td class='room'>"+ rn +"</td>"+
-							"<td class='go'><button type='button' onclick='goRoom(\""+room_id+"\", \""+rn+"\")'>참여</button></td>" +
+							"<td class='go'><button type='button' onclick='goRoom(\""+room_id+"\", \""+rn+"\", \""+user_id+"\")'>참여</button></td>" +
 						"</tr>";	
 			});
 			$("#roomList").empty().append(tag);
@@ -144,11 +147,16 @@
 			<table id="roomList" class="roomList"></table>
 		</div>
 		<div>
+			<input type="hidden" name="product_id" id="product_id" value="31">
+			<input type="hidden" name="buyer" id="buyer" value="buyer"> 
+			<input type="hidden" name="seller" id="seller" value="seller">
 			<table class="inputTable">
+
 				<tr>
 					<th>방 제목</th>
 					<th><input type="text" name="roomName" id="roomName"></th>
 					<th><button id="createRoom">방 만들기</button></th>
+
 				</tr>
 			</table>
 		</div>
