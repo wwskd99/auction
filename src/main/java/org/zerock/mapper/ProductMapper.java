@@ -3,6 +3,7 @@ package org.zerock.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.zerock.domain.Bid_historyVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 
@@ -17,6 +18,7 @@ public interface ProductMapper {
 	public String readCPU(int product_id);
 	//current_price&user
 	
+	public List<Bid_historyVO> readBidList(String user_id);
 	
 	// 아래 동길
 	public List<ProductVO> getList();

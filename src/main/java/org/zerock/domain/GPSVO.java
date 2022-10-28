@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class GPSVO {
 	private String latitude;
-	private String longitude;	// 권한
+	private String longitude;
 }
