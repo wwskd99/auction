@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Java interface와 namespace를 맞추어준다. -->
+<mapper namespace="org.zerock.mapper.ChatMapper">
+
+<insert id="insertChat">
+	insert into chatting_log (user_id, chat,room_id) values (#{user_id}, #{chat}, #{room_id})
+</insert>
+<select id="SelectChat" resultType="org.zerock.domain.ChatVO">
+	select * from chatting_log where room_id = #{room_id}
+</select>
+</mapper>
