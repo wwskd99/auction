@@ -33,6 +33,16 @@ insert into bid_history (user_id, current_price, product_id) values (#{user_id},
 select user_id from bid_history where product_id = #{product_id} order by current_price desc limit 1; 
 </select>
 
+
+
+
+
+<select id="readBidList" resultType="org.zerock.domain.Bid_historyVO">
+	select * from bid_history where user_id = #{user_id}
+</select>
+
+
+
 <!-- 아래 동길 -->
 
 <select id="getList" resultType="org.zerock.domain.ProductVO">

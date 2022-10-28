@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.zerock.domain.MemberVO;
 import org.zerock.service.MemberService;
 
@@ -60,5 +62,13 @@ public class MemberController {
 		
 	}
 	
-
+	@RequestMapping("/logout")
+	@ResponseBody
+	public ModelAndView memberLogout(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		HttpSession session = request.getSession();
+		session.invalidate();
+		mv.setViewName("/main");
+		return mv;
+	}
 }
