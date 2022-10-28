@@ -133,7 +133,7 @@ $( function(){
 	});
 	
 	$( '.chat_list_click' ).on("click", function() {
-		window.location.href='../chat/list';
+		window.location.href='../chatting/room';
 	});
 	$( '.myPage_login_click' ).on("click", function() {
 		window.location.href='../member/login';

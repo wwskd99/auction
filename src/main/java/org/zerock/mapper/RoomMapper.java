@@ -10,6 +10,7 @@ public interface RoomMapper {
 	public void insertRoom(Room room);
 	public List<Room> selectAllRoom();
 	public List<Room> selectSellerRoom(String seller);
+	public List<Room> selectBuyerRoom(String buyer);
 	public Room selectOneRoom(int room_id);
 	
 	public void insertScore(ScoreVO score);
