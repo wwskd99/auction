@@ -81,7 +81,7 @@
 	}
 
 	function getRoom(){
-		commonAjax('/chatting/getRoom.json', "", 'post', function(result){
+		commonAjax('/chatting/getRoom.json?user_id=${sessionScope.userid}', "", 'post', function(result){
 			createChatingRoom(result);
 		});
 	}

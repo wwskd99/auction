@@ -83,8 +83,14 @@ public class ChatController {
 	 */
 	@RequestMapping("/getRoom")
 	public @ResponseBody List<Room> getRoom(@RequestParam HashMap<Object, Object> params){
-		roomList = rService.selectAllRoom();
-//		roomList = rService.selectSellerRoom("seller"); // 특정인만 출력
+
+		String user_id = (String) params.get("user_id");
+		
+//		roomList = rService.selectAllRoom();
+
+		roomList = rService.selectSellerRoom(user_id); // 특정인만 출력
+		roomList.addAll(rService.selectBuyerRoom(user_id)); 
+		
 		return roomList;
 	}
 	

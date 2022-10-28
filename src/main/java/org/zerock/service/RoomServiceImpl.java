@@ -75,4 +75,9 @@ public class RoomServiceImpl implements RoomService{
 	public void insertSuccessTradeBuyer(String user_id) {
 		roomMapper.insertSuccessTradeBuyer(user_id);
 	}
+
+	@Override
+	public List<Room> selectBuyerRoom(String buyer) {
+		return roomMapper.selectBuyerRoom(buyer);
+	}
 }
