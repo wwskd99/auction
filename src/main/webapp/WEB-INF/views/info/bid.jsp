@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>입찰 내역</title>
 </head>
 <body>
 	<div>
-		<table border="1">
+		<table>
 			<c:forEach items="${BidList}" var="list">
 				<div class="bid_id">번호 : ${list.bid_id}</div>
 				<div class="bid_date">입찰 날짜: ${list.bid_date}</div>

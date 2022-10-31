@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ include file="includes/header.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,5 +79,10 @@ text-align: center;
 			</div>
 		</div>
 	</main>
+	<script type="text/javascript">
+		<c:if test="${not empty message}">
+			alert("${message}");
+		</c:if>
+	</script>
 </body>
 </html>
