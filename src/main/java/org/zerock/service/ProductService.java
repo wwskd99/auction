@@ -14,9 +14,10 @@ public interface ProductService {
 	public int currentPriceRead(int product_id);
 	public void currentPriceInsert(int product_id, int current_price,String user_id);
 	public String currentPriceUserRead(int product_id);
+	public void productRegist(ProductVO product);
 	
 	// 아래 동길
-	public void register(ProductVO product);
+	
 	public ProductVO get(int product_id);
 	public boolean modify(ProductVO product);
 	public boolean remove(int product_id);

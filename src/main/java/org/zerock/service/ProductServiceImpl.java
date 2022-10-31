@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.mapper.ProductMapper;
+import org.zerock.mapper.ProductPicMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -16,6 +17,7 @@ import lombok.extern.log4j.Log4j;
 public class ProductServiceImpl implements ProductService {
 
 	private ProductMapper pMapper;
+	private ProductPicMapper pPicMapper;
 	
 	@Override
 	public List<ProductPicVO> piclistRead(int product_id) {
@@ -62,13 +64,25 @@ public class ProductServiceImpl implements ProductService {
 		return pMapper.readCPU(product_id);
 	}
 	
-	// 아래 동길
 	@Override
-	public void register(ProductVO product) {
+	public void productRegist(ProductVO product) {
 		log.info("register..." + product);
-		pMapper.insertSelectKey(product);
+		pMapper.registProductSK(product);
+		
+		product.getProductPic().forEach(productPic -> {
+			productPic.setProduct_id(product.getProduct_id());
+			pPicMapper.RegistProductPic(productPic);
+		});
+		
 
 	}
+	
+
+	
+	// 아래 동길
+	
+	
+	
 
 	@Override
 	public ProductVO get(int product_id) {

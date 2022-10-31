@@ -7,6 +7,9 @@ import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 
 public interface ProductMapper {
+	public void registProductPic (ProductPicVO productpic);
+	public void registProductSK(ProductVO product);	
+	public void registProduct (ProductVO product);
 	public List<ProductPicVO> piclist(int product_id);
 	public int picCount(int product_id);
 	public ProductVO readProduct(int product_id);
@@ -20,8 +23,8 @@ public interface ProductMapper {
 	
 	// 아래 동길
 	public List<ProductVO> getList();
-	public void insert (ProductVO product);
-	public void insertSelectKey(ProductVO product);	
+
+	
 	public int delete(Integer product_id);
 	public int update(ProductVO product);
 	public ProductVO read(int product_id);

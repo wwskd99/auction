@@ -1,6 +1,8 @@
 package org.zerock.controller;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.MemberVO;
 import org.zerock.domain.ProductPicVO;
@@ -72,6 +75,27 @@ public class ProductController {
 		return currentPrice;
 	}
 	
+	@GetMapping("/register")
+	public void register() {
+
+	}
+	
+	@PostMapping("/register")
+	public String register(ProductVO product, RedirectAttributes rttr, Model model) {
+		
+		
+		// 게시글 등록
+		pService.productRegist(product);
+		
+		rttr.addFlashAttribute("result", product.getProduct_id());
+		System.out.println(product.getProduct_id());
+		return "redirect:/product/view?product_id="+product.getProduct_id();
+		
+		
+	}
+	
+	
+	
 	//// 아래 동길
 	
 	@GetMapping("/list")
@@ -80,18 +104,9 @@ public class ProductController {
 		model.addAttribute("list", pService.getList());
 	}
 
-	@GetMapping("/register")
-	public void register() {
+	
 
-	}
 
-	@PostMapping("/register")
-	public String register(ProductVO product, RedirectAttributes rttr) {
-		log.info("register: " + product);
-		pService.register(product);
-		rttr.addFlashAttribute("result", product.getProduct_id());
-		return "redirect:/product/list";
-	}
 
 	@GetMapping({ "/get", "/modify" })
 	public void get(@RequestParam("product_id") Integer product_id, Model model) {

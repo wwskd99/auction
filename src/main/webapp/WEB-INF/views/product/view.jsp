@@ -14,9 +14,9 @@ main {
 margin: 0 auto;
 position : relative;
 width : 70%;
-min-width : 900px;
+min-width : 1000px;
 height : 50vw;
-min-height : 1000px;
+min-height : 700px;
 overflow : visible;
 }
 
@@ -127,6 +127,7 @@ color : #343a40;
 	width : 5%;
 	height : 100%;
 	float : left;
+	cursor : pointer;
 }
 .bidTextBoxDown{
 	font-size : 1.5em;
@@ -134,6 +135,7 @@ color : #343a40;
 	height : 100%;
 	left : 75%;
 	float : left;	
+	cursor : pointer;
 }
 .bidTextBox{
 
@@ -155,6 +157,7 @@ color : #343a40;
 	width : 60%;
 	height : 35%;
 	top : 55%;
+	cursor : pointer;
 }
 
 .piclist_img {
@@ -229,6 +232,8 @@ top :65%;
 }
 .desc_title {
  font-size : 1.3em;
+ 
+ 
 	font-weight : 600;
 	padding-bottom : 2%;
 	border-bottom : 1px solid #E4E4E4;
@@ -254,14 +259,31 @@ $(document).ready( function() {
 	$("#index").css("opacity",1);
 	
 	var mVo = "<%=(MemberVO)session.getAttribute("sessionMember")%>";
-	console.log(mVo);
 	
 	if(mVo == "null"){
 		 $(".bidButton").text("로그인 후 이용해주세요");
 		 $(".bidButton").attr('class','requestLogin');
+		 
+			$( '.requestLogin' ).css("text-align","center")
+			.css("border-radius","10px")
+			.css("line-height" , "230%")
+			.css("background-color" , "black")
+			.css("color" , "white")
+			.css("font-size" , "1.3em")
+			.css("font-weight" , "600")
+			.css("position" , "absolute")
+			.css("width" , "60%")
+			.css("height" , "35%")
+			.css("top" , "55%")
+			.css("cursor", "pointer");
+		 
+		
+		
+		 
 	}
 	
 });
+
 
 $( function(){
 	$( '.requestLogin' ).on("click", function() {
@@ -520,7 +542,7 @@ $(document).ready( function bidUnit(){
 		<div class="piclist_wrap">
 			<c:forEach items="${piclist}" var="pic">
 				
-					<img class="piclist_img" src="../../resources/img/${pic.picture_path}/${pic.picture_name}">
+					<img class="piclist_img" src="/productUpload/${pic.picture_name}">
 				
 			</c:forEach>
 		</div>
