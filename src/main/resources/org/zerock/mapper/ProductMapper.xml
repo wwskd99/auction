@@ -53,6 +53,15 @@ select * from product where product_id > 0 order by product_id desc
 			select last_insert_id() as product_id
 		</selectKey>
 	</insert>
+	<insert id="registProductNeighborhoodSK" useGeneratedKeys="true"
+		keyProperty="product_id" keyColumn="product_id">
+		insert into product (title, description, start_price, neighborhood)
+		values (#{title}, #{description}, #{start_price}, #{neighborhood})
+		<selectKey keyProperty="product_id" order="AFTER"
+			resultType="Integer">
+			select last_insert_id() as product_id
+		</selectKey>
+	</insert>
 	<select id="read" resultType="org.zerock.domain.ProductVO">
 		select * from product where product_id = #{product_id}
 	</select>

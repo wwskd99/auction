@@ -35,10 +35,6 @@ public class UploadController {
 				productPic.setPicture_name(fileName);
 				productPic.setPicture_path(voUploadFolder);
 				
-				
-				log.info("파일명 : " + multipartFile.getOriginalFilename());
-				log.info("파일크기 : " + multipartFile.getSize());
-				
 				File saveFile = new File(uploadFolder, fileName);
 				try {
 					picList.add(productPic);
@@ -49,8 +45,7 @@ public class UploadController {
 			}
 			
 			model.addAttribute("imageList", picList);
-			
-			picList.forEach(s->System.out.println(s));
+
 			
 			return new ResponseEntity<List<ProductPicVO>>(picList, HttpStatus.OK);
 				

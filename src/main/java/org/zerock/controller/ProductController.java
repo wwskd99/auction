@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.domain.GPSVO;
 import org.zerock.domain.MemberVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
@@ -37,14 +38,14 @@ public class ProductController {
 	
 	@GetMapping("/view")
 	public void productView(@RequestParam("product_id") int product_id, Model model) {
-		log.info("----- view page controller start -----");
+		
 		List<ProductPicVO> picList = pService.piclistRead(product_id);
 		model.addAttribute("piclist",picList);	
 		
 		int picCount = pService.picCountRead(product_id);
 		model.addAttribute("piccount",picCount);
 		
-		log.info("----- view page controller end -----");
+	
 		
 		ProductVO pVo = pService.productRead(product_id);
 		model.addAttribute("productView",pVo);		
@@ -81,14 +82,21 @@ public class ProductController {
 	}
 	
 	@PostMapping("/register")
-	public String register(ProductVO product, RedirectAttributes rttr, Model model) {
+	public String register(ProductVO product, GPSVO gpsVo, RedirectAttributes rttr, Model model) {
 		
-		
+		System.out.println(gpsVo.getLatitude());
+		System.out.println(gpsVo.getLongitude());
 		// 게시글 등록
 		pService.productRegist(product);
+		// 셀렉트키 리턴
+		gpsVo.setProduct_id(product.getProduct_id());
+		
+		if(gpsVo.getLatitude() != null) {
+		pService.productGPSRegist(gpsVo);
+		}
 		
 		rttr.addFlashAttribute("result", product.getProduct_id());
-		System.out.println(product.getProduct_id());
+
 		return "redirect:/product/view?product_id="+product.getProduct_id();
 		
 		
