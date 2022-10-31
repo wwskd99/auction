@@ -14,4 +14,6 @@ public class ProductVO {
 	private int current_price;
 	private Date date;
 	
+	private List<ProductPicVO> productPic;
+	
 }
