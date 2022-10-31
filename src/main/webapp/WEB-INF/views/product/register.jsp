@@ -209,7 +209,30 @@ height : 50vw;
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
- 
+
+function success(position){
+	var latitude = "<input type = 'hidden' name = 'latitude' value = '" + position.coords.latitude + "'>";
+	var longitude = "<input type = 'hidden' name = 'longitude' value = '" + position.coords.longitude + "'>";
+	
+
+	$(".product_regist_form").append(latitude);
+	$(".product_regist_form").append(longitude);
+	
+}
+
+function getUserLocation() {
+    if (!navigator.geolocation) {
+        throw "위치 정보가 지원되지 않습니다.";
+    }
+    navigator.geolocation.getCurrentPosition(success);
+}
+
+getUserLocation();
+
+
+
+
+
 function imgs_submit(){
 	var formData = new FormData();
 	var inputFile = $("input[name='uploadImgs']");
@@ -280,8 +303,8 @@ function imgs_submit(){
 				<div class = "product_regist_reset">취소(아직결정X)</div>
 				<button class = "product_regist_button" type ="submit">게시글 업로드</button>
 				<div class = "product_5km_check_text">
-					<input class = "product_5km_check" type="checkbox">
-					5km 이내 동네 거래	
+					<input class = "product_5km_check" type="checkbox" name = "neighborhood" value ="YES">
+					5km 이내 동네 직거래	
 				</div>
 			</div>
 			</form>
