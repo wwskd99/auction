@@ -24,6 +24,10 @@ p input {
 	outline:none; 
 }
 
+placeholder {
+	color:#595f63; 
+}
+
 p textarea{
 	box-sizing:border-box; 
 	padding:20px 0 0; 
@@ -110,8 +114,7 @@ height : 50vw;
 
 .product_title{
 	width : 100%;
-	height: 15%;
-
+	height: 10%;
 	position : absolute;
 	top : 5%;
 }
@@ -119,7 +122,6 @@ height : 50vw;
 .product_start_price{
 	width : 100%;
 	height: 10%;
-	
 	position : absolute;
 	top : 20%;
 }
@@ -152,13 +154,6 @@ height : 50vw;
 }
 
 
-.product_title div{
-	text-align : center;
- float : left;
- width : 15%;
- height : 100%;
- margin : 0 auto;
-}
 
 .imgs_form_input{
 	position : absolute;
@@ -275,8 +270,8 @@ function imgs_submit(){
 					
 			<div class = "product_description">
 				<p>
-					<textarea name="description" autocomplete="off"></textarea>
-					<label for = "description"><span>설명</span></label>
+					<textarea name="description" autocomplete="off" placeholder = "상품의 상세한 상태를 입력해주세요"></textarea>
+					<label for = "description"></label>
 				</p>
 			</div>	
 			

@@ -2,6 +2,7 @@ package org.zerock.service;
 
 import java.util.List;
 
+import org.zerock.domain.Bid_historyVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 
@@ -24,5 +25,7 @@ public interface ProductService {
 	public List<ProductVO> getList();
 	public ProductVO read(int product_id);
 	
+	// 호준
+	public List<Bid_historyVO> readBidList(String user_id);
 	
 }

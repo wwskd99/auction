@@ -33,16 +33,6 @@ insert into bid_history (user_id, current_price, product_id) values (#{user_id},
 select user_id from bid_history where product_id = #{product_id} order by current_price desc limit 1; 
 </select>
 
-
-
-
-
-<select id="readBidList" resultType="org.zerock.domain.Bid_historyVO">
-	select * from bid_history where user_id = #{user_id}
-</select>
-
-
-
 <!-- 아래 동길 -->
 
 <select id="getList" resultType="org.zerock.domain.ProductVO">
@@ -50,14 +40,14 @@ select user_id from bid_history where product_id = #{product_id} order by curren
 select * from product where product_id > 0 order by product_id desc
 ]]>
 	</select>
-	<insert id="insert">
-		insert into product (title, description, start_price,current_price) 
-		values (#{title}, #{description}, #{ start_price},#{current_price})
+	<insert id="registProduct">
+		insert into product (title, description, start_price) 
+		values (#{title}, #{description}, #{start_price})
 	</insert>
-	<insert id="insertSelectKey" useGeneratedKeys="true"
+	<insert id="registProductSK" useGeneratedKeys="true"
 		keyProperty="product_id" keyColumn="product_id">
-		insert into product (title, description, start_price,current_price)
-		values (#{title}, #{description}, #{ start_price}, #{current_price})
+		insert into product (title, description, start_price)
+		values (#{title}, #{description}, #{start_price})
 		<selectKey keyProperty="product_id" order="AFTER"
 			resultType="Integer">
 			select last_insert_id() as product_id
@@ -76,6 +66,9 @@ select * from product where product_id > 0 order by product_id desc
 		where product_id = #{product_id}
 	</update>
 
-
+<!-- 호준 -->
+<select id="readBidList" resultType="org.zerock.domain.Bid_historyVO">
+	select * from bid_history where user_id = #{user_id}
+</select>
 
 </mapper>
