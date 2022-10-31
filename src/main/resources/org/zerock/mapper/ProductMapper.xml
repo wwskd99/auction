@@ -66,6 +66,9 @@ select * from product where product_id > 0 order by product_id desc
 		where product_id = #{product_id}
 	</update>
 
-
+<!-- 호준 -->
+<select id="readBidList" resultType="org.zerock.domain.Bid_historyVO">
+	select * from bid_history where user_id = #{user_id}
+</select>
 
 </mapper>

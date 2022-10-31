@@ -149,6 +149,9 @@ $( function(){
 	$( '.myPage_resign_click' ).on("click", function() {
 		window.location.href='../member/resign';
 	});
+	$( '.bid_regist_click' ).on("click", function() {
+		window.location.href='../product/register';
+	});
 	
 	
 });
@@ -225,6 +228,7 @@ $(document).ready( function() {
 	}else{
 		$("#total_bid_list").hide();
 		$("#myPage_resign").hide();
+		$("#bid_regist").hide();
 	}
 });
 
@@ -247,6 +251,7 @@ $(document).ready( function() {
 			<div class = "dropDown_list">
 				<div class = "myPage_login"><a class = "myPage_login_click">로그인</a></div>
 				<div class = "myPage_join"><a class = "myPage_join_click">회원 가입</a></div>
+				<div id = "bid_regist"><a class = "bid_regist_click">경매 등록</a></div>
 				<div id = "total_bid_list"><a class = "myPage_bid_click">통합 경매 내역</a></div>
 				<div id = "myPage_resign"><a class = "myPage_resign_click">회원 탈퇴</a></div>
 			</div>

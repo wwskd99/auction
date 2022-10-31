@@ -3,6 +3,7 @@ package org.zerock.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.zerock.domain.Bid_historyVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.mapper.ProductMapper;
@@ -18,6 +19,7 @@ public class ProductServiceImpl implements ProductService {
 
 	private ProductMapper pMapper;
 	private ProductPicMapper pPicMapper;
+	
 	
 	@Override
 	public List<ProductPicVO> piclistRead(int product_id) {
@@ -114,5 +116,10 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	
-	
+	// 호준
+	@Override
+	public List<Bid_historyVO> readBidList(String user_id) {
+		log.info("userid: " + user_id);
+		return pMapper.readBidList(user_id);
+	}
 }
