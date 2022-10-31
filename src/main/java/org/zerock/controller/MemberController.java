@@ -71,4 +71,40 @@ public class MemberController {
 		mv.setViewName("/main");
 		return mv;
 	}
+	
+	@RequestMapping("/join")
+	public void memberJoin() {
+		
+	}
+	
+	@PostMapping("/joinb")
+	public  ModelAndView memberJoin(@RequestParam("user_id") String user_id,@RequestParam("pw") String pw, @RequestParam("name") String name, @RequestParam("phone") String phone, @RequestParam("birth") String birth) {
+		MemberVO mVo = new MemberVO();
+		ModelAndView mv = new ModelAndView();
+		
+		mVo.setUser_id(user_id);
+		mVo.setPw(pw);
+		mVo.setName(name);
+		mVo.setPhone(phone);
+		mVo.setBirth(birth);
+		
+		mService.joinMember(mVo);
+		mv.addObject("message", "회원가입을 했습니다.");
+		mv.setViewName("/main");
+		return mv;
+	}
+	
+	@RequestMapping("/resign")
+	@ResponseBody
+	public ModelAndView memberResign(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		
+		HttpSession session = request.getSession();
+		mService.resignMember((String)session.getAttribute("userid"));
+		
+		session.invalidate();
+		mv.addObject("message", "탈퇴 처리를 했습니다.");
+		mv.setViewName("/main");
+		return mv;
+	}
 }

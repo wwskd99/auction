@@ -147,7 +147,10 @@ $( function(){
 		window.location.href='../info/bid';
 	});
 	$( '.myPage_resign_click' ).on("click", function() {
-		window.location.href='../member/resign';
+		var flag=confirm("정말로 탈퇴하시겠습니까?");
+		if (flag){
+			window.location.href='../member/resign';
+		}
 	});
 	$( '.bid_regist_click' ).on("click", function() {
 		window.location.href='../product/register';
@@ -231,8 +234,6 @@ $(document).ready( function() {
 		$("#bid_regist").hide();
 	}
 });
-
-
 
 
 </script>
