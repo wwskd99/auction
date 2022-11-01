@@ -1,14 +1,14 @@
 package org.zerock.controller;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.domain.Bid_historyVO;
 import org.zerock.domain.GPSVO;
 import org.zerock.domain.MemberVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
+import org.zerock.service.MemberService;
 import org.zerock.service.ProductService;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +35,7 @@ import lombok.extern.log4j.Log4j;
 public class ProductController {
 
 	private ProductService pService; 
-	
+	private MemberService mService;
 	
 	@GetMapping("/view")
 	public void productView(@RequestParam("product_id") int product_id, Model model) {
@@ -77,8 +78,10 @@ public class ProductController {
 	}
 	
 	@GetMapping("/register")
-	public void register() {
-
+	public void register(HttpServletRequest request,Model model) {
+		HttpSession session = request.getSession();
+		String sessionUser = (String)session.getAttribute("sessionUser");
+		model.addAttribute("loginUser", sessionUser);
 	}
 	
 	@PostMapping("/register")
@@ -96,10 +99,20 @@ public class ProductController {
 		}
 		
 		rttr.addFlashAttribute("result", product.getProduct_id());
-
+		
 		return "redirect:/product/view?product_id="+product.getProduct_id();
 		
 		
+	}
+	
+	@ResponseBody
+	@PostMapping("/currentPriceUserId")
+	public String currentPriceUserId(@RequestParam("product_id") int product_id) {
+		
+		String currentUser = pService.currentPriceUserRead(product_id);
+		System.out.println(currentUser);
+		return currentUser;
+	
 	}
 	
 	
@@ -140,6 +153,5 @@ public class ProductController {
 		}
 		return "redirect:/product/list";
 	}
-	
 	
 }

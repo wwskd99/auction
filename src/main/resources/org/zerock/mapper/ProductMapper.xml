@@ -41,13 +41,13 @@ select * from product where product_id > 0 order by product_id desc
 ]]>
 	</select>
 	<insert id="registProduct">
-		insert into product (title, description, start_price) 
-		values (#{title}, #{description}, #{start_price})
+		insert into product (title, user_id,description, start_price) 
+		values (#{title},#{user_id}, #{description}, #{start_price})
 	</insert>
 	<insert id="registProductSK" useGeneratedKeys="true"
 		keyProperty="product_id" keyColumn="product_id">
-		insert into product (title, description, start_price)
-		values (#{title}, #{description}, #{start_price})
+		insert into product (title, user_id,description, start_price)
+		values (#{title}, #{user_id},#{description}, #{start_price})
 		<selectKey keyProperty="product_id" order="AFTER"
 			resultType="Integer">
 			select last_insert_id() as product_id
@@ -55,8 +55,8 @@ select * from product where product_id > 0 order by product_id desc
 	</insert>
 	<insert id="registProductNeighborhoodSK" useGeneratedKeys="true"
 		keyProperty="product_id" keyColumn="product_id">
-		insert into product (title, description, start_price, neighborhood)
-		values (#{title}, #{description}, #{start_price}, #{neighborhood})
+		insert into product (title,user_id, description, start_price, neighborhood)
+		values (#{title},#{user_id}, #{description}, #{start_price}, #{neighborhood})
 		<selectKey keyProperty="product_id" order="AFTER"
 			resultType="Integer">
 			select last_insert_id() as product_id

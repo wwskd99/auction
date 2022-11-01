@@ -39,4 +39,5 @@ public interface ProductMapper {
 	public void updateDeadline(ProductVO pVo);
 	public String BuyerIsWho(int product_id);
 	
+	
 }
