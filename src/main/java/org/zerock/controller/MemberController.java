@@ -107,4 +107,32 @@ public class MemberController {
 		mv.setViewName("/main");
 		return mv;
 	}
+	
+	@RequestMapping("/update")
+	public ModelAndView memberUpdate(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		HttpSession session = request.getSession();
+		
+		mv.addObject("mVo", session.getAttribute("sessionMember"));
+		mv.setViewName("/member/update");
+		
+		return mv;	
+	}
+	
+	@PostMapping("/updateb")
+	public  ModelAndView memberUpdate(@RequestParam("user_id") String user_id,@RequestParam("pw") String pw, @RequestParam("name") String name, @RequestParam("phone") String phone, @RequestParam("birth") String birth) {
+		MemberVO mVo = new MemberVO();
+		ModelAndView mv = new ModelAndView();
+		
+		mVo.setUser_id(user_id);
+		mVo.setPw(pw);
+		mVo.setName(name);
+		mVo.setPhone(phone);
+		mVo.setBirth(birth);
+
+		mService.updateMember(mVo);
+		mv.addObject("message", "회원정보를 수정했습니다.");
+		mv.setViewName("/main");
+		return mv;
+	}
 }

@@ -27,5 +27,11 @@ public class MemberServiceImpl implements MemberService {
 	public void resignMember(String user_id) {
 		mMapper.resignMember(user_id);
 	}
+
+	@Override
+	public void updateMember(MemberVO mVo) {
+		mMapper.updateMember(mVo);
+		
+	}
 	
 }

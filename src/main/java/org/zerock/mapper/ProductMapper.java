@@ -36,6 +36,7 @@ public interface ProductMapper {
 	
 	// 호준
 	public List<Bid_historyVO> readBidList(String user_id);
-	
+	public void updateDeadline(ProductVO pVo);
+	public String BuyerIsWho(int product_id);
 	
 }
