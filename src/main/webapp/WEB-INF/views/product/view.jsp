@@ -258,38 +258,9 @@ $(document).ready( function() {
 	first.attr('id','index');
 	$("#index").css("opacity",1);
 	
-	var mVo = "<%=(MemberVO)session.getAttribute("sessionMember")%>";
-	
-	if(mVo == "null"){
-		 $(".bidButton").text("로그인 후 이용해주세요");
-		 $(".bidButton").attr('class','requestLogin');
-		 
-			$( '.requestLogin' ).css("text-align","center")
-			.css("border-radius","10px")
-			.css("line-height" , "230%")
-			.css("background-color" , "black")
-			.css("color" , "white")
-			.css("font-size" , "1.3em")
-			.css("font-weight" , "600")
-			.css("position" , "absolute")
-			.css("width" , "60%")
-			.css("height" , "35%")
-			.css("top" , "55%")
-			.css("cursor", "pointer");
-		 
-		
-		
-		 
-	}
-	
+
 });
 
-
-$( function(){
-	$( '.requestLogin' ).on("click", function() {
-		window.location.href='../member/login';
-	});
-});
 
 var imgLen = ${piccount}-1;
 
@@ -365,15 +336,182 @@ function remainTime() {
 		
 		$(".remainTime").html(remainTime);
 		
-	}
+		}else{
+			
+			clearInterval(interval);
+			createChat();	
+			
+			var mVo = "<%=(String)session.getAttribute("sessionUser")%>";
+			var currentUser = "";
+			$.ajax({
+		  	 	url : "currentPriceUserId", 
+		   		type : 'POST', 
+		     	data : {'product_id':product_id},
+		     	dataType : 'text', 
+		     	success : function(data) {
+		     		currentUser = data;
+		     	}, 
+		   		error : function(xhr, status) {
+		 			
+		   		}
+			})
+			
+		
+			if (mVo == currentUser || mVo == "${ProductView.user_id}"){
+				
+				$(".bidButton").text("채팅방 들어가기");
+				$(".bidButton").attr('class','joinChat');
+				$( '.joinChat' ).css("text-align","center")
+					.css("border-radius","10px")
+					.css("line-height" , "230%")
+					.css("background-color" , "black")
+					.css("color" , "white")
+					.css("font-size" , "1.3em")
+					.css("font-weight" , "600")
+					.css("position" , "absolute")
+					.css("width" , "60%")
+					.css("height" , "35%")
+					.css("top" , "55%")
+					.css("cursor", "pointer");
+		
+			}
 	
+	}
+}
+
+
+
+
+function createChat() {
+	var roomName = "${productView.title}";
+	var product_id = ${productView.product_id};
+	var seller = "${productView.user_id}";
+	var buyer = "";
+	
+	$.ajax({
+  	 	url : "currentPriceUserId", 
+   		type : 'POST', 
+     	data : {'product_id':product_id},
+     	dataType : 'text', 
+     	success : function(data) {
+     		buyer = data;
+     		
+     	//	inner ajax
+     		$.ajax({
+     	  	 	url : "/chatting/createRoom.json", 
+     	   		type : 'POST', 
+     	     	data : {'product_id':product_id, 'buyer' : buyer, 'seller' : seller , 'roomName' : roomName}, 
+     	     	success : function(data) {
+     	     		alert("성공");
+     	   	 	}, 
+     	   		error : function(xhr, status) {
+     	    		
+     	   		}
+     		});
+  		// inner ajax
+  		
+  		
+   	 	}, 
+   		error : function(xhr, status) {
+ 			
+   		}
+	})
 }
 
 // 남은 시작시 + 반복
 $(document).ready( function() {
-	remainTime();
+	var currentDate = new Date();
+	var regDate = new Date(${regDate});
+	var endDate = new Date(${regDate});
+	endDate.setDate(endDate.getDate() + 30);
+	
+	var currentTime = currentDate.getTime();
+	var endTime = endDate.getTime();
+	
+	// 마감X
+	if(currentTime < endTime){
+		
+		//타이머 스타트, 인터벌
+		remainTime();
+		var interval = setInterval(remainTime,1000);
+		
+		//세션
+		var mVo = "<%=(MemberVO)session.getAttribute("sessionMember")%>";
+		
+		//로그인 x시	
+		if(mVo == "null"){
+			 $(".bidButton").text("로그인 후 이용해주세요");
+			 $(".bidButton").attr('class','requestLogin');
+			 
+				$( '.requestLogin' ).css("text-align","center")
+				.css("border-radius","10px")
+				.css("line-height" , "230%")
+				.css("background-color" , "black")
+				.css("color" , "white")
+				.css("font-size" , "1.3em")
+				.css("font-weight" , "600")
+				.css("position" , "absolute")
+				.css("width" , "60%")
+				.css("height" , "35%")
+				.css("top" , "55%")
+				.css("cursor", "pointer");
+		}
+		
+	// 마감 O
+	} else {
+		
+		var mVo = "<%=(String)session.getAttribute("sessionUser")%>";
+		if (mVo == "${currentPriceUser}" || mVo == "${ProductView.user_id}"){
+			
+			$(".bidButton").text("채팅방 들어가기");
+			$(".bidButton").attr('class','joinChat');
+			$( '.joinChat' ).css("text-align","center")
+				.css("border-radius","10px")
+				.css("line-height" , "230%")
+				.css("background-color" , "black")
+				.css("color" , "white")
+				.css("font-size" , "1.3em")
+				.css("font-weight" , "600")
+				.css("position" , "absolute")
+				.css("width" , "60%")
+				.css("height" , "35%")
+				.css("top" , "55%")
+				.css("cursor", "pointer");
+		} else {
+			
+			$(".bidButton").text("마감");
+			$(".bidButton").attr('class','notMatch');
+			$( '.notMatch' ).css("text-align","center")
+				.css("border-radius","10px")
+				.css("line-height" , "230%")
+				.css("background-color" , "black")
+				.css("color" , "white")
+				.css("font-size" , "1.3em")
+				.css("font-weight" , "600")
+				.css("position" , "absolute")
+				.css("width" , "60%")
+				.css("height" , "35%")
+				.css("top" , "55%")
+				.css("cursor", "pointer");
+			
+		}
+	}
+	
 });
-setInterval(remainTime,1000);
+
+$( function(){
+	$(".joinChat").on("click", function(){
+		
+		window.location.href='../chatting/room';
+		
+	});
+});
+
+$( function(){
+	$( '.requestLogin' ).on("click", function() {
+		window.location.href='../member/login';
+	});
+});
 
 
 // 텍스트박스 +버튼
@@ -494,8 +632,10 @@ $( function(){
 			
 			alert("이미 최상위 입찰자입니다.");			
 			
+		}else if(sessionUser == "${productView.user_id}"){
+			
+			alert("자신의 경매물품에는 입찰할 수 없습니다.");
 		}
-		
 
 	});
 });
@@ -527,6 +667,7 @@ $(document).ready( function bidUnit(){
 	
 	 $(".bid_unit").text("호가단위 : " + bid_unit + "원");
 });
+
 </script>
 
 

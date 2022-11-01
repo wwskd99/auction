@@ -73,11 +73,13 @@ public class ProductServiceImpl implements ProductService {
 		}else {
 			pMapper.registProductSK(product);
 		}
-		product.getProductPic().forEach(productPic -> {
-			productPic.setProduct_id(product.getProduct_id());
-			pPicMapper.RegistProductPic(productPic);
-		});
 		
+		if(product.getProductPic() != null ) {
+			product.getProductPic().forEach(productPic -> {
+				productPic.setProduct_id(product.getProduct_id());
+				pPicMapper.RegistProductPic(productPic);
+			});
+		}
 
 	}
 	
