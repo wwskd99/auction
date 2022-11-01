@@ -38,4 +38,5 @@ public interface ProductMapper {
 	public List<Bid_historyVO> readBidList(String user_id);
 	
 	
+	
 }
