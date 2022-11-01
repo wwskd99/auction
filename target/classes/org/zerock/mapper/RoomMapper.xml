@@ -6,6 +6,7 @@
 
 <insert id="insertRoom">
 	insert into room (product_id,buyer,seller,roomName) values (#{product_id}, #{buyer}, #{seller}, #{roomName})
+	ON DUPLICATE KEY UPDATE product_id = #{product_id}, buyer = #{buyer}, seller = #{seller}, roomName = #{roomName};
 </insert>
 <select id="selectAllRoom" resultType="org.zerock.domain.Room">
 	select * from room
