@@ -22,6 +22,7 @@ import org.zerock.domain.GPSVO;
 import org.zerock.domain.MemberVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
+import org.zerock.service.MemberService;
 import org.zerock.service.ProductService;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +35,7 @@ import lombok.extern.log4j.Log4j;
 public class ProductController {
 
 	private ProductService pService; 
-	
+	private MemberService mService;
 	
 	@GetMapping("/view")
 	public void productView(@RequestParam("product_id") int product_id, Model model) {
@@ -77,8 +78,10 @@ public class ProductController {
 	}
 	
 	@GetMapping("/register")
-	public void register() {
-
+	public void register(HttpServletRequest request,Model model) {
+		HttpSession session = request.getSession();
+		String sessionUser = (String)session.getAttribute("sessionUser");
+		model.addAttribute("loginUser", sessionUser);
 	}
 	
 	@PostMapping("/register")
