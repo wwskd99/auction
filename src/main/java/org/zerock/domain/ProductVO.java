@@ -14,9 +14,4 @@ public class ProductVO {
 	private int current_price;
 	private Date date;
 	
-	
-
-	
-	
-	
 }

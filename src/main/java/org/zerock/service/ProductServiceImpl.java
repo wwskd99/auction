@@ -3,6 +3,7 @@ package org.zerock.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.zerock.domain.Criteria;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.mapper.ProductMapper;
@@ -70,11 +71,6 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 
-	@Override
-	public ProductVO get(int product_id) {
-		log.info("get..." + product_id);
-		return pMapper.read(product_id);
-	}
 
 	@Override
 	public boolean modify(ProductVO product) {
@@ -92,13 +88,11 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductVO> getList() {
 		log.info("getList");
 		return pMapper.getList();
-	}
+	}	
+	
 	@Override
-	public ProductVO read(int product_id) {
+	public List<ProductVO> searchList(Criteria cri) {
 		
-		return pMapper.read(product_id);
+		return pMapper.searchList(cri);
 	}
-	
-	
-	
 }

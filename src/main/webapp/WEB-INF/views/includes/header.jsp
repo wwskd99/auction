@@ -154,15 +154,15 @@ $(function () {
     }
 })
 </script>
-
 <meta charset="UTF-8">
+<title>${productView.title}</title>
 </head>
 <header>
 <div class = "header_wrap">
 	<div class = "logo">
 		<div class = "logo_image_div"><a>로고크기이미지</a></div>
 	</div>
-	<div class = "product_list"><a>중고 거래</a></div>
+	<div class = "product_list"><a href="/product/list">중고 거래</a></div>
 	<div class = "chat_list"><a>채팅</a></div>
 	<div class = "myPage_list_dropDown">
 		<a class = "myPage_a">마이페이지</a>

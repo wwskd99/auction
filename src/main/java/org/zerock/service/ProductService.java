@@ -2,6 +2,7 @@ package org.zerock.service;
 
 import java.util.List;
 
+import org.zerock.domain.Criteria;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 
@@ -16,12 +17,11 @@ public interface ProductService {
 	public String currentPriceUserRead(int product_id);
 	
 	// 아래 동길
-	public void register(ProductVO product);
-	public ProductVO get(int product_id);
+	public void register(ProductVO product);	
 	public boolean modify(ProductVO product);
 	public boolean remove(int product_id);
 	public List<ProductVO> getList();
-	public ProductVO read(int product_id);
+	public List<ProductVO> searchList(Criteria cri);
 	
 	
 }

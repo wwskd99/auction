@@ -3,6 +3,7 @@ package org.zerock.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.zerock.domain.Criteria;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 
@@ -24,7 +25,6 @@ public interface ProductMapper {
 	public void insertSelectKey(ProductVO product);	
 	public int delete(Integer product_id);
 	public int update(ProductVO product);
-	public ProductVO read(int product_id);
-	
+	public List<ProductVO> searchList(Criteria cri);
 	
 }
