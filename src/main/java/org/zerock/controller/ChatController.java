@@ -72,13 +72,22 @@ public class ChatController {
 		int product_id =  Integer.parseInt((String)params.get("product_id"));
 		String buyer = (String) params.get("buyer");
 		String seller = (String) params.get("seller");
+		
+		CompleteVO complete = new CompleteVO();
+		
 		if(roomName != null && !roomName.trim().equals("")) {
 			Room room = new Room();
 			room.setProduct_id(product_id);
 			room.setRoomName(roomName);
 			room.setBuyer(buyer);
 			room.setSeller(seller);
+			
+			complete.setProduct_id(product_id);
+			complete.setBuyer_id(buyer);
+			complete.setSeller_id(seller);
+			
 			rService.insertRoom(room);
+			rService.insertComplete(complete);
 			
 			roomList.add(room);
 		}
@@ -128,6 +137,7 @@ public class ChatController {
 			mv.addObject("roomName", params.get("roomName"));
 			mv.addObject("room_id", params.get("room_id"));
 			mv.addObject("chat_log",chat_log);
+			mv.addObject("product_id", room.getProduct_id());
 
 			mv.setViewName("chatting/chat");
 		}else {
@@ -154,14 +164,12 @@ public class ChatController {
 			complete.setBuyer_id(anotherUser);
 			complete.setSeller_id(user_id);
 			complete.setSeller_check(true);
-			rService.insertComplete(complete);
-			rService.updateSellerCheck(complete);
+			rService.updateSellerCheck(complete);	// 평가완료
 			
 			complete = rService.resultCheck(product_id);
 			if(complete.isBuyer_check() && complete.isSeller_check()) {
 				complete.setResult(1);
 				rService.updateResult(product_id);
-				rService.insertSuccessTradeSeller(user_id);
 			}
 			
 		} else {
@@ -170,14 +178,12 @@ public class ChatController {
 			complete.setBuyer_id(user_id);
 			complete.setSeller_id(anotherUser);
 			complete.setBuyer_check(true);
-			rService.insertComplete(complete);
-			rService.updateBuyerCheck(complete);
+			rService.updateBuyerCheck(complete);	// 평가완료
 			
 			complete = rService.resultCheck(product_id);
 			if(complete.isBuyer_check() && complete.isSeller_check()) {
 				complete.setResult(1);
-				rService.updateResult(product_id);
-				rService.insertSuccessTradeBuyer(user_id);
+				rService.updateResult(product_id);	
 			}
 		}
 		

@@ -87,4 +87,25 @@ public class RoomServiceImpl implements RoomService{
 	public List<Room> selectBuyerRoom(String buyer) {
 		return roomMapper.selectBuyerRoom(buyer);
 	}
+
+	@Override
+	public CompleteVO selectComplete(int product_id) {
+		
+		return roomMapper.selectComplete(product_id);
+	}
+
+	@Override
+	public void deleteComplete(int product_id) {
+		roomMapper.deleteComplete(product_id);
+	}
+
+	@Override
+	public void insertFailTradeSeller(String user_id) {
+		roomMapper.insertFailTradeSeller(user_id);		
+	}
+
+	@Override
+	public void insertFailTradeBuyer(String user_id) {
+		roomMapper.insertFailTradeBuyer(user_id);
+	}
 }
