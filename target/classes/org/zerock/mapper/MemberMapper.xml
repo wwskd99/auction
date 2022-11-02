@@ -6,5 +6,10 @@
 <select id="readMember" resultType="org.zerock.domain.MemberVO">
 	select * from Member where user_id = #{user_id};
 </select>
-
+<insert id="joinMember">
+	insert into Member (user_id, name, pw, phone, birth) values (#{user_id}, #{name}, #{pw}, #{phone}, #{birth})
+</insert>
+<delete id="resignMember">
+	DELETE FROM Member where user_id = #{user_id};
+</delete>
 </mapper>

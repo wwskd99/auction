@@ -1,98 +1,325 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ include file="../includes/header.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<!DOCTYPE html>
+<html>
+<head>
+
 <style>
-.uploadResult {
-	width: 100%;
-	background-color: gray;
+p { 
+	margin: 0 auto;
+	position:relative;
+	width:80%; 
+	height:80%; 
 }
-.uploadResult ul {
-	display: flex;
-	flex-flow: row;
-	justify-content: center;
-	align-items: center;
+
+p input { 
+	box-sizing:border-box; 
+	padding:20px 0 0; 
+	width:100%; 
+	height:100%; 
+	border:0 none; 
+	color:#595f63; 
+	outline:none; 
 }
-.uploadResult ul li {
-	list-style: none;
-	padding: 10px;
+
+placeholder {
+	color:#595f63; 
 }
-.uploadResult ul li img {
-	width: 20px;
+
+p textarea{
+	box-sizing:border-box; 
+	padding:20px 0 0; 
+	width:100%; 
+	height:100%; 
+	border:0 none; 
+	color:#595f63; 
+	outline:none; 
+	resize: none;
 }
-.bigPictureWrapper {
-  position: absolute;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  top:0%;
-  width:100%;
-  height:100%;
-  background-color: gray; 
-  z-index: 100;
+
+p label { 
+	position:absolute; 
+	left:0%; 
+	bottom:0; 
+	width:100%; 
+	height:100%; 
+	border-bottom:1px solid #000; 
+	text-align:left; 
+	pointer-events:none; 
 }
-.bigPicture {
-  position: relative;
-  display:flex;
-  justify-content: center;
-  align-items: center;
+
+p label:after { 
+	content:""; 
+	position:absolute; 
+	left:0; 
+	bottom:-1px; 
+	width:0; 
+	height:100%; 
+	border-bottom:3px solid #5fa8d3; 
+	transition:all .3s ease; 
 }
-.bigPicture img {
-  width: 600px;
+
+p label span { 
+	position:absolute; 
+	left:0; 
+	bottom:5px; 
+	transition:all .3s ease; 
 }
+
+p input:focus + label span, 
+p input:valid + label span { 
+	transform:translateY(-150%); 
+	font-size:1.0rem; 
+	color:#5fa8d3; 
+}  
+p input:focus + label::after,
+p input:valid + label::after { 
+	width:100%; 
+	transform:translateX(0); 
+}
+
+p textarea:focus + label span, 
+p textarea:valid + label span { 
+	transform:translateY(-150%); 
+	font-size:1.0rem; 
+	color:#5fa8d3; 
+}  
+p textarea:focus + label::after,
+p textarea:valid + label::after { 
+	width:100%; 
+	transform:translateX(0); 
+}
+
+main{
+width : 100%;
+height : 50vw;
+}
+
+.main_wrap {
+	margin:0 auto;
+	width: 70%;
+	height : 100%;
+
+}
+
+.register_wrap{
+	margin:0 auto;
+	width : 70%;
+	height : 100%;
+	
+	position : relative;
+}
+
+.product_title{
+	width : 100%;
+	height: 10%;
+	position : absolute;
+	top : 5%;
+}
+
+.product_start_price{
+	width : 100%;
+	height: 10%;
+	position : absolute;
+	top : 20%;
+}
+.product_description{
+	width : 100%;
+	height: 40%;
+
+	position : absolute;
+	top : 30%;
+}
+.product_piclist{
+	width : 100%;
+	height: 15%;
+	position : absolute;
+	top : 70%;
+}
+
+.product_regist_submit{
+	width : 100%;
+	height : 15%;
+
+	position : absolute;
+	top : 85%;
+}
+
+.product_regist_form{
+	width : 100%;
+	height : 100%;
+	position : absolute;
+}
+
+
+
+.imgs_form_input{
+	position : absolute;
+	left : 10%;
+	top : 40%;
+}
+
+.imgs_submit{
+	position : absolute;
+	right : 5%;
+	background-color : #666;
+	border-radius : 0.25em;
+	color : white;
+	width : 20%;
+	height : 30%;
+	text-align : center;
+	line-height : 200%;
+	cursor : pointer;
+	top : 40%;
+
+}
+
+.piclist_div{
+	margin-top : 1%;
+	margin-left : 10%;
+}
+
+.product_5km_check_text{
+	position : absolute;
+	top : 40%;
+	left : 10%;
+}
+
+.product_regist_button{
+	position : absolute;
+	top : 40%;
+	right : 5%;
+	background-color : black;
+	width : 20%;
+	height : 30%;
+	text-align : center;
+	line-height : 200%;
+	color : white;
+	border-radius : 0.25em;
+}
+
+.product_regist_reset{
+	position : absolute;
+	left : 50%;
+	top : 40%;
+}
+
 </style>
-<div class="row">
-	<div class="col-lg-12">
-		<h1 class="page-header">Product Register</h1>
-	</div>
-	<!-- /.col-lg-12 -->
-</div>
-<!-- /.row -->
-<div class="row">
-	<div class="col-lg-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">Product Register</div>
-			<!-- /.panel-heading -->
-			<div class="panel-body">
-				<form action="/product/register" method="post" role="form">
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					<div class="form-group">
-						<label>상품 제목</label> <input class="form-control" name="title">
-					</div>
-					<div class="form-group">
-						<label>상품 설명</label>
-						<textarea rows="3" class="form-control" name="description"></textarea>
-					</div>
-					<div class="form-group">
-						<label>시작 가격</label> 
-						<input class="form-control" name="start_price" >
-					</div>
-					<button type="submit" class="btn btn-default">Submit Button</button>
-					<button type="reset" class="btn btn-default">Reset Button</button>
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				</form>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+
+function success(position){
+	var latitude = "<input type = 'hidden' name = 'latitude' value = '" + position.coords.latitude + "'>";
+	var longitude = "<input type = 'hidden' name = 'longitude' value = '" + position.coords.longitude + "'>";
+	
+
+	$(".product_regist_form").append(latitude);
+	$(".product_regist_form").append(longitude);
+	
+}
+
+function getUserLocation() {
+    if (!navigator.geolocation) {
+        throw "위치 정보가 지원되지 않습니다.";
+    }
+    navigator.geolocation.getCurrentPosition(success);
+}
+
+getUserLocation();
+
+
+
+
+
+function imgs_submit(){
+	var formData = new FormData();
+	var inputFile = $("input[name='uploadImgs']");
+	var files = inputFile[0].files;
+	for (var i = 0; i < files.length; i++) {
+		formData.append("uploadImgs", files[i]);
+	}
+	
+
+	$.ajax({
+		processData : false,
+		contentType: false,
+		url : '/upload/uploadImages',
+		data : formData,
+		type : 'POST',
+		dataType : 'json', 
+		success : function(result) { 
+			
+			for(var i=0; i < result.length; i++){
+				var obj = result[i];
+				var a = "<input type='hidden' value='"+obj.picture_name + "' name = 'productPic[" + i + "].picture_name'>";
+				var b = "<input type='hidden' value='"+obj.picture_path + "' name = 'productPic[" + i + "].picture_path'>";
+				$(".product_regist_form").append(a);
+				$(".product_regist_form").append(b);
+			}
+			
+			alert("이미지 등록 완료");
+
+		}
+	});
+}
+
+
+
+		
+</script>
+<meta charset="EUC-KR">
+<title>경매 등록</title>
+</head>
+<body>
+<main>
+
+	<div class = "main_wrap">
+		<div class = "register_wrap">
+			<form class = "product_regist_form" method = "post" action ="../product/register">
+			<div class = "product_title">
+				<p>
+					<input class = "product_title_input" type = "text" name="title" autocomplete="off" required>
+					<label for = "title"><span>게시글 제목</span></label>
+				</p>
 			</div>
-			<!-- /.panel-body -->
-		</div>
-		<!-- /.panel -->
+			<div class = "product_start_price">
+				<p>
+					<input type = "text" name="start_price" autocomplete="off" required>
+					<label for = "start_price"><span>시작가</span></label>
+				</p>
+			</div>
+					
+			<div class = "product_description">
+				<p>
+					<textarea name="description" autocomplete="off" placeholder = "상품의 상세한 상태를 입력해주세요"></textarea>
+					<label for = "description"></label>
+				</p>
+			</div>	
+			
+			
+			<div class = "product_regist_submit">
+				<div class = "product_regist_reset">취소(아직결정X)</div>
+				<button class = "product_regist_button" type ="submit">게시글 업로드</button>
+				<div class = "product_5km_check_text">
+					<input class = "product_5km_check" type="checkbox" name = "neighborhood" value ="YES">
+					5km 이내 동네 직거래	
+				</div>
+			</div>
+			</form>
+				<div class = "product_piclist">
+					<div class = "piclist_div"> 이미지</div>
+					<form class = "img_form" action ="../upload/uploadImages" method = "post" enctype="multipart/form-data">
+						<div><input class = "imgs_form_input" type = "file" name = "uploadImgs" multiple required></div>
+						<div class ="imgs_submit" onclick = "imgs_submit()">이미지 등록</div>
+					</form>
+				</div>
+		</div>	
+		
 	</div>
-	<!-- /.col-lg-12 -->
-</div>
-<!-- /.row -->
-<div class="row">
-  <div class="col-lg-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">File Attach</div><!-- /.panel-heading -->
-      <div class="panel-body">
-        <div class="form-group uploadDiv">
-            <input type="file" name='uploadFile' multiple>
-        </div>
-        <div class='uploadResult'> 
-          <ul>
-          </ul>
-        </div>
-      </div><!--  end panel-body -->
-    </div><!--  end panel-body -->
-  </div><!-- end panel -->
-</div><!-- /.row -->
+</main>
+</body>
+</html>

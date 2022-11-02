@@ -8,11 +8,17 @@ import java.util.List;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import org.zerock.domain.ChatVO;
+import org.zerock.service.ChatService;
+import org.zerock.service.RoomService;
+
+import lombok.Setter;
 
 @Component
 public class SocketHandler extends TextWebSocketHandler {
@@ -20,22 +26,32 @@ public class SocketHandler extends TextWebSocketHandler {
 	//HashMap<String, WebSocketSession> sessionMap = new HashMap<>(); //웹소켓 세션을 담아둘 맵
 	List<HashMap<String, Object>> rls = new ArrayList<>(); //웹소켓 세션을 담아둘 리스트 ---roomListSessions
 	
+	@Setter(onMethod_ = @Autowired)
+	private ChatService cService;
+	
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) {
 		//메시지 발송
 		String msg = message.getPayload();
 		JSONObject obj = jsonToObjectParser(msg);
-		
+		String room_id = "";
+		ChatVO chat = new ChatVO();
 		String rN = (String) obj.get("room_id");
+		
 		HashMap<String, Object> temp = new HashMap<String, Object>();
 		if(rls.size() > 0) {
 			for(int i=0; i<rls.size(); i++) {
-				String room_id = (String) rls.get(i).get("room_id"); //세션리스트의 저장된 방번호를 가져와서
+				room_id = (String) rls.get(i).get("room_id"); //세션리스트의 저장된 방번호를 가져와서
 				if(room_id.equals(rN)) { //같은값의 방이 존재한다면
 					temp = rls.get(i); //해당 방번호의 세션리스트의 존재하는 모든 object값을 가져온다.
 					break;
 				}
 			}
+			
+			chat.setChat((String)obj.get("msg"));
+			chat.setRoom_id(Integer.parseInt(room_id));
+			chat.setUser_id((String)obj.get("userName"));
+			cService.insertChat(chat);
 			
 			//해당 방의 세션들만 찾아서 메시지를 발송해준다.
 			for(String k : temp.keySet()) { 

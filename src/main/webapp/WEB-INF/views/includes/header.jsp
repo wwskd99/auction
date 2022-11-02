@@ -1,27 +1,24 @@
+<%@page import="org.zerock.domain.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <style>
-
 body{
-
 margin : 0 auto;
 padding-top : 70px;
 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
-
 main{
- width : 100vw;
+ width : 100%;
  
 }
-
 header {
 position : fixed;
 z-index : 3;
 width : 100vw;
 height : 70px;
-min-width : 1000px;
+min-width : 900px;
 font-weight: 700;
 font-size: 1.1rem;
 color : #393a40;
@@ -29,79 +26,60 @@ background-color : white;
 transition: top 0.01s ease-in-out;
 margin-top : -70px;
 }
-
 .header_wrap{
-
 margin : 0 auto;
 width : 70%;
 height : 100%;
-
 }
-
-
 .header_wrap div{
 line-height : 70px;
 text-align : center;
 height : 70px;
-
 }
-
-
-
 .logo{
-
 width : 20%;
 float : left;
-
 }
-
 .product_list{
-
-width : 25%;
+width : 30%;
 float : left;
 color : #ff6f0f;
-
 }
-
 .chat_list{
-
-width : 25%;
+width : 30%;
 float : left;
-
 }
-
 .header_wrap a {
 cursor : pointer;
 }
-
 .myPage_list_dropDown{
 	position : relative;
 	 display : inline-block;
-	 width : 30%;
+	 width : 20%;
 	float : right;
-	
-	 
+		
 }
-
 .dropDown_list{
 	z-index : 5;
 	position : absolute;
 	display : none;
 	background-color : white;
-	min-width : 300px;
+	width : 100%;
 }
-
 .dropDown_list a{
 	display : block;
 	background-color : white;
-
 }
-
+.dropDown_list a:hover{
+background-color : #ececec;
+}
 .myPage_list_dropDown:hover .dropDown_list {
   display: block;
+ 
 }
-
-
+.dropDown_list div{
+	width : 100%;
+}
 </style>
 
 
@@ -109,66 +87,132 @@ cursor : pointer;
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
+$(function () {
+$(window).scroll(function(){
+	  $('header').css('left', 0-$(this).scrollLeft());
+	});
+});	
 $( function(){
-	$( '.logo_image_div' ).on("click", function() {
+	$( '.logo_image_click' ).on("click", function() {
 		window.location.href='../main';
 	});
+	
+	$( '.product_list_click' ).on("click", function() {
+		window.location.href='../product/list';
+	});
+	
+	$( '.chat_list_click' ).on("click", function() {
+		window.location.href='../chatting/room';
+	});
+	$( '.myPage_login_click' ).on("click", function() {
+		window.location.href='../member/login';
+	});
+	
+	$( '.myPage_join_click' ).on("click", function() {
+		window.location.href='../member/join';
+	});
+	
+	$( '.myPage_bid_click' ).on("click", function() {
+		window.location.href='../info/bid';
+	});
+	$( '.myPage_resign_click' ).on("click", function() {
+		var flag=confirm("정말로 탈퇴하시겠습니까?");
+		if (flag){
+			window.location.href='../member/resign';
+		}
+	});
+	$( '.bid_regist_click' ).on("click", function() {
+		window.location.href='../product/register';
+	});
+	
+	
 });
-
-
 $(function () {
 	var didScroll;
     var lastScrollTop = 0;
-    var delta = 5; // 이벤트를 발생시킬 스크롤의 이동 범위
+    var delta = 5; 
     var navbarHeight = $("header").outerHeight();
-
     $(window).scroll(function(event){
         didScroll = true;
     });
-
     setInterval(function() {
         if (didScroll) {
             hasScrolled();
             didScroll = false;
         }
-    }, 250); // 스크롤이 멈춘 후 동작이 실행되기 까지의 딜레이
-
+    }, 250); 
     function hasScrolled() {
-        var st = $(this).scrollTop(); // 현재 window의 scrollTop 값
-
-        // delta로 설정한 값보다 많이 스크롤 되어야 실행된다.
+        var st = $(this).scrollTop(); 
+        
         if(Math.abs(lastScrollTop - st) <= delta)
             return;
-
         if (st > lastScrollTop && st > navbarHeight){
-            // 스크롤을 내렸을 때
-            $("header").slideUp("fast"); // header 숨기기
+          
+            $("header").slideUp("fast");
         } else {
-            // 스크롤을 올렸을 때
+           
             if(st + $(window).height() < $(document).height()) {
-                $("header").slideDown("fast"); // header 보이기
+                $("header").slideDown("fast"); 
             }
         }
-
-        lastScrollTop = st; // 현재 멈춘 위치를 기준점으로 재설정
+        lastScrollTop = st;
     }
 })
+$(document).ready( function() {
+	var mVo = "<%=(MemberVO)session.getAttribute("sessionMember")%>";
+	if(mVo == "null"){
+		 $(".chat_list").hide();
+	}
+	
+	
+	if(mVo != "null"){
+		$(".myPage_login").attr('id','myPage_logout');
+		document.querySelector('.myPage_login').removeAttribute('class');
+		$(".myPage_login_click").text("로그아웃");
+		$(".myPage_login_click").attr('id','myPage_logout_click');
+		document.querySelector('.myPage_login_click').removeAttribute('class');
+		
+		$(".myPage_join").attr('id','myPage_update');
+		document.querySelector('.myPage_join').removeAttribute('class');
+		$(".myPage_join_click").text("회원 정보 수정");
+		$(".myPage_join_click").attr('id','myPage_update_click');
+		document.querySelector('.myPage_join_click').removeAttribute('class');
+		
+		$('#myPage_update').css('background-color', 'white');
+		
+		$( '#myPage_logout_click' ).on("click", function() {
+			window.location.href='../member/logout';
+		});
+		
+		$( '#myPage_update_click' ).on("click", function() {
+			window.location.href='../member/update';
+		});
+	
+	}else{
+		$("#total_bid_list").hide();
+		$("#myPage_resign").hide();
+		$("#bid_regist").hide();
+	}
+});
 </script>
+
 <meta charset="UTF-8">
-<title>${productView.title}</title>
 </head>
 <header>
 <div class = "header_wrap">
 	<div class = "logo">
-		<div class = "logo_image_div"><a>로고크기이미지</a></div>
+		<div class = "logo_image_div"><a class = "logo_image_click"><img src = "../../resources/img/main/logo.png" alt ="ㅇㅇ"></a></div>
 	</div>
-	<div class = "product_list"><a href="/product/list">중고 거래</a></div>
-	<div class = "chat_list"><a>채팅</a></div>
+	<div class = "product_list"><a class = "product_list_click">중고 거래</a></div>
+	<div class = "chat_list"><a class = "chat_list_click">채팅</a></div>
 	<div class = "myPage_list_dropDown">
 		<a class = "myPage_a">마이페이지</a>
 			<div class = "dropDown_list">
-				<div><a>로그인</a></div>
-				<div><a>회원가입</a></div>
+				<div class = "myPage_login"><a class = "myPage_login_click">로그인</a></div>
+				<div class = "myPage_join"><a class = "myPage_join_click">회원 가입</a></div>
+				<div id = "bid_regist"><a class = "bid_regist_click">경매 등록</a></div>
+				<div id = "total_bid_list"><a class = "myPage_bid_click">통합 경매 내역</a></div>
+				<div id = "myPage_resign"><a class = "myPage_resign_click">회원 탈퇴</a></div>
 			</div>
 	</div>
 

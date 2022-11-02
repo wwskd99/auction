@@ -7,101 +7,131 @@
 <html>
 <head>
 <style>
-.body {
-	
+main {
+	width: 80vw;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .list_container {
 	width: 100%;
 	height: 100%;
-	background: #000;
-	position: relative;
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-right: 15px;
 }
 
-#list_button {
-	display: block;
-	text-align: right;
-	margin: .25rem;
-	padding: .5rem 1rem;
-	text-decoration: none;
-	font-weight: bold;
-	color: white;
+.list_row {
+	width: 100%;
+	height: auto%;
+	overflow: hidden;
+	display: flex;
 }
 
-.pro_wrap {
-	display: inline-block;
-	margin: 0 auto;
-	transition: all 300ms ease-in-out;
+.search-box {
+	height: 40px;
+	width: 400px;
+	border: 1px solid #FFE302;
+	background: #fffff;
+	margin-bottom: 10px;
+}
+
+input{
+	font-size: 16px;
+	width: 325px;
+	padding: 10px;
+	border: 0px;
+	outline: none;
+	float: left;
+}
+
+.btn-square{
+	width: 50px;
+	height: 40px;
+	border: 0px;
+	background: #ff8c00;
+	outline: none;
+	float: right;
+	color: #ffffff;
+}
+
+.btn-sort{
+	float: right;
+}
+
+.pro_list_wrap {
+	width: 19vw;
+	height: auto;
+	float: left;
+	border: 1px solid #eee;
+}
+
+.pro_img {
+	width: 100%;
+	height: auto;
+	border-radius: 5px;
+	vertical-align: middle;
+	border-style: none;
+}
+
+.pic_list {
+	
 }
 
 .pro_list {
-	width: 25%;
-	height: 80%;
+	width: 100%;
 	float: left;
-	border: 1px solid #eee;
-	padding: 10px;
+	list-style: none;
+	padding-top: 15px;
+	font-size: 16px;
+	margin-top: 0;
+	transition: all 300ms ease-in-out;
 }
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
 </head>
 <body>
 	<main>
 		<div class="list_continer">
-			<div class="list_top_wrap">
-				<div class="col-12 text-style">
-					<h3>상품 리스트</h3>
-					<!-- 검색 -->
-					<nav class="navbar navbar-light bg-light">
-						<div class="container-fluid">
-							<form action="/product/searchList" id="searchForm" method="get">
-								<div class="serach_input">
-									<input type="text" name="keyword" />
-									<button class="btn seach_btn">Search</button>
-								</div>
-							</form>
-							<div class="d-flex" id="list_button">
-								<button class="btn-sort" onClick="SortDistance()">5km이내</button>
-								<button class="btn-sort" onClick="SortPrice()">가격순</button>
-								<button class="btn-sort" onClick="SortNew()">최신순</button>
-							</div>
-						</div>
-					</nav>
-					<div class="panel-heading">
-						<button id='regBtn' type="button"
-							onclick="location.href='register'">새 상품 등록</button>
-					</div>
-					<!--  -->
-					<div class="pro_wrap">
-						<div class="product">
-							<c:forEach items="${list}" var="product">
-								<div class="pic_list_wrap">
-									<a href="view?product_id=${product.product_id}"> 
-										<img src="../../resources/img/${pic.picture_path}/${pic.picture_name}">
-									</a>
-								</div>
-								<div class="pro_list">
-									<div class="product_id">번호: ${product.product_id}</div>
-									<div class="title">제목: ${product.title}</div>
-									<div class="description">설명: ${product.description}</div>
-									<div class="start_price">시작가: ${product.start_price}원</div>
-									<div class="current_price">현재가: ${product.current_price}원</div>
-									<button class="buy" type="button"
-										onclick="location.href='view?product_id=${product.product_id}';">
-										입찰하기</button>
-								</div>
-							</c:forEach>
-						</div>
-					</div>
-					<c:if test="${listcheck != 'empty'}">
-					</c:if>
-					<!-- 게시물 x -->
-					<c:if test="${listcheck == 'empty'}">
-						<div class="table_empty">검색결과가 없습니다.</div>
-					</c:if>
+			<div class="list_row">
+				<div class="search-box">
+					<form action="/product/searchList" id="searchForm" method="get">
+						<input type="text" placeholder="Search" name="keyword" />
+						<button type="submit" class="btn-square">검색</button>
+					</form>
+				</div>
+				<div class="btn-sort">
+					<button type="button" style="float: right;" onClick="SortDistance()">5km이내</button>
+					<button type="button" onClick="SortPrice()">가격순</button>
+					<button type="button" onClick="SortNew()">최신순</button>
 				</div>
 			</div>
+			<div class="pro_wrap">
+				<c:forEach items="${list}" var="product">
+					<div class="pro_list_wrap">
+						<div class="pic_list">
+							<a href="view?product_id=${product.product_id}"> <img
+								class="pro_img" src="../../resources/img/iphone13pink.png">
+							</a>
+						</div>
+						<div class="pro_list">
+							<div class="title">제목: ${product.title}</div>
+							<div class="description">설명: ${product.description}</div>
+							<div class="start_price">시작가: ${product.start_price}원</div>
+							<div class="current_price">현재가: ${product.current_price}원</div>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
 		</div>
+		<c:if test="${listcheck != 'empty'}">
+		</c:if>
+		<!-- 게시물 x -->
+		<c:if test="${listcheck == 'empty'}">
+			<div class="table_empty">검색결과가 없습니다.</div>
+		</c:if>
 	</main>
 </body>
 <script type="text/javascript">

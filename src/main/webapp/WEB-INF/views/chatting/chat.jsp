@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -131,11 +132,9 @@
 
 				}else if(d.type == "message"){
 					if(d.sessionId == $("#sessionId").val()){
-						$("#chating").append("<p class='me'>나 :" + d.msg + "</p>");	
+						$("#chating").append("<p class='me'>나 : " + d.msg + "</p>");	
 					}else{
-						$("#chating").append("<p class='others'>" + d.userName + " :" + d.msg + "</p>");
-						let x = document.getElementsByClassName("otherId")[0];
-						   x.innerText=" 상대방 id: "+d.userName; 
+						$("#chating").append("<p class='others'>" + d.userName + " : " + d.msg + "</p>");
 					}
 						
 				}else{
@@ -177,10 +176,6 @@
 	
 </script>
 <body>
-<%
-	session = request.getSession();
-	String userid = (String)session.getAttribute("userid");
-%>	
 	<div id="container" class="container">
 		<h1>${roomName}의 채팅방</h1>
 		<input type="hidden" id="sessionId" value="">
@@ -190,17 +185,29 @@
 			<button id="btn-modal">거래 완료</button>
 		</div>
 
+		<!-- 모달창 -->
+		
 		<div id="modal" class="modal-overlay">
 			<div class="modal-window">
 				<div class="close-area">×</div>
 				<div class="title">
 					<h2>평가창</h2><br>
-					<h2><span class="otherId"> 상대방 id: </span></h2>
+					<h2>
+						<c:choose>
+							<c:when test="${buyer == sessionScope.userid}">
+								상대방 ID : "${seller}"
+							</c:when>
+							<c:otherwise>
+								상대방 ID : "${buyer}"
+							</c:otherwise>
+						</c:choose>
+					</h2>
 					<br><br>
 				</div>
 				<form method="get" action="/chatting/score">
-					<input type="hidden" name="user_id" value="<%=userid%>">
+					<input type="hidden" name="user_id" value="${sessionScope.userid}">
 					<input type="hidden" name="product_id" value="14">
+					<input type="hidden" name="room_id" value="${room_id}">
 					<div>
 						<input type="range" name="user_score" class="user_score" min="0" max="5" step="1">
 						<h3>
@@ -219,14 +226,26 @@
 				</form>
 			</div>
 		</div>
-
+		
+		<!-- 모달창 끝 -->
+		
 		<div id="chating" class="chating">
-		</div>	
+			<c:forEach var="chat" items="${chat_log}">
+				<c:choose>
+					<c:when test="${chat.user_id == sessionScope.userid}">
+						<p class='me'>나 : ${chat.chat}</p>
+					</c:when>
+					<c:otherwise>
+						<p class='others'>${chat.user_id} : ${chat.chat}</p>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+		</div>
 		<div id="yourName">
 			<table class="inputTable">
 				<tr>
 					<th>사용자명</th>
-					<th><input type="text" name="userName" id="userName" value="<%=userid%>"></th>
+					<th><input type="text" name="userName" id="userName" value="${sessionScope.userid}"></th>
 					<th><button onclick="chatName()" id="startBtn">이름 등록</button></th>
 				</tr>
 			</table>

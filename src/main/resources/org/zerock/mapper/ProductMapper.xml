@@ -65,38 +65,62 @@
 select * from product where product_id > 0 order by product_id desc
 ]]>
 	</select>
+
 	<insert id="insert">
 		insert into product (title, description,
 		start_price,current_price)
 		values (#{title}, #{description}, #{
 		start_price},#{current_price})
 	</insert>
-	<insert id="insertSelectKey" useGeneratedKeys="true"
-		keyProperty="product_id" keyColumn="product_id">
-		insert into product (title, description,
-		start_price,current_price)
-		values (#{title}, #{description}, #{ start_price}, #{current_price})
-		<selectKey keyProperty="product_id" order="AFTER"
-			resultType="Integer">
-			select last_insert_id() as product_id
-		</selectKey>
-	</insert>
+		<insert id="registProduct">
+			insert into product (title, description, start_price)
+			values (#{title}, #{description}, #{start_price})
 
-	<delete id="delete">
-		delete from product where product_id = #{product_id}
-	</delete>
-	<update id="update">
-		update product
-		set title=#{title},
-		description=#{description}, start_price=#{
-		start_price},
-		current_price=#{current_price}
-		where product_id = #{product_id}
-	</update>
+		</insert>
+		<insert id="registProductSK" useGeneratedKeys="true"
+			keyProperty="product_id" keyColumn="product_id">
+			insert into product (title, description,
+			start_price,current_price)
+			values (#{title}, #{description}, #{ start_price}, #{current_price})
+			insert into product (title, description, start_price)
+			values (#{title}, #{description}, #{start_price})
+			<selectKey keyProperty="product_id" order="AFTER"
+				resultType="Integer">
+				select last_insert_id() as product_id
+			</selectKey>
+		</insert>
+		<insert id="registProductNeighborhoodSK"
+			useGeneratedKeys="true" keyProperty="product_id"
+			keyColumn="product_id">
+			insert into product (title, description, start_price, neighborhood)
+			values (#{title}, #{description}, #{start_price}, #{neighborhood})
 
+			<selectKey keyProperty="product_id" order="AFTER"
+				resultType="Integer">
+				select last_insert_id() as product_id
+			</selectKey>
+		</insert>
 
-	<select id="searchList" resultType="org.zerock.domain.ProductVO">
-		select * from product WHERE title like concat ('%',#{keyword},'%');
-	</select>
+		<delete id="delete">
+			delete from product where product_id = #{product_id}
+		</delete>
+		<update id="update">
+			update product
+			set title=#{title},
+			description=#{description}, start_price=#{
+			start_price},
+			current_price=#{current_price}
+			where product_id = #{product_id}
+		</update>
 
+		<select id="searchList"
+			resultType="org.zerock.domain.ProductVO">
+			select * from product WHERE title like concat ('%',#{keyword},'%');
+		</select>
+
+		<!-- 호준 -->
+		<select id="readBidList"
+			resultType="org.zerock.domain.Bid_historyVO">
+			select * from bid_history where user_id = #{user_id}
+		</select>
 </mapper>

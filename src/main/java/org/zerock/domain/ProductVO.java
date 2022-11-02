@@ -1,6 +1,7 @@
 package org.zerock.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -13,5 +14,10 @@ public class ProductVO {
 	private int start_price;
 	private int current_price;
 	private Date date;
+	private String neighborhood;
 	
+
+	private List<ProductPicVO> productPic;
+	
+
 }

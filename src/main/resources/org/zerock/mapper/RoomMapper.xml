@@ -5,7 +5,7 @@
 <mapper namespace="org.zerock.mapper.RoomMapper">
 
 <insert id="insertRoom">
-	insert into room (buyer,seller,roomName) values (#{buyer}, #{seller}, #{roomName})
+	insert into room (product_id,buyer,seller,roomName) values (#{product_id}, #{buyer}, #{seller}, #{roomName})
 </insert>
 <select id="selectAllRoom" resultType="org.zerock.domain.Room">
 	select * from room
@@ -14,7 +14,40 @@
 <select id="selectSellerRoom" resultType="org.zerock.domain.Room">
 	select * from room where seller = #{seller}
 </select>
+
+<select id="selectBuyerRoom" resultType="org.zerock.domain.Room">
+	select * from room where buyer = #{buyer}
+</select>
 <insert id="insertScore">
 	insert into score (user_id,product_id,user_score,cause) values (#{user_id}, #{product_id}, #{user_score}, #{cause})
+</insert>
+<select id="selectOneRoom" resultType="org.zerock.domain.Room">
+	select * from room where room_id = #{room_id}
+</select>
+<insert id="insertComplete">
+	insert into complete (product_id,buyer_id,seller_id) 
+	select #{product_id}, #{buyer_id}, #{seller_id}
+	from dual
+	where not exists (select product_id from complete where product_id = #{product_id});
+</insert>
+<update id="updateSellerCheck"> 
+	update complete set seller_check = #{seller_check} where product_id = #{product_id} 
+</update>
+<update id="updateBuyerCheck"> 
+	update complete set buyer_check = #{buyer_check} where product_id = #{product_id} 
+</update>
+<select id="resultCheck" resultType="org.zerock.domain.CompleteVO">
+	select * from complete where product_id = #{product_id}
+</select>
+<update id="updateResult"> 
+	update complete set result = 1 where product_id = #{product_id} 
+</update>
+<insert id="insertSuccessTradeSeller">
+	insert into trade(user_id, total_count_s, fail_count_s) values (#{user_id} , 1, 0) 
+	on DUPLICATE KEY UPDATE total_count_s = total_count_s+1;
+</insert>
+<insert id="insertSuccessTradeBuyer">
+	insert into trade(user_id, total_count_b, fail_count_b) values (#{user_id} , 1, 0) 
+	on DUPLICATE KEY UPDATE total_count_b = total_count_b+1;
 </insert>
 </mapper>

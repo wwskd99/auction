@@ -1,6 +1,5 @@
 package org.zerock.controller;
 
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import org.zerock.domain.Criteria;
+
+import org.zerock.domain.Bid_historyVO;
+import org.zerock.domain.GPSVO;
+
 import org.zerock.domain.MemberVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
@@ -37,14 +45,17 @@ public class ProductController {
 
 	@GetMapping("/view")
 	public void productView(@RequestParam("product_id") int product_id, Model model) {
-		log.info("----- view page controller start -----");
+
 		List<ProductPicVO> picList = pService.piclistRead(product_id);
 		model.addAttribute("piclist", picList);
 
 		int picCount = pService.picCountRead(product_id);
+
 		model.addAttribute("piccount", picCount);
 
 		log.info("----- view page controller end -----");
+
+		model.addAttribute("piccount", picCount);
 
 		ProductVO pVo = pService.productRead(product_id);
 		model.addAttribute("productView", pVo);
@@ -76,6 +87,41 @@ public class ProductController {
 		return currentPrice;
 	}
 
+	@GetMapping("/register")
+	public void register() {
+
+	}
+
+	@PostMapping("/register")
+	public String register(ProductVO product, GPSVO gpsVo, RedirectAttributes rttr, Model model) {
+
+		System.out.println(gpsVo.getLatitude());
+		System.out.println(gpsVo.getLongitude());
+		// 게시글 등록
+		pService.productRegist(product);
+		// 셀렉트키 리턴
+		gpsVo.setProduct_id(product.getProduct_id());
+
+		if (gpsVo.getLatitude() != null) {
+			pService.productGPSRegist(gpsVo);
+		}
+
+		rttr.addFlashAttribute("result", product.getProduct_id());
+
+		return "redirect:/product/view?product_id=" + product.getProduct_id();
+
+	}
+
+	@ResponseBody
+	@PostMapping("/currentPriceUserId")
+	public String currentPriceUserId(@RequestParam("product_id") int product_id) {
+
+		String currentUser = pService.currentPriceUserRead(product_id);
+		System.out.println(currentUser);
+		return currentUser;
+
+	}
+
 	//// 아래 동길
 
 	@GetMapping("/list")
@@ -97,18 +143,6 @@ public class ProductController {
 		return "/product/list";
 	}
 
-	@GetMapping("/register")
-	public void register() {
-
-	}
-
-	@PostMapping("/register")
-	public String register(ProductVO product, RedirectAttributes rttr) {
-		log.info("register: " + product);
-		pService.register(product);
-		rttr.addFlashAttribute("result", product.getProduct_id());
-		return "redirect:/product/list";
-	}
 
 	@PostMapping("/modify")
 	public String modify(ProductVO product, RedirectAttributes rttr) {
@@ -127,5 +161,4 @@ public class ProductController {
 		}
 		return "redirect:/product/list";
 	}
-
 }

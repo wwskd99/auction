@@ -3,10 +3,17 @@ package org.zerock.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
 import org.zerock.domain.Criteria;
+
+import org.zerock.domain.Bid_historyVO;
+import org.zerock.domain.GPSVO;
+
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
+import org.zerock.mapper.GPSMapper;
 import org.zerock.mapper.ProductMapper;
+import org.zerock.mapper.ProductPicMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -15,16 +22,14 @@ import lombok.extern.log4j.Log4j;
 @Service
 @AllArgsConstructor
 public class ProductServiceImpl implements ProductService {
-
+	
+	private GPSMapper gpsMapper;
 	private ProductMapper pMapper;
+	private ProductPicMapper pPicMapper;
+	
 	
 	@Override
 	public List<ProductPicVO> piclistRead(int product_id) {
-		log.info("----- ProductServiceImpl piclistRead Start -----");
-		
-		
-		
-		log.info("----- ProductServiceImpl piclistRead end -----");
 		return pMapper.piclist(product_id);
 		
 	}
@@ -63,14 +68,31 @@ public class ProductServiceImpl implements ProductService {
 		return pMapper.readCPU(product_id);
 	}
 	
-	// 아래 동길
 	@Override
-	public void register(ProductVO product) {
-		log.info("register..." + product);
-		pMapper.insertSelectKey(product);
+	public void productRegist(ProductVO product) {
+		
+		
+		if (product.getNeighborhood() != null) {
+			pMapper.registProductNeighborhoodSK(product);
+		}else {
+			pMapper.registProductSK(product);
+		}
+		
+		if(product.getProductPic() != null ) {
+			product.getProductPic().forEach(productPic -> {
+				productPic.setProduct_id(product.getProduct_id());
+				pPicMapper.RegistProductPic(productPic);
+			});
+		}
 
 	}
+	
+	public void productGPSRegist(GPSVO gpsVo) {
+		gpsMapper.registProductGPS(gpsVo);
+	}
 
+	
+	// 아래 동길
 
 	@Override
 	public boolean modify(ProductVO product) {
@@ -95,4 +117,12 @@ public class ProductServiceImpl implements ProductService {
 		
 		return pMapper.searchList(cri);
 	}
+
+	// 호준
+	@Override
+	public List<Bid_historyVO> readBidList(String user_id) {
+		log.info("userid: " + user_id);
+		return pMapper.readBidList(user_id);
+	}
+
 }

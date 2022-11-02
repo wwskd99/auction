@@ -17,5 +17,15 @@ public class MemberServiceImpl implements MemberService {
 		return mMapper.readMember(user_id);
 		
 	}
+
+	@Override
+	public void joinMember(MemberVO mVo) {
+		mMapper.joinMember(mVo);
+	}
+
+	@Override
+	public void resignMember(String user_id) {
+		mMapper.resignMember(user_id);
+	}
 	
 }
