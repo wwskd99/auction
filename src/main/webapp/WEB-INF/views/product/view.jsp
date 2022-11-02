@@ -312,7 +312,7 @@ function remainTime() {
 	var currentDate = new Date();
 	var regDate = new Date(${regDate});
 	var endDate = new Date(${regDate});
-	endDate.setDate(endDate.getDate() + 30);
+	endDate.setDate(endDate.getDate() + 3);
 	
 	var currentTime = currentDate.getTime();
 	var endTime = endDate.getTime();
@@ -423,7 +423,7 @@ $(document).ready( function() {
 	var currentDate = new Date();
 	var regDate = new Date(${regDate});
 	var endDate = new Date(${regDate});
-	endDate.setDate(endDate.getDate() + 30);
+	endDate.setDate(endDate.getDate() + 3);
 	
 	var currentTime = currentDate.getTime();
 	var endTime = endDate.getTime();
@@ -597,9 +597,13 @@ $( function(){
 	
 		var sessionUser = "<%=session.getAttribute("sessionUser")%>";
 		var user = "${currentPriceUser}";
-
-		if(sessionUser != user){
-					
+		
+		if(sessionUser == "${productView.user_id}"){
+			
+			alert("자신의 경매물품에는 입찰할 수 없습니다.");
+			
+		} else if (sessionUser != user) {
+			
 			if(bid <= start_price){
 			
 				alert ("입찰 가격이 경매 시작가보다 같거나 낮습니다. 더 높게 입찰해주세요");
@@ -632,9 +636,6 @@ $( function(){
 			
 			alert("이미 최상위 입찰자입니다.");			
 			
-		}else if(sessionUser == "${productView.user_id}"){
-			
-			alert("자신의 경매물품에는 입찰할 수 없습니다.");
 		}
 
 	});

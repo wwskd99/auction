@@ -1,5 +1,6 @@
 package org.zerock.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -87,6 +88,27 @@ public class ProductServiceImpl implements ProductService {
 		gpsMapper.registProductGPS(gpsVo);
 	}
 
+	
+	@Override
+	public String TitleRead(int product_id) {
+		
+		return pMapper.readTitle(product_id);
+		
+	}
+	
+	@Override
+	public void productDelete(int product_id) {
+		
+		gpsMapper.deleteGPS(product_id);
+		pMapper.deleteProduct(product_id);
+		
+	}
+	
+	@Override
+	public Date regDateRead(int product_id) {
+		
+		return pMapper.readRegDate(product_id);
+	}
 	
 	// 아래 동길
 	
