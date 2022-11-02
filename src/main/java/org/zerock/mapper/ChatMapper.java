@@ -10,4 +10,5 @@ public interface ChatMapper {
 	public List<ChatVO> SelectChat(int room_id);
 	public void insertStorage(ChatStorageVO storage);
 	public void deleteLog(int room_id);
+	public List<ChatStorageVO> selectStorage(int product_id);
 }
