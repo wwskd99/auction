@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.zerock.domain.MemberVO;
 import org.zerock.service.MemberService;
+import org.zerock.service.ProductService;
 
 import lombok.AllArgsConstructor;
 
@@ -21,6 +22,7 @@ import lombok.AllArgsConstructor;
 public class MemberController {
 	
 	private MemberService mService; 
+	private ProductService pService;
 	
 	@PostMapping("/loginb")
 	public String memberLogin(@RequestParam("user_id") String user_id,@RequestParam("pw") String pw, HttpServletRequest request) {
@@ -100,12 +102,23 @@ public class MemberController {
 		ModelAndView mv = new ModelAndView();
 		
 		HttpSession session = request.getSession();
-		mService.resignMember((String)session.getAttribute("userid"));
-		
-		session.invalidate();
-		mv.addObject("message", "탈퇴 처리를 했습니다.");
-		mv.setViewName("/main");
-		return mv;
+		String userid=(String)session.getAttribute("userid");
+		int result = pService.IsExist(userid);
+		if(result == 1) {
+			mv.addObject("message", "판매 게시글이 존재하여 불가능합니다.");
+			mv.setViewName("/main");
+			return mv;
+		} else {
+			
+			mService.deleteBid_history(userid);
+			mService.deleteTrade(userid);		
+			mService.resignMember(userid);
+			
+			session.invalidate();
+			mv.addObject("message", "탈퇴 처리를 했습니다.");
+			mv.setViewName("/main");
+			return mv;
+		}
 	}
 	
 	@RequestMapping("/update")

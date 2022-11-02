@@ -33,5 +33,16 @@ public class MemberServiceImpl implements MemberService {
 		mMapper.updateMember(mVo);
 		
 	}
+
+	@Override
+	public void deleteBid_history(String userid) {
+		mMapper.deleteBid_history(userid);
+	}
+
+	@Override
+	public void deleteTrade(String userid) {
+		mMapper.deleteTrade(userid);
+		
+	}
 	
 }

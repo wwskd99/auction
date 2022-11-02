@@ -146,20 +146,6 @@
 		<div id="roomContainer" class="roomContainer">
 			<table id="roomList" class="roomList"></table>
 		</div>
-		<div>
-			<input type="hidden" name="product_id" id="product_id" value="31">
-			<input type="hidden" name="buyer" id="buyer" value="buyer"> 
-			<input type="hidden" name="seller" id="seller" value="seller">
-			<table class="inputTable">
-
-				<tr>
-					<th>방 제목</th>
-					<th><input type="text" name="roomName" id="roomName"></th>
-					<th><button id="createRoom">방 만들기</button></th>
-
-				</tr>
-			</table>
-		</div>
 	</div>
 </body>
 </html>

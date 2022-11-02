@@ -138,4 +138,9 @@ public class ProductServiceImpl implements ProductService {
 		
 		return pMapper.BuyerIsWho(product_id);
 	}
+	@Override
+	public int IsExist(String user_id) {
+		
+		return pMapper.IsExist(user_id);
+	}
 }

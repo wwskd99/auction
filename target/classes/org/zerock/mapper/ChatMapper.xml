@@ -10,4 +10,10 @@
 <select id="SelectChat" resultType="org.zerock.domain.ChatVO">
 	select * from chatting_log where room_id = #{room_id}
 </select>
+<insert id="insertStorage">
+	insert into chat_storage (user_id, chat, product_id) values (#{user_id}, #{chat}, #{product_id})
+</insert>
+<delete id="deleteLog">
+	DELETE FROM chatting_log where room_id = #{room_id};
+</delete>
 </mapper>

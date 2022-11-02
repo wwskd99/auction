@@ -20,4 +20,10 @@
 	birth = #{birth}  
 	where user_id = #{user_id} 
 </update>
+<delete id="deleteBid_history">
+	DELETE FROM bid_history where user_id = #{user_id};
+</delete>
+<delete id="deleteTrade">
+	DELETE FROM trade where user_id = #{user_id};
+</delete>
 </mapper>
