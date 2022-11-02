@@ -6,6 +6,7 @@
 
 <insert id="insertRoom">
 	insert into room (product_id,buyer,seller,roomName) values (#{product_id}, #{buyer}, #{seller}, #{roomName})
+	ON DUPLICATE KEY UPDATE product_id = #{product_id}, buyer = #{buyer}, seller = #{seller}, roomName = #{roomName};
 </insert>
 <select id="selectAllRoom" resultType="org.zerock.domain.Room">
 	select * from room
@@ -18,11 +19,17 @@
 <select id="selectBuyerRoom" resultType="org.zerock.domain.Room">
 	select * from room where buyer = #{buyer}
 </select>
+<delete id="deleteRoom">
+	DELETE FROM room where room_id = #{room_id};
+</delete>
 <insert id="insertScore">
 	insert into score (user_id,product_id,user_score,cause) values (#{user_id}, #{product_id}, #{user_score}, #{cause})
 </insert>
 <select id="selectOneRoom" resultType="org.zerock.domain.Room">
 	select * from room where room_id = #{room_id}
+</select>
+<select id="selectOneRoomByProduct_id" resultType="org.zerock.domain.Room">
+	select * from room where product_id = #{product_id}
 </select>
 <insert id="insertComplete">
 	insert into complete (product_id,buyer_id,seller_id) 

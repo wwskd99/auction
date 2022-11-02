@@ -12,6 +12,8 @@ public interface RoomMapper {
 	public List<Room> selectSellerRoom(String seller);
 	public List<Room> selectBuyerRoom(String buyer);
 	public Room selectOneRoom(int room_id);
+	public Room selectOneRoomByProduct_id(int product_id);
+	public void deleteRoom(int room_id);
 	
 	public void insertScore(ScoreVO score);
 	

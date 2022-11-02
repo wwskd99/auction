@@ -27,5 +27,22 @@ public class MemberServiceImpl implements MemberService {
 	public void resignMember(String user_id) {
 		mMapper.resignMember(user_id);
 	}
+
+	@Override
+	public void updateMember(MemberVO mVo) {
+		mMapper.updateMember(mVo);
+		
+	}
+
+	@Override
+	public void deleteBid_history(String userid) {
+		mMapper.deleteBid_history(userid);
+	}
+
+	@Override
+	public void deleteTrade(String userid) {
+		mMapper.deleteTrade(userid);
+		
+	}
 	
 }
