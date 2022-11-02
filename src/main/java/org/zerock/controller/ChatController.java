@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.zerock.domain.ChatStorageVO;
 import org.zerock.domain.ChatVO;
 import org.zerock.domain.CompleteVO;
 import org.zerock.domain.Room;
 import org.zerock.domain.ScoreVO;
 import org.zerock.service.ChatService;
+import org.zerock.service.ProductService;
 import org.zerock.service.RoomService;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -31,6 +37,9 @@ public class ChatController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private ChatService cService;
+	
+	@Setter(onMethod_ = @Autowired)
+	private ProductService pService;
 	
 	List<Room> roomList = new ArrayList<Room>();
 	
@@ -180,6 +189,18 @@ public class ChatController {
 		rService.insertScore(score);
 		
 		mv.setViewName("chatting/room");
+		return mv;
+	}
+	
+	@RequestMapping("/log")
+	@ResponseBody
+	public ModelAndView log(@RequestParam("product_id") int product_id) {
+		ModelAndView mv = new ModelAndView();
+		
+		List<ChatStorageVO> storageVo = cService.selectStorage(product_id);
+		mv.addObject("log", storageVo);
+
+		
 		return mv;
 	}
 }

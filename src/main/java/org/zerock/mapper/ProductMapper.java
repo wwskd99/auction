@@ -40,5 +40,4 @@ public interface ProductMapper {
 	public String BuyerIsWho(int product_id);
 	public int IsExist(String user_id);
 	
-	
 }

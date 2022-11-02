@@ -34,5 +34,10 @@ public class ChatServiceImpl implements ChatService{
 	public void deleteLog(int room_id) {
 		chatmapper.deleteLog(room_id);
 	}
+
+	@Override
+	public List<ChatStorageVO> selectStorage(int product_id) {
+		return chatmapper.selectStorage(product_id);
+	}
 	
 }
