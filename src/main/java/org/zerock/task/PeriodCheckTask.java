@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.zerock.domain.ChatStorageVO;
 import org.zerock.domain.ChatVO;
+import org.zerock.domain.CompleteVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.domain.Room;
 import org.zerock.mapper.ChatMapper;
@@ -20,56 +21,82 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Component
 public class PeriodCheckTask {
-	
-	@Setter(onMethod_ = {@Autowired})
+
+	@Setter(onMethod_ = { @Autowired })
 	private ProductMapper pMapper;
-	
-	@Setter(onMethod_ = {@Autowired})
+
+	@Setter(onMethod_ = { @Autowired })
 	private RoomMapper rMapper;
-	
-	@Setter(onMethod_ = {@Autowired})
+
+	@Setter(onMethod_ = { @Autowired })
 	private ChatMapper cMapper;
-	
-	@Scheduled(cron="0 0 0/1 1/1 * ?")
-	public void checkFiles(){
+
+	@Scheduled(cron = "0 0 0/1 1/1 * ?")
+	public void checkFiles() {
 		log.info("게시글 체크 task run............");
 		Date now = new Date();
 		List<ProductVO> productList = pMapper.getList();
-		
+
 		productList.forEach(product -> {
 
 			Date productDate = product.getDate();
-			
+
+			CompleteVO complete = new CompleteVO();
 			long diffTime = now.getTime() - productDate.getTime();
-			
-			if(diffTime >= 259200000 && diffTime < 864000000) {
+			int product_id = product.getProduct_id();
+			Room room = rMapper.selectOneRoomByProduct_id(product_id);
+			String Buyer_id = pMapper.BuyerIsWho(product_id);
+
+			if (diffTime >= 259200000 && diffTime < 864000000) {
 				// 3일 지난 상태
 				// 채팅방 개설
-				
-				String Buyer_id = pMapper.BuyerIsWho(product.getProduct_id());
-
-				if(Buyer_id == null) { // 유저아이디가 없으면 
+				if (Buyer_id == null) { // 유저아이디가 없으면
 					// 혹시나 게시글 삭제할 경우 여기다가
 					return;
-				} else {
-					Room room = new Room();
+				} else if (room != null) { // 방이 존재하는지
+					complete = rMapper.selectComplete(product_id);
+					if (complete.getResult() == 1) { // 둘다 거래 햇으면 거래완료테이블, 방 제거
+						
+						rMapper.insertSuccessTradeBuyer(Buyer_id);
+						rMapper.insertSuccessTradeSeller(product.getUser_id());		// 거래 횟수 증가
+						
+						List<ChatVO> cVo = cMapper.SelectChat(room.getRoom_id());
+						log.info("cVo " + cVo);
+						cVo.forEach(chat -> {
+							ChatStorageVO storage = new ChatStorageVO();
 
-					room.setProduct_id(product.getProduct_id());
-					room.setRoomName(product.getTitle());
-					room.setBuyer(Buyer_id);
-					room.setSeller(product.getUser_id());
+							storage.setUser_id(chat.getUser_id());
+							storage.setChat(chat.getChat());
+							storage.setProduct_id(product.getProduct_id());
 
-					rMapper.insertRoom(room);
+							cMapper.insertStorage(storage);
+						}); // 채팅기록 다른 곳에 저장
+
+						cMapper.deleteLog(room.getRoom_id()); // 채팅방 기록 삭제
+						rMapper.deleteRoom(room.getRoom_id());
+						rMapper.deleteComplete(product_id);
+					}
+				} else {	// 방이 없을 경우
+					Room new_room = new Room(); // 방 개설
+
+					new_room.setProduct_id(product_id);
+					new_room.setRoomName(product.getTitle());
+					new_room.setBuyer(Buyer_id);
+					new_room.setSeller(product.getUser_id());
+
+					complete.setProduct_id(product_id);
+					complete.setBuyer_id(Buyer_id);
+					complete.setSeller_id(product.getUser_id());
+
+					rMapper.insertRoom(new_room);
+					rMapper.insertComplete(complete);
 				}
-				
-			}
-			else if(diffTime >= 864000000) {
-				// 10일 지난 상태
-				// 채팅방 폭파
-				int product_id = product.getProduct_id();
-				Room room = rMapper.selectOneRoomByProduct_id(product_id);
 
-				if(room != null) {	// 방이 존재하면
+			} else if (diffTime >= 864000000) {
+				// 10일 지난 상태
+				// 채팅방 자동 폭파
+				if (room != null) { // 방이 존재하면
+					complete = rMapper.selectComplete(product_id);
 					List<ChatVO> cVo = cMapper.SelectChat(room.getRoom_id());
 					log.info("cVo " + cVo);
 					cVo.forEach(chat -> {
@@ -81,8 +108,17 @@ public class PeriodCheckTask {
 
 						cMapper.insertStorage(storage);
 					}); // 채팅기록 다른 곳에 저장
+
+					if (complete.getResult() == 1) { // 둘다 거래완료 눌럿으면
+						rMapper.insertSuccessTradeBuyer(Buyer_id);
+						rMapper.insertSuccessTradeSeller(product.getUser_id());
+					} else { // 거래완료가 안되었으면
+						rMapper.insertFailTradeBuyer(Buyer_id);
+						rMapper.insertFailTradeSeller(product.getUser_id());
+					}
 					cMapper.deleteLog(room.getRoom_id()); // 채팅방 기록 삭제
 					rMapper.deleteRoom(room.getRoom_id());
+					rMapper.deleteComplete(product_id);
 				}
 			}
 		});

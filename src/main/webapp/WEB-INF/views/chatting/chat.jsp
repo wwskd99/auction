@@ -43,7 +43,7 @@
 			height: 25px;
 		}
 		#yourMsg{
-			display: none;
+			display: block;
 		}
 		
 		#modal.modal-overlay {
@@ -149,25 +149,23 @@
 			}
 		});
 	}
-
-	function chatName(){
-		var userName = $("#userName").val();
+	$(document).ready(function() {
+		var userName = '${sessionScope.userid}';
 		if(userName == null || userName.trim() == ""){
-			alert("사용자 이름을 입력해주세요.");
-			$("#userName").focus();
+			alert("로그인 후 사용해주세요.");
+			location.href="/main";
 		}else{
 			wsOpen();
-			$("#yourName").hide();
-			$("#yourMsg").show();
 		}
-	}
+	});
+
 
 	function send() {
 		var option ={
 			type: "message",
 			room_id: $("#room_id").val(),
 			sessionId : $("#sessionId").val(),
-			userName : $("#userName").val(),
+			userName : "${sessionScope.userid}",
 			msg : $("#chatting").val()
 		}
 		ws.send(JSON.stringify(option))
@@ -206,7 +204,7 @@
 				</div>
 				<form method="get" action="/chatting/score">
 					<input type="hidden" name="user_id" value="${sessionScope.userid}">
-					<input type="hidden" name="product_id" value="14">
+					<input type="hidden" name="product_id" value="${product_id}">
 					<input type="hidden" name="room_id" value="${room_id}">
 					<div>
 						<input type="range" name="user_score" class="user_score" min="0" max="5" step="1">
@@ -240,15 +238,6 @@
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
-		</div>
-		<div id="yourName">
-			<table class="inputTable">
-				<tr>
-					<th>사용자명</th>
-					<th><input type="text" name="userName" id="userName" value="${sessionScope.userid}"></th>
-					<th><button onclick="chatName()" id="startBtn">이름 등록</button></th>
-				</tr>
-			</table>
 		</div>
 		<div id="yourMsg">
 			<table class="inputTable">

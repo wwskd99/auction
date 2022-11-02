@@ -22,8 +22,12 @@ public interface RoomService {
 	public void updateBuyerCheck(CompleteVO complete);
 	public void updateSellerCheck(CompleteVO complete);
 	public CompleteVO resultCheck(int product_id);
+	public CompleteVO selectComplete(int product_id);
+	public void deleteComplete(int product_id);
 	public void updateResult(int product_id);
 	
 	public void insertSuccessTradeSeller(String user_id);
 	public void insertSuccessTradeBuyer(String user_id);
+	public void insertFailTradeSeller(String user_id);
+	public void insertFailTradeBuyer(String user_id);
 }

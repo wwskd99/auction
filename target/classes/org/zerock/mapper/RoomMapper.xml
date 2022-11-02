@@ -37,6 +37,12 @@
 	from dual
 	where not exists (select product_id from complete where product_id = #{product_id});
 </insert>
+<select id="selectComplete" resultType="org.zerock.domain.CompleteVO">
+	select * from complete where product_id = #{product_id}
+</select>
+<delete id="deleteComplete">
+	DELETE FROM complete where product_id = #{product_id};
+</delete>
 <update id="updateSellerCheck"> 
 	update complete set seller_check = #{seller_check} where product_id = #{product_id} 
 </update>
@@ -56,5 +62,13 @@
 <insert id="insertSuccessTradeBuyer">
 	insert into trade(user_id, total_count_b, fail_count_b) values (#{user_id} , 1, 0) 
 	on DUPLICATE KEY UPDATE total_count_b = total_count_b+1;
+</insert>
+<insert id="insertFailTradeSeller">
+	insert into trade(user_id, total_count_s, fail_count_s) values (#{user_id} , 1, 1) 
+	on DUPLICATE KEY UPDATE total_count_s = total_count_s+1, fail_count_s = fail_count_s+1;
+</insert>
+<insert id="insertFailTradeBuyer">
+	insert into trade(user_id, total_count_b, fail_count_b) values (#{user_id} , 1, 1) 
+	on DUPLICATE KEY UPDATE total_count_b = total_count_b+1, fail_count_b = fail_count_b+1;
 </insert>
 </mapper>
