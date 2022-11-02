@@ -38,6 +38,7 @@ public interface ProductMapper {
 	public List<Bid_historyVO> readBidList(String user_id);
 	public void updateDeadline(ProductVO pVo);
 	public String BuyerIsWho(int product_id);
+	public int IsExist(String user_id);
 	
 	
 }

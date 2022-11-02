@@ -8,4 +8,6 @@ public interface MemberService {
 	public void joinMember(MemberVO mVo);
 	public void resignMember(String user_id);
 	public void updateMember(MemberVO mVo);
+	public void deleteBid_history(String userid);
+	public void deleteTrade(String userid);
 }
