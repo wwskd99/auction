@@ -28,11 +28,27 @@ select current_price from product where product_id = #{product_id}
 insert into bid_history (user_id, current_price, product_id) values (#{user_id},#{current_price},#{product_id});
 </insert>
 
+<delete id="deleteProduct">
+  delete from product where product_id = #{product_id};
+</delete>
 
 <select resultType="String" id="readCPU">
 select user_id from bid_history where product_id = #{product_id} order by current_price desc limit 1; 
 </select>
 
+<select resultType="String" id="readTitle">
+select title from product where product_id = #{product_id}; 
+</select>
+
+	<select id="readProductlist" resultType="org.zerock.domain.ProductVO">
+		select * from product where user_id = #{user_id};
+	</select>
+
+<select resultType="Date" id="readRegDate">
+select date from product where product_id = #{product_id}; 
+</select>
+	
+	
 <!-- 아래 동길 -->
 
 <select id="getList" resultType="org.zerock.domain.ProductVO">
@@ -41,13 +57,13 @@ select * from product where product_id > 0 order by product_id desc
 ]]>
 	</select>
 	<insert id="registProduct">
-		insert into product (title, description, start_price) 
-		values (#{title}, #{description}, #{start_price})
+		insert into product (title, user_id,description, start_price) 
+		values (#{title},#{user_id}, #{description}, #{start_price})
 	</insert>
 	<insert id="registProductSK" useGeneratedKeys="true"
 		keyProperty="product_id" keyColumn="product_id">
-		insert into product (title, description, start_price)
-		values (#{title}, #{description}, #{start_price})
+		insert into product (title, user_id,description, start_price)
+		values (#{title}, #{user_id},#{description}, #{start_price})
 		<selectKey keyProperty="product_id" order="AFTER"
 			resultType="Integer">
 			select last_insert_id() as product_id
@@ -55,8 +71,8 @@ select * from product where product_id > 0 order by product_id desc
 	</insert>
 	<insert id="registProductNeighborhoodSK" useGeneratedKeys="true"
 		keyProperty="product_id" keyColumn="product_id">
-		insert into product (title, description, start_price, neighborhood)
-		values (#{title}, #{description}, #{start_price}, #{neighborhood})
+		insert into product (title,user_id, description, start_price, neighborhood)
+		values (#{title},#{user_id}, #{description}, #{start_price}, #{neighborhood})
 		<selectKey keyProperty="product_id" order="AFTER"
 			resultType="Integer">
 			select last_insert_id() as product_id
