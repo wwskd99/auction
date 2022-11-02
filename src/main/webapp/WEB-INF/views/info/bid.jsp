@@ -90,12 +90,15 @@ min-height : 650px;
 
 
 /* 3-2-1 */
+.total_bid_list_wrap_des2_proid{
+width : 15%;
+}
 .total_bid_list_wrap_des2_title{
 width : 20%;
 
 }
 .total_bid_list_wrap_des2_bid{
-width : 30%;
+width : 25%;
 
 }
 .total_bid_list_wrap_des2_date{
@@ -103,7 +106,7 @@ width : 20%;
 
 }
 .total_bid_list_wrap_des2_etc{
-width : 30%;
+width : 20%;
 
 }
 .total_bid_list_wrap_des2 div{
@@ -112,12 +115,15 @@ height : 20%;
 }
 
 /* 3-2-2 */
+.total_reg_list_wrap_des2_proid{
+width : 15%;
+}
 .total_reg_list_wrap_des2_title{
 width : 20%;
 
 }
 .total_reg_list_wrap_des2_bid{
-width : 30%;
+width : 25%;
 
 }
 .total_reg_list_wrap_des2_date{
@@ -125,7 +131,7 @@ width : 20%;
 
 }
 .total_reg_list_wrap_des2_del{
-width : 30%;
+width : 20%;
 
 }
 .total_reg_list_wrap_des2 div{
@@ -134,13 +140,15 @@ height : 20%;
 }
 
 /* 3-2-3 */
-
+.total_end_list_wrap_des2_proid{
+width : 15%;
+}
 .total_end_list_wrap_des2_title{
 width : 20%;
 
 }
 .total_end_list_wrap_des2_bid{
-width : 30%;
+width : 25%;
 
 }
 .total_end_list_wrap_des2_date{
@@ -148,7 +156,7 @@ width : 20%;
 
 }
 .total_end_list_wrap_des2_phone{
-width : 30%;
+width : 20%;
 
 }
 .total_end_list_wrap_des2 div{
@@ -178,11 +186,14 @@ height : 20%;
 
 
 /* 3-3-1 */
+.product_id{
+	width: 15%;
+}
 .bid_date{
 	width : 20%;
 }
 .current_price{
-	width : 30%;
+	width : 25%;
 }
 
 .product_title{
@@ -190,9 +201,9 @@ height : 20%;
 }
 
 .bid_etc{
-	width : 30%;
+	width : 20%;
 }
-.bid_date, .current_price, .product_title, .bid_etc{
+.bid_date, .current_price, .product_title, .bid_etc, .product_id{
 	float : left;
 	height : 14%;
 	line-height : 250%;
@@ -201,12 +212,16 @@ height : 20%;
 
 
 /* 3-3-2 */
+
+.product_id_reg{
+	width : 15%;
+}
 .product_title_reg{
 	width : 20%;
 
 }
 .current_price_reg{
-	width : 30%;
+	width : 25%;
 
 }
 .regist_date{
@@ -214,11 +229,11 @@ height : 20%;
 
 }
 .delete_product{
-	width : 30%;
+	width : 20%;
 
 }
 
-.product_title_reg, .current_price_reg, .regist_date, .delete_product{
+.product_title_reg, .current_price_reg, .regist_date, .delete_product, .product_id_reg{
 	float : left;
 	height : 18%;
 	line-height : 250%;
@@ -226,30 +241,28 @@ height : 20%;
 
 
 /* 3-3-3 */
-
+.awd_proid{
+	width : 15%;
+}
 .awd_title{
 	width : 20%;
 }
 .awd_price{
-	width : 30%;
+	width : 25%;
 }
 .awd_date{
 	width : 20%;
 }
 .awd_phone{
-	width : 30%;
+	width : 20%;
 }
 
-.awd_title, .awd_price, .awd_date, .awd_phone{
+.awd_title, .awd_price, .awd_date, .awd_phone,.awd_proid{
 	float : left;
 	height : 18%;
 	line-height : 250%;
 
 }
-
-
-
-
 
 
 
@@ -436,6 +449,7 @@ $( function(){
 		<div class = "total_bid_wrap">
 			<div class = "total_bid_list_wrap_des">입찰 내역</div>
 			<div class = "total_bid_list_wrap_des2">
+				<div class = "total_bid_list_wrap_des2_proid">경매 번호</div>
 				<div class = "total_bid_list_wrap_des2_title">경매 이름</div>
 				<div class = "total_bid_list_wrap_des2_bid">입찰가</div>
 				<div class = "total_bid_list_wrap_des2_date">입찰일</div>
@@ -443,6 +457,7 @@ $( function(){
 			</div>
 			<div class = "total_bid_list_wrap">
 			<c:forEach items="${BidList}" var="list" varStatus="status">
+				<div class = "product_id">${list.product_id}번</div>
 				<div class="product_title">${BidListTitle[status.index]}</div>
 				<div class="current_price">${list.current_price}원</div>
 				<div class="bid_date">${BidListDate[status.index]}</div>
@@ -453,14 +468,15 @@ $( function(){
 		<div class = "total_reg_wrap">
 			<div class = "total_reg_list_wrap_des">등록 내역</div>
 				<div class = "total_reg_list_wrap_des2">
-				<div class = "total_reg_list_wrap_des2_title">경매 이름</div>
-				<div class = "total_reg_list_wrap_des2_bid">현재가</div>
-				<div class = "total_reg_list_wrap_des2_date">등록일</div>
-				<div class = "total_reg_list_wrap_des2_del"></div>
+					<div class = "total_reg_list_wrap_des2_proid">경매 번호</div>
+					<div class = "total_reg_list_wrap_des2_title">경매 이름</div>
+					<div class = "total_reg_list_wrap_des2_bid">현재가</div>
+					<div class = "total_reg_list_wrap_des2_date">등록일</div>
+					<div class = "total_reg_list_wrap_des2_del"></div>
 			</div>
 			<div class = "total_reg_list_wrap">
 			<c:forEach items="${productList}" var="proList" varStatus = "status">
-			
+				<div class = "product_id_reg">${proList.product_id}번</div>
 				<div class = "product_title_reg">${proList.title}</div>
 				<div class = "current_price_reg">${proList.current_price}원</div>
 				<div class = "regist_date">${RegListDate[status.index]}</div>
@@ -472,6 +488,7 @@ $( function(){
 		<div class = "total_end_wrap">
 			<div class = "total_end_list_wrap_des">낙찰 내역</div>
 				<div class = "total_end_list_wrap_des2">
+					<div class = "total_end_list_wrap_des2_proid">경매 번호</div>
 					<div class = "total_end_list_wrap_des2_title">경매 이름</div>
 					<div class = "total_end_list_wrap_des2_bid">낙찰</div>
 					<div class = "total_end_list_wrap_des2_date">낙찰일</div>
@@ -479,6 +496,7 @@ $( function(){
 				</div>
 			
 			<c:forEach items="${AwardList}" var="awaList" varStatus = "status">
+				<div class = "awd_proid">${awaList.product_id}</div>
 				<div class = "awd_title">${awaList.title}</div>
 				<div class = "awd_price">${awaList.current_price}원</div>
 				<div class = "awd_date">${AwardDate[status.index]}</div>
