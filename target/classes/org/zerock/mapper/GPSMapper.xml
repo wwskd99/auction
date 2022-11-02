@@ -9,6 +9,10 @@
 insert into product_gps (product_id, product_latitude, product_longitude) values (#{product_id},#{latitude},#{longitude});
 </insert>
 
+<delete id="deleteGPS">
+  delete from product_gps where product_id = #{product_id};
+</delete>
+
 
 
 </mapper>

@@ -1,5 +1,6 @@
 package org.zerock.mapper;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -21,9 +22,10 @@ public interface ProductMapper {
 	public int readCP(int product_id);
 	public void insertCP(@Param("product_id")int product_id,@Param("current_price")int current_price,@Param("user_id")String user_id);
 	public String readCPU(int product_id);
-	
-
-	
+	public String readTitle(int product_id);
+	public List<ProductVO> readProductlist(String user_id);
+	public void deleteProduct(int product_id);
+	public Date readRegDate(int product_id);
 	
 	// 아래 동길
 	public List<ProductVO> getList();

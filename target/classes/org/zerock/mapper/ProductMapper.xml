@@ -28,11 +28,27 @@ select current_price from product where product_id = #{product_id}
 insert into bid_history (user_id, current_price, product_id) values (#{user_id},#{current_price},#{product_id});
 </insert>
 
+<delete id="deleteProduct">
+  delete from product where product_id = #{product_id};
+</delete>
 
 <select resultType="String" id="readCPU">
 select user_id from bid_history where product_id = #{product_id} order by current_price desc limit 1; 
 </select>
 
+<select resultType="String" id="readTitle">
+select title from product where product_id = #{product_id}; 
+</select>
+
+	<select id="readProductlist" resultType="org.zerock.domain.ProductVO">
+		select * from product where user_id = #{user_id};
+	</select>
+
+<select resultType="Date" id="readRegDate">
+select date from product where product_id = #{product_id}; 
+</select>
+	
+	
 <!-- 아래 동길 -->
 
 <select id="getList" resultType="org.zerock.domain.ProductVO">

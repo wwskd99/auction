@@ -212,8 +212,8 @@ height : 50vw;
 $(document).ready( function() {
 	
 	// 슬라이드
-	var loginUser = <%=session.getAttribute("sessionUser")%>;
-	if(loginUser == null){
+	var loginUser = "<%=session.getAttribute("sessionUser")%>";
+	if(loginUser == "null"){
 		alert("잘못된 접근입니다. 로그인을 해주세요.")
 		window.location.href='../member/login';
 	}

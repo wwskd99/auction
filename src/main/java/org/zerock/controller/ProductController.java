@@ -115,7 +115,35 @@ public class ProductController {
 	
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/productDelete", produces = "application/json; charset=utf8")
+	public String productDelete(@RequestParam("product_id") int product_id ,HttpServletRequest request) {
+		
+		String requestMessage;
+		HttpSession session = request.getSession();
+		String sessionUser = (String)session.getAttribute("sessionUser");
+		
+		ProductVO pVo = pService.productRead(product_id);
+		
+		if (sessionUser.equals(pVo.getUser_id())) {
+			
+			if (pVo.getCurrent_price() != 0) {
+				requestMessage = "현재 경매 입찰중입니다. 삭제할 수 없습니다.";				
+			}else {
+				pService.productDelete(product_id);
+				requestMessage = "경매 삭제 완료";
+			}
+			
+		
+		}else {
+			
+			requestMessage = "아이디 정보가 없습니다. 정상적인 경로로 접근해주십시오";
+			
+		}
 	
+		return requestMessage;
+	}
+		
 	
 	
 	//// 아래 동길
