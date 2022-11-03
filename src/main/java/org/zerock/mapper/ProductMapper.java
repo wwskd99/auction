@@ -4,9 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+
+import org.zerock.domain.Criteria;
+
 import org.zerock.domain.Bid_historyVO;
 import org.zerock.domain.Criteria;
 import org.zerock.domain.GPSVO;
+
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.domain.TradeVO;
@@ -32,12 +36,10 @@ public interface ProductMapper {
 	
 	// 아래 동길
 	public List<ProductVO> getList();
-
-	
-	public int delete(Integer product_id);
+	public int delete(int product_id);
 	public int update(ProductVO product);
-	public ProductVO read(int product_id);
-	
+	public List<ProductVO> searchList(Criteria cri);
+	public List<ProductVO> price_desc();
 	
 	// 호준
 	public void updateDeadline(ProductVO pVo);
@@ -45,4 +47,5 @@ public interface ProductMapper {
 	public int IsExist(String user_id);
 	public TradeVO selectTrade(String user_id);
 	public void priceSale(ProductVO pVo);
+	public List<Bid_historyVO> readBidList(String user_id);
 }

@@ -686,6 +686,20 @@ $(document).ready( function bidUnit(){
 	 $(".bid_unit").text("호가단위 : " + bid_unit + "원");
 });
 
+// 수정버튼(동길)
+$(document).ready(function() {
+ 
+ 	var operForm = $("#operForm"); 
+ 
+ 	$("button[data-oper='modify']").on("click", function(e) 
+		 operForm.attr("action","/product/modify").submit();
+	});
+		$("button[data-oper='list']").on("click", function(e){
+		operForm.find("#product_id").remove();
+		operForm.attr("action","/product/list")
+		operForm.submit();
+	}); 
+});
 </script>
 
 
@@ -707,8 +721,8 @@ $(document).ready( function bidUnit(){
 		</div>
 
 		<div class="page-nav">
-			<a onclick ="prev()" class ="prev"> < </a>
-			<a onclick ="next()" class="next"> > </a>
+			<a onclick ="prev()" class ="prev">  </a>
+			<a onclick ="next()" class="next">  </a>
 		</div>
 	</div>
 	

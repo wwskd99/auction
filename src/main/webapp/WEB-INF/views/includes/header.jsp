@@ -4,18 +4,30 @@
 <html>
 <head>
 <style>
+<<<<<<< HEAD
+body{
+margin : 0 auto;
+padding-top : 70px;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+=======
 body {
 	margin: 0 auto;
 	padding-top: 70px;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
 		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 }
+<<<<<<< HEAD
+main{
+ width : 100%;
+ 
+=======
 
 main {
 	width: 100%;
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 }
-
 header {
 	position: fixed;
 	z-index: 3;
@@ -29,46 +41,95 @@ header {
 	transition: top 0.01s ease-in-out;
 	margin-top: -70px;
 }
+<<<<<<< HEAD
+.header_wrap{
+margin : 0 auto;
+width : 70%;
+height : 100%;
+=======
 
 .header_wrap {
 	margin: 0 auto;
 	width: 70%;
 	height: 100%;
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 }
+<<<<<<< HEAD
+.header_wrap div{
+line-height : 70px;
+text-align : center;
+height : 70px;
+=======
 
 .header_wrap div {
 	line-height: 70px;
 	text-align: center;
 	height: 70px;
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 }
+<<<<<<< HEAD
+.logo{
+width : 20%;
+float : left;
+=======
 
 .logo {
 	width: 20%;
 	float: left;
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 }
+<<<<<<< HEAD
+.product_list{
+width : 30%;
+float : left;
+color : #ff6f0f;
+=======
 
 .product_list {
 	width: 30%;
 	float: left;
 	color: #ff6f0f;
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 }
+<<<<<<< HEAD
+.chat_list{
+width : 30%;
+float : left;
+=======
 
 .chat_list {
 	position: relative;
 	display: inline-block;
 	width: 30%;
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 }
-
 .header_wrap a {
 	cursor: pointer;
 }
+<<<<<<< HEAD
+.myPage_list_dropDown{
+	position : relative;
+	 display : inline-block;
+	 width : 20%;
+	float : right;
+		
+=======
 
 .myPage_list_dropDown {
 	position: relative;
 	display: inline-block;
 	width: 20%;
 	float: right;
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 }
+<<<<<<< HEAD
+.dropDown_list{
+	z-index : 5;
+	position : absolute;
+	display : none;
+	background-color : white;
+	width : 100%;
+=======
 
 .dropDown_list {
 	z-index: 5;
@@ -76,28 +137,42 @@ header {
 	display: none;
 	background-color: white;
 	width: 100%;
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 }
+<<<<<<< HEAD
+.dropDown_list a{
+	display : block;
+	background-color : white;
+=======
 
 .dropDown_list a {
 	display: block;
 	background-color: white;
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 }
 
 .dropDown_list a:hover {
 	background-color: #ececec;
 }
-
 .myPage_list_dropDown:hover .dropDown_list {
 	display: block;
 }
+<<<<<<< HEAD
+.dropDown_list div{
+	width : 100%;
+=======
 
 .chat_list:hover .dropDown_list {
 	display: block;
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 }
+<<<<<<< HEAD
+=======
 
 .dropDown_list div {
 	width: 100%;
 }
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 </style>
 
 
@@ -110,7 +185,6 @@ $(window).scroll(function(){
 	  $('header').css('left', 0-$(this).scrollLeft());
 	});
 });	
-
 $( function(){
 	$( '.logo_image_click' ).on("click", function() {
 		window.location.href='../main';
@@ -154,32 +228,25 @@ $( function(){
 	
 	
 });
-
-
 $(function () {
 	var didScroll;
     var lastScrollTop = 0;
     var delta = 5; 
     var navbarHeight = $("header").outerHeight();
-
     $(window).scroll(function(event){
         didScroll = true;
     });
-
     setInterval(function() {
         if (didScroll) {
             hasScrolled();
             didScroll = false;
         }
     }, 250); 
-
     function hasScrolled() {
         var st = $(this).scrollTop(); 
-
         
         if(Math.abs(lastScrollTop - st) <= delta)
             return;
-
         if (st > lastScrollTop && st > navbarHeight){
           
             $("header").slideUp("fast");
@@ -189,11 +256,9 @@ $(function () {
                 $("header").slideDown("fast"); 
             }
         }
-
         lastScrollTop = st;
     }
 })
-
 $(document).ready( function() {
 	var mVo = "<%=(MemberVO)session.getAttribute("sessionMember")%>";
 	if(mVo == "null"){
@@ -230,8 +295,6 @@ $(document).ready( function() {
 		$("#bid_regist").hide();
 	}
 });
-
-
 </script>
 
 <meta charset="UTF-8">

@@ -17,6 +17,8 @@ public class ProductVO {
 	private String neighborhood;
 	private int deadline;
 	
+
 	private List<ProductPicVO> productPic;
 	
+
 }
