@@ -4,175 +4,101 @@
 <html>
 <head>
 <style>
-<<<<<<< HEAD
-body{
-margin : 0 auto;
-padding-top : 70px;
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-=======
 body {
-	margin: 0 auto;
-	padding-top: 70px;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
->>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
+   margin: 0 auto;
+   padding-top: 70px;
+   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+      "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
-<<<<<<< HEAD
-main{
- width : 100%;
- 
-=======
 
 main {
-	width: 100%;
->>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
+   width: 100%;
 }
+
 header {
-	position: fixed;
-	z-index: 3;
-	width: 100vw;
-	height: 70px;
-	min-width: 900px;
-	font-weight: 700;
-	font-size: 1.1rem;
-	color: #393a40;
-	background-color: white;
-	transition: top 0.01s ease-in-out;
-	margin-top: -70px;
+   position: fixed;
+   z-index: 3;
+   width: 100vw;
+   height: 70px;
+   min-width: 900px;
+   font-weight: 700;
+   font-size: 1.1rem;
+   color: #393a40;
+   background-color: white;
+   transition: top 0.01s ease-in-out;
+   margin-top: -70px;
 }
-<<<<<<< HEAD
-.header_wrap{
-margin : 0 auto;
-width : 70%;
-height : 100%;
-=======
 
 .header_wrap {
-	margin: 0 auto;
-	width: 70%;
-	height: 100%;
->>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
+   margin: 0 auto;
+   width: 70%;
+   height: 100%;
 }
-<<<<<<< HEAD
-.header_wrap div{
-line-height : 70px;
-text-align : center;
-height : 70px;
-=======
+
+.header_wrap {
+   margin: 0 auto;
+   width: 70%;
+   height: 100%;
+}
 
 .header_wrap div {
-	line-height: 70px;
-	text-align: center;
-	height: 70px;
->>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
+   line-height: 70px;
+   text-align: center;
+   height: 70px;
 }
-<<<<<<< HEAD
-.logo{
-width : 20%;
-float : left;
-=======
 
 .logo {
-	width: 20%;
-	float: left;
->>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
+   width: 20%;
+   float: left;
 }
-<<<<<<< HEAD
-.product_list{
-width : 30%;
-float : left;
-color : #ff6f0f;
-=======
 
 .product_list {
-	width: 30%;
-	float: left;
-	color: #ff6f0f;
->>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
+   width: 30%;
+   float: left;
+   color: #ff6f0f;
 }
-<<<<<<< HEAD
-.chat_list{
-width : 30%;
-float : left;
-=======
 
 .chat_list {
-	position: relative;
-	display: inline-block;
-	width: 30%;
->>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
+   width: 30%;
+   float: left;
 }
+
 .header_wrap a {
-	cursor: pointer;
+   cursor: pointer;
 }
-<<<<<<< HEAD
-.myPage_list_dropDown{
-	position : relative;
-	 display : inline-block;
-	 width : 20%;
-	float : right;
-		
-=======
 
 .myPage_list_dropDown {
-	position: relative;
-	display: inline-block;
-	width: 20%;
-	float: right;
->>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
+   position: relative;
+   display: inline-block;
+   width: 20%;
+   float: right;
 }
-<<<<<<< HEAD
-.dropDown_list{
-	z-index : 5;
-	position : absolute;
-	display : none;
-	background-color : white;
-	width : 100%;
-=======
 
 .dropDown_list {
-	z-index: 5;
-	position: absolute;
-	display: none;
-	background-color: white;
-	width: 100%;
->>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
+   z-index: 5;
+   position: absolute;
+   display: none;
+   background-color: white;
+   width: 100%;
 }
-<<<<<<< HEAD
-.dropDown_list a{
-	display : block;
-	background-color : white;
-=======
 
 .dropDown_list a {
-	display: block;
-	background-color: white;
->>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
+   display: block;
+   background-color: white;
 }
 
 .dropDown_list a:hover {
-	background-color: #ececec;
+   background-color: #ececec;
 }
-.myPage_list_dropDown:hover .dropDown_list {
-	display: block;
-}
-<<<<<<< HEAD
-.dropDown_list div{
-	width : 100%;
-=======
 
-.chat_list:hover .dropDown_list {
-	display: block;
->>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
+.myPage_list_dropDown:hover .dropDown_list {
+   display: block;
 }
-<<<<<<< HEAD
-=======
 
 .dropDown_list div {
-	width: 100%;
+   width: 100%;
 }
->>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 </style>
 
 

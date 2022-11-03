@@ -181,9 +181,16 @@ public class ProductController {
 	
 	@GetMapping("/new")
 	public String pronew(Model model) {
-//		List<ProductVO> pnew = pService.pronew();
-//		model.addAllAttributes("list", pnew);
-		return "/product/price";
+		List<ProductVO> pnew = pService.pronew();
+		model.addAttribute("list", pnew);
+		return "/product/new";
+	}
+	
+	@GetMapping("/pro5km")
+	public String distance(Model model) {
+		List<ProductVO> pdist = pService.distance();
+		model.addAttribute("list", pdist);
+		return "/product/pro5km";
 	}
 	
 	@GetMapping("/searchList")
