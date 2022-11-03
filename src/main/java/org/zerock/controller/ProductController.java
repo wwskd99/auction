@@ -97,12 +97,13 @@ public class ProductController {
 		// 게시글 등록
 		pService.productRegist(product);
 		// 셀렉트키 리턴
-		gpsVo.setProduct_id(product.getProduct_id());
+		if(product.getNeighborhood() == "YES") {
+			gpsVo.setProduct_id(product.getProduct_id());
 		
-		if(gpsVo.getLatitude() != null) {
-		pService.productGPSRegist(gpsVo);
+			if(gpsVo.getLatitude() != null) {
+				pService.productGPSRegist(gpsVo);
+			}
 		}
-		
 		rttr.addFlashAttribute("result", product.getProduct_id());
 		
 		return "redirect:/product/view?product_id="+product.getProduct_id();
