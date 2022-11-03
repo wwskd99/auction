@@ -110,4 +110,9 @@ select * from product where product_id > 0 order by product_id desc
 <select id="selectTrade" resultType="org.zerock.domain.TradeVO">
 	select * from trade where user_id = #{user_id}
 </select>
+<update id="priceSale"> 
+	update product set 
+	start_price = #{start_price}
+	where product_id = #{product_id} 
+</update>
 </mapper>

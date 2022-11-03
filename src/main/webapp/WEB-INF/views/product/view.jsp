@@ -529,7 +529,7 @@ $( function(){
 		}
 		
 		
-		if(bidTextBox < 10000 && bidTextBox >= 1000){
+		if(bidTextBox < 10000 && bidTextBox >= 800){
 			bidTextBox = bidTextBox + 100;
 			document.getElementById('bidCheck').setAttribute('value',bidTextBox)
 		} else if (bidTextBox < 50000 && bidTextBox >= 10000){
@@ -565,7 +565,7 @@ $( function(){
 			}
 		}
 		
-		if(bidTextBox < 10000 && bidTextBox >= 1000){
+		if(bidTextBox < 10000 && bidTextBox >= 800){
 			bidTextBox = bidTextBox - 100;
 			document.getElementById('bidCheck').setAttribute('value',bidTextBox)
 		} else if (bidTextBox < 50000 && bidTextBox >= 10000){
@@ -652,7 +652,7 @@ $(document).ready( function bidUnit(){
 		}
 	}
 	
-	if(bidTextBox < 10000 && bidTextBox >= 1000){
+	if(bidTextBox < 10000 && bidTextBox >= 800){
 		bid_unit = 100;
 	} else if (bidTextBox < 50000 && bidTextBox >= 10000){
 		bid_unit = 500;
