@@ -7,8 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.zerock.domain.Bid_historyVO;
 import org.zerock.domain.GPSVO;
 import org.zerock.domain.MemberVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
-import org.zerock.service.MemberService;
+import org.zerock.domain.TradeVO;
 import org.zerock.service.ProductService;
 
 import lombok.AllArgsConstructor;
@@ -35,7 +32,6 @@ import lombok.extern.log4j.Log4j;
 public class ProductController {
 
 	private ProductService pService; 
-	private MemberService mService;
 	
 	@GetMapping("/view")
 	public void productView(@RequestParam("product_id") int product_id, Model model) {
@@ -60,6 +56,15 @@ public class ProductController {
 		String currentPriceUser = pService.currentPriceUserRead(product_id);
 		model.addAttribute("currentPriceUser",currentPriceUser);
 		
+		TradeVO tVo = pService.selectTrade(pVo.getUser_id());
+		if (tVo == null) {
+			model.addAttribute("msg", "첫 경매 판매자입니다.");
+		} else {
+			model.addAttribute("trade", tVo);
+			float SuccessRate = ((float) (tVo.getTotal_count_s() - tVo.getFail_count_s()) / tVo.getTotal_count_s())
+					* 100;
+			model.addAttribute("rate", SuccessRate);
+		}
 	}
 	
 	@ResponseBody
