@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.zerock.domain.BidPageVO;
 import org.zerock.domain.Bid_historyVO;
+import org.zerock.domain.Criteria;
 import org.zerock.domain.MemberVO;
+import org.zerock.domain.PageMaker;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.service.MemberService;
@@ -40,14 +43,27 @@ public class InfoController {
 	private ProductService pService;
 	private MemberService mService;
 	@GetMapping("/bid")
-	public void bid(HttpServletRequest request, Model model) {
-		
-		//list 자체
+	public void bid(@RequestParam("bid_page")int bid_page,@RequestParam("reg_page")int reg_page,@RequestParam("awd_page")int awd_page ,HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		List<Bid_historyVO> BidList = new ArrayList<Bid_historyVO>();
+		List<Bid_historyVO> BidList2 = new ArrayList<Bid_historyVO>();
 		String user_id = (String) session.getAttribute("sessionUser");
-		BidList = tService.TotalBidRead(user_id);
+		
+
+	
+		Criteria bid_cri = new Criteria();
+		bid_cri.setCurrentPage(bid_page);
+		PageMaker bid_pageMaker = new PageMaker();
+		bid_pageMaker.setCri(bid_cri);
+		bid_pageMaker.setTotalCount(tService.TotalBidCountRead(user_id)); 
+		
+		
+		//list 자체
+		
+		BidList = tService.TotalBidRead(user_id,bid_cri);
+		BidList2 = tService.TotalBidReadAll(user_id);
 		model.addAttribute("BidList", BidList);
+		model.addAttribute("BidListPage",bid_pageMaker);
 		
 		
 		//title 가져오기
@@ -112,13 +128,20 @@ public class InfoController {
 		model.addAttribute("BidListEtc", Bid_etc);
 		
 		
+		Criteria reg_cri = new Criteria();
+		reg_cri.setCurrentPage(reg_page);
+		PageMaker reg_pageMaker = new PageMaker();
+		reg_pageMaker.setCri(reg_cri);
+		reg_pageMaker.setTotalCount(tService.ProductlistCountRead(user_id)); 
+		
 		//등록리스트
 		List<ProductVO> product_list = new ArrayList<ProductVO>();
 		
-		product_list = tService.ProductlistRead(user_id);
+		product_list = tService.ProductlistRead(user_id,reg_cri);
 		
 		model.addAttribute("productList",product_list);
-
+		model.addAttribute("productListPage",reg_pageMaker);
+		
 		//등록리스트 날짜 형식
 		List<String> date_list_reg = new ArrayList<String>();
 		
@@ -135,16 +158,25 @@ public class InfoController {
 		
 		model.addAttribute("RegListDate", date_list_reg);
 		
+		//awd cri 설정
+		Criteria awd_cri = new Criteria();
+		awd_cri.setCurrentPage(awd_page);
 		
-		//낙찰리스트,마감날짜, 판매자 전화번호
+		
+		
+		//낙찰리스트, 마감날짜, 판매자 전화번호
 		List<ProductVO> award_list = new ArrayList<ProductVO>();
 		List<String> endDate_list = new ArrayList<String>();
 		List<String> phoneNum = new ArrayList<String>();
 		
-		for(int i = 0; i < BidList.size(); i++) {
+		
+		
+		// 
+		// 0 -> 1번째 
+		for(int i = 0; i < BidList2.size(); i++) {
 			
 			
-			int product_id = BidList.get(i).getProduct_id();
+			int product_id = BidList2.get(i).getProduct_id();
 			String currentUser = pService.currentPriceUserRead(product_id);
 			
 			
@@ -179,17 +211,46 @@ public class InfoController {
 				}
 				
 			}
-			//리스트더하기
+			
 			
 		}
+		//for문 끝
 		
-		model.addAttribute("AwardList", award_list);
-		model.addAttribute("AwardDate", endDate_list);
-		model.addAttribute("AwardNum", phoneNum);
+		List<ProductVO> award_list2 = new ArrayList<ProductVO>();
+		List<String> endDate_list2 = new ArrayList<String>();
+		List<String> phoneNum2 = new ArrayList<String>();
+		
+		int pn = awd_cri.getOnePageNum();
+		int ps = awd_cri.getPageStart();
 		
 		
+		for (int i = 0; i < award_list.size(); i++) {
+			
+			if(i >= ps) {
+				
+				if(i < ps+pn) {
+					
+					award_list2.add(award_list.get(i));
+					endDate_list2.add(endDate_list.get(i));
+					phoneNum2.add(phoneNum.get(i));
+					
+				}	
+			}	
+		}
 		
+		//awd pageMaker설정
+		PageMaker awd_pageMaker = new PageMaker();
+		awd_pageMaker.setCri(awd_cri);
+		awd_pageMaker.setTotalCount(award_list2.size()); 
 		
+		model.addAttribute("AwardList2", award_list);
+		model.addAttribute("AwardDate2", endDate_list);
+		model.addAttribute("AwardNum2", phoneNum);
+		model.addAttribute("AwardListPage",awd_pageMaker);
+		
+		model.addAttribute("bid_page_model", bid_page);
+		model.addAttribute("reg_page_model", reg_page);
+		model.addAttribute("awd_page_model", awd_page);
 		
 	}
 

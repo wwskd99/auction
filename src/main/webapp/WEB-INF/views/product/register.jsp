@@ -311,7 +311,7 @@ function imgs_submit(){
 			
 			
 			<div class = "product_regist_submit">
-				<div class = "product_regist_reset">취소(아직결정X)</div>
+	
 				<button class = "product_regist_button" type ="submit">게시글 업로드</button>
 				<div class = "product_5km_check_text">
 					<input class = "product_5km_check" type="checkbox" name = "neighborhood" value ="YES">

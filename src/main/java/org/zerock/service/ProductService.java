@@ -24,6 +24,7 @@ public interface ProductService {
 	public void productDelete(int product_id);
 	public Date regDateRead(int product_id);
 	
+	
 	// 아래 동길
 	
 	public ProductVO get(int product_id);
@@ -33,7 +34,7 @@ public interface ProductService {
 	public ProductVO read(int product_id);
 	
 	// 호준
-	public List<Bid_historyVO> readBidList(String user_id);
+
 	public void updateDeadline(ProductVO pVo);
 	public String BuyerIsWho(int product_id);
 	public int IsExist(String user_id);
