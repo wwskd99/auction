@@ -43,13 +43,23 @@ public class PeriodCheckTask {
 
 			CompleteVO complete = new CompleteVO();
 			long diffTime = now.getTime() - productDate.getTime();
+			long oneday = 86400000;
 			int product_id = product.getProduct_id();
 			Room room = rMapper.selectOneRoomByProduct_id(product_id);
 			String Buyer_id = pMapper.BuyerIsWho(product_id);
 
-			if (diffTime >= 259200000 && diffTime < 864000000) {
+			if (diffTime >= oneday*3 && diffTime < oneday*10) {
 				// 3일 지난 상태
 				// 채팅방 개설
+				
+				if(diffTime/oneday==1) {	// deadline 입력
+					product.setDeadline(1);
+					pMapper.updateDeadline(product);
+				} else if(diffTime/oneday==2) {
+					product.setDeadline(2);
+					pMapper.updateDeadline(product);
+				}
+				
 				if (Buyer_id == null) { // 유저아이디가 없으면
 					// 혹시나 게시글 삭제할 경우 여기다가
 					return;
@@ -92,7 +102,7 @@ public class PeriodCheckTask {
 					rMapper.insertComplete(complete);
 				}
 
-			} else if (diffTime >= 864000000) {
+			} else if (diffTime >= oneday*10) {
 				// 10일 지난 상태
 				// 채팅방 자동 폭파
 				if (room != null) { // 방이 존재하면

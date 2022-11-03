@@ -97,7 +97,7 @@ select * from product where product_id > 0 order by product_id desc
 </select>
 <update id="updateDeadline"> 
 	update product set 
-	deadline = 1
+	deadline = #{deadline}
 	where product_id = #{product_id} 
 </update>
 <select id="BuyerIsWho" resultType="String">
@@ -106,5 +106,8 @@ select * from product where product_id > 0 order by product_id desc
 </select>
 <select id="IsExist" resultType="int">
 	select exists (select * from product where user_id = #{user_id});
+</select>
+<select id="selectTrade" resultType="org.zerock.domain.TradeVO">
+	select * from trade where user_id = #{user_id}
 </select>
 </mapper>
