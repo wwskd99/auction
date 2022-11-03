@@ -8,6 +8,7 @@ import org.zerock.domain.Bid_historyVO;
 import org.zerock.domain.GPSVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
+import org.zerock.domain.TradeVO;
 import org.zerock.mapper.GPSMapper;
 import org.zerock.mapper.ProductMapper;
 import org.zerock.mapper.ProductPicMapper;
@@ -161,5 +162,13 @@ public class ProductServiceImpl implements ProductService {
 	public int IsExist(String user_id) {
 		
 		return pMapper.IsExist(user_id);
+	}
+	@Override
+	public TradeVO selectTrade(String user_id) {
+		return pMapper.selectTrade(user_id);
+	}
+	@Override
+	public void priceSale(ProductVO pVo) {
+		pMapper.priceSale(pVo);
 	}
 }

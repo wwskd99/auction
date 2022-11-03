@@ -7,6 +7,7 @@ import org.zerock.domain.Bid_historyVO;
 import org.zerock.domain.GPSVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
+import org.zerock.domain.TradeVO;
 
 public interface ProductService {
 	
@@ -37,4 +38,6 @@ public interface ProductService {
 	public void updateDeadline(ProductVO pVo);
 	public String BuyerIsWho(int product_id);
 	public int IsExist(String user_id);
+	public TradeVO selectTrade(String user_id);
+	public void priceSale(ProductVO pVo);
 }
