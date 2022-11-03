@@ -225,9 +225,9 @@ ul {
 				</div>
 				<!-- search box -->
 				<div class="btn-sort">
-					<button class="sort_dis" type="button" onClick="Distance">5km이내</button>
+					<button class="sort_dis" type="button" onClick="Distance()">5km이내</button>
 					<button class="sort_price" id="price_desc" onClick="price_desc()">가격순</button>
-					<button class="sort_new" type="button" onClick="proNew">최신순</button>
+					<button class="sort_new" type="button" onClick="pronew()">최신순</button>
 				</div>
 				<!-- sort -->
 			</div>
@@ -304,6 +304,21 @@ function price_desc(){
 	});
 };
 
+function pronew()
+
+	$.ajax({
+		url : "/product/price",
+		type : "get",
+		data : ""{		
+		success : function(data) {
+
+			$("#item").html(data);			
+		},
+		error : function() {
+			alert(error);
+		}
+	});
+}
 
 
 </script>

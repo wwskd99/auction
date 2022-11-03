@@ -141,6 +141,13 @@ public class ProductController {
 		return "/product/price";
 	}
 	
+	@GetMapping("/new")
+	public String pronew(Model model) {
+//		List<ProductVO> pnew = pService.pronew();
+//		model.addAllAttributes("list", pnew);
+		return "/product/price";
+	}
+	
 	@GetMapping("/searchList")
 	public String searchList(Criteria cri, Model model) {
 		log.info("cri: " + cri);
