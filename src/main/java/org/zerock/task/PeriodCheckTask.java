@@ -33,7 +33,6 @@ public class PeriodCheckTask {
 
 	@Scheduled(cron = "0 0 0/1 1/1 * ?")
 	public void checkFiles() {
-		log.info("게시글 체크 task run............");
 		Date now = new Date();
 		List<ProductVO> productList = pMapper.getList();
 
@@ -52,16 +51,14 @@ public class PeriodCheckTask {
 				// 3일 지난 상태
 				// 채팅방 개설
 				
-				if(diffTime/oneday==1) {	// deadline 입력
-					product.setDeadline(1);
-					pMapper.updateDeadline(product);
-				} else if(diffTime/oneday==2) {
-					product.setDeadline(2);
-					pMapper.updateDeadline(product);
-				}
-				
-				if (Buyer_id == null) { // 유저아이디가 없으면
-					// 혹시나 게시글 삭제할 경우 여기다가
+				if (Buyer_id == null) { // 구매자가 없으면
+					if(diffTime/oneday==1) {	// deadline 입력
+						product.setDeadline(1);
+						pMapper.updateDeadline(product);
+					} else if(diffTime/oneday==2) {
+						product.setDeadline(2);
+						pMapper.updateDeadline(product);
+					}
 					return;
 				} else if (room != null) { // 방이 존재하는지
 					complete = rMapper.selectComplete(product_id);
@@ -129,6 +126,28 @@ public class PeriodCheckTask {
 					cMapper.deleteLog(room.getRoom_id()); // 채팅방 기록 삭제
 					rMapper.deleteRoom(room.getRoom_id());
 					rMapper.deleteComplete(product_id);
+				}
+			}
+		});
+	}
+	
+	@Scheduled(cron = "0 0 0 1/1 * ?")
+	public void DeadLineCheck() {
+		List<ProductVO> productList = pMapper.getList();
+		
+		productList.forEach(product -> {
+			int product_id = product.getProduct_id();
+			String Buyer_id = pMapper.BuyerIsWho(product_id);
+			
+			if (Buyer_id == null) {	// 구매자가 없을 시
+				if (product.getDeadline() == 1) {
+					int price = (int) (product.getStart_price() * 0.9); // 10퍼 할인
+					product.setStart_price(price);
+					pMapper.priceSale(product);
+				} else if (product.getDeadline() == 2) {
+					int price = (int) (product.getStart_price() * 10 / 9); // 등록가격으로 변경
+					product.setStart_price((int) (price * 0.8)); // 20퍼 할인
+					pMapper.priceSale(product);
 				}
 			}
 		});

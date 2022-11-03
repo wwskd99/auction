@@ -170,4 +170,8 @@ public class ProductServiceImpl implements ProductService {
 	public TradeVO selectTrade(String user_id) {
 		return pMapper.selectTrade(user_id);
 	}
+	@Override
+	public void priceSale(ProductVO pVo) {
+		pMapper.priceSale(pVo);
+	}
 }
