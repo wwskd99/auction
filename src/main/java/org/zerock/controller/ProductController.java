@@ -9,12 +9,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,12 +21,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import org.zerock.domain.Criteria;
 
-import org.zerock.domain.Bid_historyVO;
 import org.zerock.domain.GPSVO;
 
 import org.zerock.domain.MemberVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
+import org.zerock.service.MemberService;
 import org.zerock.service.ProductService;
 
 import lombok.AllArgsConstructor;
@@ -40,9 +38,12 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class ProductController {
 
+
 	@Autowired
 	private ProductService pService;
 
+	private MemberService mService;
+	
 	@GetMapping("/view")
 	public void productView(@RequestParam("product_id") int product_id, Model model) {
 
@@ -88,8 +89,10 @@ public class ProductController {
 	}
 
 	@GetMapping("/register")
-	public void register() {
-
+	public void register(HttpServletRequest request,Model model) {
+		HttpSession session = request.getSession();
+		String sessionUser = (String)session.getAttribute("sessionUser");
+		model.addAttribute("loginUser", sessionUser);
 	}
 
 	@PostMapping("/register")
@@ -126,10 +129,18 @@ public class ProductController {
 
 	@GetMapping("/list")
 	public void list(Model model) {
-		log.info("list");
-		model.addAttribute("list", pService.getList());
+		List<ProductVO> p = pService.getList();
+		log.info("list---------------------");
+		model.addAttribute("list", p);
 	}
-
+	
+	@GetMapping("/price")
+	public String price_desc(Model model){
+		List<ProductVO> pdesc = pService.price_desc();
+		model.addAttribute("list", pdesc);
+		return "/product/price";
+	}
+	
 	@GetMapping("/searchList")
 	public String searchList(Criteria cri, Model model) {
 		log.info("cri: " + cri);
@@ -142,23 +153,5 @@ public class ProductController {
 		}
 		return "/product/list";
 	}
-
-
-	@PostMapping("/modify")
-	public String modify(ProductVO product, RedirectAttributes rttr) {
-		log.info("modify:" + product);
-		if (pService.modify(product)) {
-			rttr.addFlashAttribute("result", "success");
-		}
-		return "redirect:/product/list";
-	}
-
-	@PostMapping("/remove")
-	public String remove(@RequestParam("product_id") Integer product_id, RedirectAttributes rttr) {
-		log.info("remove..." + product_id);
-		if (pService.remove(product_id)) {
-			rttr.addFlashAttribute("result", "success");
-		}
-		return "redirect:/product/list";
-	}
 }
+

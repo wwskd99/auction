@@ -15,6 +15,7 @@ public class ProductVO {
 	private int current_price;
 	private Date date;
 	private String neighborhood;
+	private int deadline;
 	
 
 	private List<ProductPicVO> productPic;

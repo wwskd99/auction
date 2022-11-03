@@ -95,18 +95,6 @@ public class ProductServiceImpl implements ProductService {
 	// 아래 동길
 
 	@Override
-	public boolean modify(ProductVO product) {
-		log.info("modify..." + product);
-		return pMapper.update(product) == 1;
-	}
-
-	@Override
-	public boolean remove(int product_id) {
-		log.info("remove..." + product_id);
-		return pMapper.delete(product_id) == 1;
-	}
-
-	@Override
 	public List<ProductVO> getList() {
 		log.info("getList");
 		return pMapper.getList();
@@ -117,12 +105,29 @@ public class ProductServiceImpl implements ProductService {
 		
 		return pMapper.searchList(cri);
 	}
+	
+	@Override
+	public List<ProductVO> price_desc() {
+
+		return pMapper.price_desc();
+	}
+
 
 	// 호준
 	@Override
 	public List<Bid_historyVO> readBidList(String user_id) {
-		log.info("userid: " + user_id);
 		return pMapper.readBidList(user_id);
+	}
+
+	@Override
+	public void updateDeadline(ProductVO pVo) {
+		pMapper.updateDeadline(pVo);
+		
+	}
+	@Override
+	public String BuyerIsWho(int product_id) {
+		
+		return pMapper.BuyerIsWho(product_id);
 	}
 
 }

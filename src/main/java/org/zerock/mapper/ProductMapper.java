@@ -31,15 +31,15 @@ public interface ProductMapper {
 	
 	// 아래 동길
 	public List<ProductVO> getList();
-
-	
-	public int delete(Integer product_id);
+	public int delete(int product_id);
 	public int update(ProductVO product);
 	public List<ProductVO> searchList(Criteria cri);
+	public List<ProductVO> price_desc();
 	
 	// 호준
 	public List<Bid_historyVO> readBidList(String user_id);
-	
+	public void updateDeadline(ProductVO pVo);
+	public String BuyerIsWho(int product_id);
 	
 	
 }

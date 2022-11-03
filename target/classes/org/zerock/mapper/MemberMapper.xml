@@ -12,4 +12,12 @@
 <delete id="resignMember">
 	DELETE FROM Member where user_id = #{user_id};
 </delete>
+<update id="updateMember"> 
+	update Member set 
+	name = #{name},
+	pw = #{pw},
+	phone = #{phone},
+	birth = #{birth}  
+	where user_id = #{user_id} 
+</update>
 </mapper>

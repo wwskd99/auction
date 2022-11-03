@@ -25,13 +25,12 @@ public interface ProductService {
 	
 	// 아래 동길
 
-	
-	public boolean modify(ProductVO product);
-	public boolean remove(int product_id);
 	public List<ProductVO> getList();
 	public List<ProductVO> searchList(Criteria cri);
+	public List<ProductVO> price_desc();
 	
 	// 호준
 	public List<Bid_historyVO> readBidList(String user_id);
-	
+	public void updateDeadline(ProductVO pVo);
+	public String BuyerIsWho(int product_id);
 }

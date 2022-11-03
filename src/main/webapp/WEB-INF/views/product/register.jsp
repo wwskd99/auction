@@ -211,6 +211,17 @@ height : 50vw;
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
+$(document).ready( function() {
+	
+	// 슬라이드
+	var loginUser = <%=session.getAttribute("sessionUser")%>;
+	if(loginUser == null){
+		alert("잘못된 접근입니다. 로그인을 해주세요.")
+		window.location.href='../member/login';
+	}
+	
+
+});
 
 function success(position){
 	var latitude = "<input type = 'hidden' name = 'latitude' value = '" + position.coords.latitude + "'>";
@@ -309,6 +320,7 @@ function imgs_submit(){
 					5km 이내 동네 직거래	
 				</div>
 			</div>
+			<input type = "hidden" name ="user_id" value ="${loginUser}">
 			</form>
 				<div class = "product_piclist">
 					<div class = "piclist_div"> 이미지</div>
