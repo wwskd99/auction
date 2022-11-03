@@ -4,8 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+
+import org.zerock.domain.Criteria;
+
 import org.zerock.domain.Bid_historyVO;
+import org.zerock.domain.Criteria;
 import org.zerock.domain.GPSVO;
+
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.domain.TradeVO;
@@ -24,24 +29,23 @@ public interface ProductMapper {
 	public void insertCP(@Param("product_id")int product_id,@Param("current_price")int current_price,@Param("user_id")String user_id);
 	public String readCPU(int product_id);
 	public String readTitle(int product_id);
-	public List<ProductVO> readProductlist(String user_id);
+	public List<ProductVO> readProductlist(@Param("user_id")String user_id,@Param("cri")Criteria cri);
+	public int readProductlistCount(String user_id);
 	public void deleteProduct(int product_id);
 	public Date readRegDate(int product_id);
 	
 	// 아래 동길
 	public List<ProductVO> getList();
-
-	
-	public int delete(Integer product_id);
+	public int delete(int product_id);
 	public int update(ProductVO product);
-	public ProductVO read(int product_id);
-	
+	public List<ProductVO> searchList(Criteria cri);
+	public List<ProductVO> price_desc();
 	
 	// 호준
-	public List<Bid_historyVO> readBidList(String user_id);
 	public void updateDeadline(ProductVO pVo);
 	public String BuyerIsWho(int product_id);
 	public int IsExist(String user_id);
 	public TradeVO selectTrade(String user_id);
 	public void priceSale(ProductVO pVo);
+	public List<Bid_historyVO> readBidList(String user_id);
 }

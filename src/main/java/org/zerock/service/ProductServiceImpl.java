@@ -4,8 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
+import org.zerock.domain.Criteria;
+
 import org.zerock.domain.Bid_historyVO;
 import org.zerock.domain.GPSVO;
+
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.domain.TradeVO;
@@ -112,45 +116,32 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	// 아래 동길
-	
-	
-	
-
-	@Override
-	public ProductVO get(int product_id) {
-		log.info("get..." + product_id);
-		return pMapper.read(product_id);
-	}
-
-	@Override
-	public boolean modify(ProductVO product) {
-		log.info("modify..." + product);
-		return pMapper.update(product) == 1;
-	}
-
-	@Override
-	public boolean remove(int product_id) {
-		log.info("remove..." + product_id);
-		return pMapper.delete(product_id) == 1;
-	}
 
 	@Override
 	public List<ProductVO> getList() {
 		log.info("getList");
 		return pMapper.getList();
-	}
+	}	
+	
 	@Override
-	public ProductVO read(int product_id) {
+	public List<ProductVO> searchList(Criteria cri) {
 		
-		return pMapper.read(product_id);
+		return pMapper.searchList(cri);
 	}
 	
-	
+	@Override
+	public List<ProductVO> price_desc() {
+
+		return pMapper.price_desc();
+	}
+
+
 	// 호준
 	@Override
 	public List<Bid_historyVO> readBidList(String user_id) {
 		return pMapper.readBidList(user_id);
 	}
+
 	@Override
 	public void updateDeadline(ProductVO pVo) {
 		pMapper.updateDeadline(pVo);
@@ -161,6 +152,7 @@ public class ProductServiceImpl implements ProductService {
 		
 		return pMapper.BuyerIsWho(product_id);
 	}
+
 	@Override
 	public int IsExist(String user_id) {
 		
