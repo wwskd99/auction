@@ -40,7 +40,14 @@ public class RoomServiceImpl implements RoomService{
 	public Room selectOneRoom(int room_id) {
 		return roomMapper.selectOneRoom(room_id);
 	}
-
+	@Override
+	public Room selectOneRoomByProduct_id(int product_id) {		
+		return roomMapper.selectOneRoomByProduct_id(product_id);
+	}
+	@Override
+	public void deleteRoom(int room_id) {
+		roomMapper.deleteRoom(room_id);
+	}
 	@Override
 	public void insertComplete(CompleteVO complete) {
 		roomMapper.insertComplete(complete);
@@ -79,5 +86,26 @@ public class RoomServiceImpl implements RoomService{
 	@Override
 	public List<Room> selectBuyerRoom(String buyer) {
 		return roomMapper.selectBuyerRoom(buyer);
+	}
+
+	@Override
+	public CompleteVO selectComplete(int product_id) {
+		
+		return roomMapper.selectComplete(product_id);
+	}
+
+	@Override
+	public void deleteComplete(int product_id) {
+		roomMapper.deleteComplete(product_id);
+	}
+
+	@Override
+	public void insertFailTradeSeller(String user_id) {
+		roomMapper.insertFailTradeSeller(user_id);		
+	}
+
+	@Override
+	public void insertFailTradeBuyer(String user_id) {
+		roomMapper.insertFailTradeBuyer(user_id);
 	}
 }

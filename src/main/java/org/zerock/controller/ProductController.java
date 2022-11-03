@@ -7,17 +7,18 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import org.zerock.domain.Criteria;
 
@@ -26,7 +27,7 @@ import org.zerock.domain.GPSVO;
 import org.zerock.domain.MemberVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
-import org.zerock.service.MemberService;
+import org.zerock.domain.TradeVO;
 import org.zerock.service.ProductService;
 
 import lombok.AllArgsConstructor;
@@ -38,11 +39,8 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class ProductController {
 
-
 	@Autowired
 	private ProductService pService;
-
-	private MemberService mService;
 	
 	@GetMapping("/view")
 	public void productView(@RequestParam("product_id") int product_id, Model model) {
@@ -68,8 +66,18 @@ public class ProductController {
 		model.addAttribute("regDate", regDate);
 
 		String currentPriceUser = pService.currentPriceUserRead(product_id);
-		model.addAttribute("currentPriceUser", currentPriceUser);
 
+		model.addAttribute("currentPriceUser",currentPriceUser);
+		
+		TradeVO tVo = pService.selectTrade(pVo.getUser_id());
+		if (tVo == null) {
+			model.addAttribute("msg", "첫 경매 판매자입니다.");
+		} else {
+			model.addAttribute("trade", tVo);
+			float SuccessRate = ((float) (tVo.getTotal_count_s() - tVo.getFail_count_s()) / tVo.getTotal_count_s())
+					* 100;
+			model.addAttribute("rate", SuccessRate);
+		}
 	}
 
 	@ResponseBody
@@ -124,7 +132,37 @@ public class ProductController {
 		return currentUser;
 
 	}
-
+	
+	@ResponseBody
+	@RequestMapping(value = "/productDelete", produces = "application/json; charset=utf8")
+	public String productDelete(@RequestParam("product_id") int product_id ,HttpServletRequest request) {
+		
+		String requestMessage;
+		HttpSession session = request.getSession();
+		String sessionUser = (String)session.getAttribute("sessionUser");
+		
+		ProductVO pVo = pService.productRead(product_id);
+		
+		if (sessionUser.equals(pVo.getUser_id())) {
+			
+			if (pVo.getCurrent_price() != 0) {
+				requestMessage = "현재 경매 입찰중입니다. 삭제할 수 없습니다.";				
+			}else {
+				pService.productDelete(product_id);
+				requestMessage = "경매 삭제 완료";
+			}
+			
+		
+		}else {
+			
+			requestMessage = "아이디 정보가 없습니다. 정상적인 경로로 접근해주십시오";
+			
+		}
+	
+		return requestMessage;
+	}
+		
+	
 	//// 아래 동길
 
 	@GetMapping("/list")

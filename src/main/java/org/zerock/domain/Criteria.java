@@ -1,31 +1,60 @@
 package org.zerock.domain;
 
-// 페이지 처리와 검색 기능을 수행하기 위해 필요한 데이터 저장하는 클래스
+
+import lombok.Data;
 
 public class Criteria {
-	// 필드
-	private int pageNum;	// 현재 페이지 번호
-	private int amount;		// 페이지 당 보여줄 게시글의 수 (보통 10개 : 가변)
+	//현재 페이지
+	private int currentPage;
+	//페이지당 개수
+	private int onePageNum;
+	
 	private String keyword;	// 키워드
 	
-	
-	public Criteria() {		
-		this(1, 10);	
-	}
-
-	public Criteria(int pageNum, int amount) {	
-		this.pageNum = pageNum;
-		this.amount = amount;
+	//페이지 시작 게시글 번호 얻기
+	public int getPageStart() {
+		
+		return (this.currentPage-1)*onePageNum;
+		
 	}
 	
-	public int getAmount() {
-		return amount;
+	//기본 디폴트
+	public Criteria() {
+		this.currentPage = 1;
+		this.onePageNum = 5;
 	}
 	
-	public void setAmount(int amount) {
-		this.amount = amount;
+	//getter,setter 현재페이지
+	public int getCurrentPage() {
+		return currentPage;
 	}
 	
+	public void setCurrentPage(int currentPage) {
+		
+		if(currentPage <= 0) {
+			this.currentPage = 1;
+		}else {
+			this.currentPage = currentPage;
+		}
+	
+	}
+	
+	//getter setter 페이지당 게시글수
+	public int getOnePageNum() {
+		return onePageNum;
+	}
+	
+	public void setOnePageNum(int pageCount) {
+		
+		// 복잡하게 되었는데, 원래값이랑 다르면 저장하고 아니면 말고 식 추후에 수정
+		int cnt = this.onePageNum;
+		if(pageCount != cnt) {
+			this.onePageNum = cnt;
+		}else {
+			this.onePageNum = pageCount;
+		}
+		
+	}
 	public String getKeyword() {
 		return keyword;
 	}
@@ -34,8 +63,5 @@ public class Criteria {
 		this.keyword = keyword;
 	}
 	
-	@Override
-	public String toString() {
-		return "Criteria [pageNum= " + pageNum + ", amount= " + amount + ", keyword=" + keyword + "]";
-	}
 }
+

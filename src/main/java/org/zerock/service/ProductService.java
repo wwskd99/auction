@@ -1,5 +1,6 @@
 package org.zerock.service;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -10,6 +11,7 @@ import org.zerock.domain.GPSVO;
 
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
+import org.zerock.domain.TradeVO;
 
 public interface ProductService {
 	
@@ -22,6 +24,10 @@ public interface ProductService {
 	public String currentPriceUserRead(int product_id);
 	public void productRegist(ProductVO product);
 	public void productGPSRegist(GPSVO gpsVo);
+	public String TitleRead(int product_id);
+	public void productDelete(int product_id);
+	public Date regDateRead(int product_id);
+	
 	
 	// 아래 동길
 
@@ -30,7 +36,11 @@ public interface ProductService {
 	public List<ProductVO> price_desc();
 	
 	// 호준
-	public List<Bid_historyVO> readBidList(String user_id);
+
 	public void updateDeadline(ProductVO pVo);
 	public String BuyerIsWho(int product_id);
+	public int IsExist(String user_id);
+	public TradeVO selectTrade(String user_id);
+	public void priceSale(ProductVO pVo);
+	public List<Bid_historyVO> readBidList(String user_id);
 }

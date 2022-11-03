@@ -19,11 +19,17 @@
 <select id="selectBuyerRoom" resultType="org.zerock.domain.Room">
 	select * from room where buyer = #{buyer}
 </select>
+<delete id="deleteRoom">
+	DELETE FROM room where room_id = #{room_id};
+</delete>
 <insert id="insertScore">
 	insert into score (user_id,product_id,user_score,cause) values (#{user_id}, #{product_id}, #{user_score}, #{cause})
 </insert>
 <select id="selectOneRoom" resultType="org.zerock.domain.Room">
 	select * from room where room_id = #{room_id}
+</select>
+<select id="selectOneRoomByProduct_id" resultType="org.zerock.domain.Room">
+	select * from room where product_id = #{product_id}
 </select>
 <insert id="insertComplete">
 	insert into complete (product_id,buyer_id,seller_id) 
@@ -31,6 +37,12 @@
 	from dual
 	where not exists (select product_id from complete where product_id = #{product_id});
 </insert>
+<select id="selectComplete" resultType="org.zerock.domain.CompleteVO">
+	select * from complete where product_id = #{product_id}
+</select>
+<delete id="deleteComplete">
+	DELETE FROM complete where product_id = #{product_id};
+</delete>
 <update id="updateSellerCheck"> 
 	update complete set seller_check = #{seller_check} where product_id = #{product_id} 
 </update>
@@ -50,5 +62,13 @@
 <insert id="insertSuccessTradeBuyer">
 	insert into trade(user_id, total_count_b, fail_count_b) values (#{user_id} , 1, 0) 
 	on DUPLICATE KEY UPDATE total_count_b = total_count_b+1;
+</insert>
+<insert id="insertFailTradeSeller">
+	insert into trade(user_id, total_count_s, fail_count_s) values (#{user_id} , 1, 1) 
+	on DUPLICATE KEY UPDATE total_count_s = total_count_s+1, fail_count_s = fail_count_s+1;
+</insert>
+<insert id="insertFailTradeBuyer">
+	insert into trade(user_id, total_count_b, fail_count_b) values (#{user_id} , 1, 1) 
+	on DUPLICATE KEY UPDATE total_count_b = total_count_b+1, fail_count_b = fail_count_b+1;
 </insert>
 </mapper>

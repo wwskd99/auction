@@ -1,5 +1,6 @@
 package org.zerock.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.zerock.domain.GPSVO;
 
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
+import org.zerock.domain.TradeVO;
 import org.zerock.mapper.GPSMapper;
 import org.zerock.mapper.ProductMapper;
 import org.zerock.mapper.ProductPicMapper;
@@ -92,6 +94,27 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	
+	@Override
+	public String TitleRead(int product_id) {
+		
+		return pMapper.readTitle(product_id);
+		
+	}
+	
+	@Override
+	public void productDelete(int product_id) {
+		
+		gpsMapper.deleteGPS(product_id);
+		pMapper.deleteProduct(product_id);
+		
+	}
+	
+	@Override
+	public Date regDateRead(int product_id) {
+		
+		return pMapper.readRegDate(product_id);
+	}
+	
 	// 아래 동길
 
 	@Override
@@ -130,4 +153,17 @@ public class ProductServiceImpl implements ProductService {
 		return pMapper.BuyerIsWho(product_id);
 	}
 
+	@Override
+	public int IsExist(String user_id) {
+		
+		return pMapper.IsExist(user_id);
+	}
+	@Override
+	public TradeVO selectTrade(String user_id) {
+		return pMapper.selectTrade(user_id);
+	}
+	@Override
+	public void priceSale(ProductVO pVo) {
+		pMapper.priceSale(pVo);
+	}
 }
