@@ -135,6 +135,18 @@ public class ProductServiceImpl implements ProductService {
 		return pMapper.price_desc();
 	}
 
+	@Override
+	public List<ProductVO> pronew() {
+		
+		return pMapper.pronew();
+	}
+	
+
+	@Override
+	public List<ProductVO> distance() {
+		
+		return pMapper.distance();
+	}
 
 	// 호준
 	@Override

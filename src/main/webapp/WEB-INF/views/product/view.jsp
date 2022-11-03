@@ -35,11 +35,28 @@ float : left;
 .memberinfo {
 	font-size : 1.0em;
 	color : #6c757d;
-	width : 95%;
+	width : 100%;
 	height : 5%;
 	padding-bottom: 1%;
 	position : absolute;
 	border-bottom : 1px solid #E4E4E4;
+}
+.memberinfoinner1 {
+	font-size : 1.0em;
+	color : #6c757d;
+	width : 40%;
+	height : 100%;
+	float : left;
+
+}
+
+.memberinfoinner2{
+		font-size : 1.0em;
+	color : #6c757d;
+	width :40%;
+	height : 100%;
+	float : left;
+
 }
 .title {
 	text-align : left;
@@ -669,20 +686,6 @@ $(document).ready( function bidUnit(){
 	 $(".bid_unit").text("호가단위 : " + bid_unit + "원");
 });
 
-// 수정버튼(동길)
-$(document).ready(function() {
- 
- 	var operForm = $("#operForm"); 
- 
- 	$("button[data-oper='modify']").on("click", function(e) 
-		 operForm.attr("action","/product/modify").submit();
-	});
-		$("button[data-oper='list']").on("click", function(e){
-		operForm.find("#product_id").remove();
-		operForm.attr("action","/product/list")
-		operForm.submit();
-	}); 
-});
 </script>
 
 
@@ -710,18 +713,16 @@ $(document).ready(function() {
 	</div>
 	
 	<div class = "info_wrap">
-		<div class ="memberinfo">${productView.user_id}님의 경매 횟수 : ${trade.total_count_s}<c:if test="${not empty msg}">0</c:if>회 
+		<div class ="memberinfo">
+			<div class = "memberinfoinner1">${productView.user_id}님의 경매 횟수 : ${trade.total_count_s}<c:if test="${not empty msg}">0</c:if>회</div>
+			<div class = "memberinfoinner2">
+				<c:choose>
+					<c:when test="${empty msg}">거래 성사율 : ${rate}%</c:when>
+					<c:otherwise>${msg}</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
-		<div class = ""> <br>
-		<c:choose>
-			<c:when test="${empty msg}">
-				거래 성사율 : ${rate}%
-			</c:when>
-			<c:otherwise>
-				${msg}
-			</c:otherwise>
-		</c:choose>
-		</div>
+		
 		<div class = "title">${productView.title}</div>
 		<div class = "startPrice">시작가 : ${productView.start_price}원</div>
 		<div class = "currentPrice"><a id = "currentPriceH2">현재가 : ${productView.current_price}원</a></div>
