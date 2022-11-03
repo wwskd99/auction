@@ -279,7 +279,21 @@ function imgs_submit(){
 	});
 }
 
+function checkForm(){
 
+	
+	var start_price = document.getElementById("start_price_input").value;
+	if((start_price%1000) != 0){
+		
+		alert("1,000원 단위 이상으로 입력해 주십시오.");
+		
+		return false;
+		
+	} else{
+		
+		return true;
+	}
+}
 
 		
 </script>
@@ -291,7 +305,7 @@ function imgs_submit(){
 
 	<div class = "main_wrap">
 		<div class = "register_wrap">
-			<form class = "product_regist_form" method = "post" action ="../product/register">
+			<form class = "product_regist_form" method = "post" action ="../product/register" name = "registproduct" onsubmit="return checkForm()">
 			<div class = "product_title">
 				<p>
 					<input class = "product_title_input" type = "text" name="title" autocomplete="off" required>
@@ -300,7 +314,7 @@ function imgs_submit(){
 			</div>
 			<div class = "product_start_price">
 				<p>
-					<input type = "text" name="start_price" autocomplete="off" required>
+					<input type = "text" id = "start_price_input" name="start_price" autocomplete="off" required>
 					<label for = "start_price"><span>시작가</span></label>
 				</p>
 			</div>
