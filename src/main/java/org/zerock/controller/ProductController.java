@@ -57,7 +57,7 @@ public class ProductController {
 		model.addAttribute("currentPriceUser",currentPriceUser);
 		
 		TradeVO tVo = pService.selectTrade(pVo.getUser_id());
-		if (tVo == null) {
+		if (tVo == null || tVo.getTotal_count_s() == 0) {
 			model.addAttribute("msg", "첫 경매 판매자입니다.");
 		} else {
 			model.addAttribute("trade", tVo);
