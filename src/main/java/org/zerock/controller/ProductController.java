@@ -43,8 +43,17 @@ public class ProductController {
 	private ProductService pService;
 	
 	@GetMapping("/view")
-	public void productView(@RequestParam("product_id") int product_id, Model model) {
-
+	public String productView(@RequestParam("product_id") int product_id, Model model) {
+		
+		ProductVO pVo = pService.productRead(product_id);
+		
+		if(pVo == null) {
+			
+			model.addAttribute("message", "존재하지 않는 게시글 입니다.");
+			
+			return "/main";
+		}
+		
 		List<ProductPicVO> picList = pService.piclistRead(product_id);
 		model.addAttribute("piclist", picList);
 
@@ -55,8 +64,7 @@ public class ProductController {
 		log.info("----- view page controller end -----");
 
 		model.addAttribute("piccount", picCount);
-
-		ProductVO pVo = pService.productRead(product_id);
+		
 		model.addAttribute("productView", pVo);
 
 		Date date = pVo.getDate();
@@ -78,6 +86,8 @@ public class ProductController {
 					* 100;
 			model.addAttribute("rate", SuccessRate);
 		}
+		
+		return "/product/view";
 	}
 
 	@ResponseBody
@@ -111,11 +121,23 @@ public class ProductController {
 		// 게시글 등록
 		pService.productRegist(product);
 		// 셀렉트키 리턴
+		
+		log.info(product);
+		
 		gpsVo.setProduct_id(product.getProduct_id());
-
-		if (gpsVo.getLatitude() != null) {
-			pService.productGPSRegist(gpsVo);
+		
+		if(product.getNeighborhood() == null) {
+			
+			product.setNeighborhood("NO");
+			
 		}
+			if(product.getNeighborhood().equals("YES")) {
+			
+				if(gpsVo.getLatitude() != null) {
+					pService.productGPSRegist(gpsVo);
+				}
+
+			}
 
 		rttr.addFlashAttribute("result", product.getProduct_id());
 
