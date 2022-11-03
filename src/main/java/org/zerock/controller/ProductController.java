@@ -97,6 +97,7 @@ public class ProductController {
 		// 게시글 등록
 		pService.productRegist(product);
 		// 셀렉트키 리턴
+		System.out.println(product.getNeighborhood());
 		if(product.getNeighborhood() == "YES") {
 			gpsVo.setProduct_id(product.getProduct_id());
 		
