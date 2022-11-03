@@ -57,7 +57,7 @@ p label:after {
 	bottom:-1px; 
 	width:0; 
 	height:100%; 
-	border-bottom:3px solid #5fa8d3; 
+	border-bottom:3px solid #FF9614;
 	transition:all .3s ease; 
 }
 
@@ -72,7 +72,7 @@ p input:focus + label span,
 p input:valid + label span { 
 	transform:translateY(-150%); 
 	font-size:1.0rem; 
-	color:#5fa8d3; 
+	color:#FF9614; 
 }  
 p input:focus + label::after,
 p input:valid + label::after { 
@@ -84,7 +84,7 @@ p textarea:focus + label span,
 p textarea:valid + label span { 
 	transform:translateY(-150%); 
 	font-size:1.0rem; 
-	color:#5fa8d3; 
+	color:#FF9614;
 }  
 p textarea:focus + label::after,
 p textarea:valid + label::after { 
@@ -164,7 +164,7 @@ height : 50vw;
 .imgs_submit{
 	position : absolute;
 	right : 5%;
-	background-color : #666;
+	background-color : #FD9001;
 	border-radius : 0.25em;
 	color : white;
 	width : 20%;
@@ -191,13 +191,14 @@ height : 50vw;
 	position : absolute;
 	top : 40%;
 	right : 5%;
-	background-color : black;
+	background-color : #FD6E01;
 	width : 20%;
 	height : 30%;
 	text-align : center;
 	line-height : 200%;
 	color : white;
-	border-radius : 0.25em;
+	border-radius : 0.25em ;
+	border : 1px solid #FD6E01;
 }
 
 .product_regist_reset{

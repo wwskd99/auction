@@ -6,15 +6,15 @@
 <html>
 <head>
 <style>
-a { 
+main a { 
  text-decoration: none;
  color: black; 
  font:bold 12px tahoma;
  }
-a:visited { text-decoration: none; }
-a:hover { text-decoration: none; }
-a:focus { text-decoration: none; }
-a:hover, a:active { text-decoration: none; }
+main a:visited { text-decoration: none; }
+main a:hover { text-decoration: none; }
+main a:focus { text-decoration: none; }
+main a:hover, a:active { text-decoration: none; }
 
 .bid_list_ul div:hover , .reg_list_ul div:hover, .awd_list_ul div:hover{
 	color:#fff;
@@ -81,6 +81,7 @@ min-height : 1000px;
 	font-size : 1.1rem;
 	background : #FFEFD5;
 	color : #FF9614;
+	font-weight : 700;
 }
 
 
@@ -102,7 +103,7 @@ min-height : 1000px;
 	color : #969696;
 	font-size : 1.0rem;
 	line-height : 250%;
-	
+	font-weight : 600;
 }
 
 
@@ -251,8 +252,9 @@ height : 20%;
 .delete_product div{
 	width : 50%;
 	cursor : pointer;
-	background : black;
+	background : #FF8222;
 	margin : 0 auto;
+	margin-top : 2%;
 	border-radius : 10px;
 	color : white;
 	cursor : pointer;
@@ -433,6 +435,7 @@ height : 20%;
 	background : #FFF6E1;
 	border:1px solid #eee;
 }
+
 
 </style>
 
