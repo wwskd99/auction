@@ -3,8 +3,12 @@ package org.zerock.service;
 import java.util.Date;
 import java.util.List;
 
+
+import org.zerock.domain.Criteria;
+
 import org.zerock.domain.Bid_historyVO;
 import org.zerock.domain.GPSVO;
+
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.domain.TradeVO;
@@ -26,12 +30,10 @@ public interface ProductService {
 	
 	
 	// 아래 동길
-	
-	public ProductVO get(int product_id);
-	public boolean modify(ProductVO product);
-	public boolean remove(int product_id);
+
 	public List<ProductVO> getList();
-	public ProductVO read(int product_id);
+	public List<ProductVO> searchList(Criteria cri);
+	public List<ProductVO> price_desc();
 	
 	// 호준
 
@@ -40,4 +42,5 @@ public interface ProductService {
 	public int IsExist(String user_id);
 	public TradeVO selectTrade(String user_id);
 	public void priceSale(ProductVO pVo);
+	public List<Bid_historyVO> readBidList(String user_id);
 }

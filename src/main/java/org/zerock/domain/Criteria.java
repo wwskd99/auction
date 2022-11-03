@@ -1,5 +1,6 @@
 package org.zerock.domain;
 
+
 import lombok.Data;
 
 public class Criteria {
@@ -7,6 +8,8 @@ public class Criteria {
 	private int currentPage;
 	//페이지당 개수
 	private int onePageNum;
+	
+	private String keyword;	// 키워드
 	
 	//페이지 시작 게시글 번호 얻기
 	public int getPageStart() {
@@ -52,7 +55,13 @@ public class Criteria {
 		}
 		
 	}
+	public String getKeyword() {
+		return keyword;
+	}
+	
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 	
 }
-
 

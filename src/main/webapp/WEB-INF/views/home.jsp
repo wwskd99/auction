@@ -14,6 +14,7 @@
 	<title>Kakao 지도 시작하기</title>
 </head>
 <body>
+
 	<div id="map" style="width: 800px; height: 600px;"></div>
 	<script type="text/javascript">
 	$(document).ready(function() {
