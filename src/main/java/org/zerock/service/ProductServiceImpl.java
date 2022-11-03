@@ -178,5 +178,4 @@ public class ProductServiceImpl implements ProductService {
 	public void priceSale(ProductVO pVo) {
 		pMapper.priceSale(pVo);
 	}
-	
 }
