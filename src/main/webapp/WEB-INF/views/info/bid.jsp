@@ -6,13 +6,30 @@
 <html>
 <head>
 <style>
+a { 
+ text-decoration: none;
+ color: black; 
+ font:bold 12px tahoma;
+ }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none; }
+a:focus { text-decoration: none; }
+a:hover, a:active { text-decoration: none; }
+
+.bid_list_ul div:hover , .reg_list_ul div:hover, .awd_list_ul div:hover{
+	color:#fff;
+	border:1px solid #f40;
+	background-color:#f40;
+}
+
+
 main {
 width : 70%;
-height : 70vw;
+height : 80vw;
 margin: 0 auto;
 position : relative;
 min-width :900px;
-min-height : 650px;
+min-height : 1000px;
 }
 
 /* 1 */
@@ -26,14 +43,14 @@ min-height : 650px;
 
 /* 2 */
 .total_end_wrap{
-	height : 30%;
+	height : 33%;
 }
 .total_bid_wrap{
-	height : 40%;
+	height : 33%;
 }
 
 .total_reg_wrap{
-	height : 30%;
+	height : 33%;
 }
 
 .total_end_wrap, .total_bid_wrap, .total_reg_wrap{
@@ -50,11 +67,11 @@ min-height : 650px;
 
 }
 .total_reg_list_wrap_des{
-	height : 18%;
+	height : 14%;
 }
 
 .total_end_list_wrap_des{
-	height : 18%;
+	height : 14%;
 }
 
 .total_bid_list_wrap_des, .total_reg_list_wrap_des, .total_end_list_wrap_des{
@@ -69,13 +86,13 @@ min-height : 650px;
 
 /* 3-2 */
 .total_end_list_wrap_des2{
-	height : 15%;
+	height : 11%;
 }
 .total_bid_list_wrap_des2{
-	height : 12%;
+	height : 11%;
 }
 .total_reg_list_wrap_des2{
-	height : 15%;
+	height : 11%;
 }
 
 .total_end_list_wrap_des2, .total_bid_list_wrap_des2, .total_reg_list_wrap_des2{
@@ -167,21 +184,20 @@ height : 20%;
 
 /* 3-3 */
 .total_bid_list_wrap{
-
+	height : 65%;
 }
 
 .total_reg_list_wrap{
-
+	height : 65%;
 }
 
 .total_end_list_wrap{
-
+	height : 65%;
 }
 
 .total_bid_list_wrap, .total_reg_list_wrap, .total_end_list_wrap{
 	width : 100%;
-	height : 70%;
-	overflow : visible;
+	
 }
 
 
@@ -205,7 +221,7 @@ height : 20%;
 }
 .bid_date, .current_price, .product_title, .bid_etc, .product_id{
 	float : left;
-	height : 14%;
+	height : 20%;
 	line-height : 250%;
 
 }
@@ -230,13 +246,23 @@ height : 20%;
 }
 .delete_product{
 	width : 20%;
-
+	
+}
+.delete_product div{
+	width : 50%;
+	cursor : pointer;
+	background : black;
+	margin : 0 auto;
+	border-radius : 10px;
+	color : white;
+	cursor : pointer;
+	height : 70%;
 }
 
 .product_title_reg, .current_price_reg, .regist_date, .delete_product, .product_id_reg{
 	float : left;
-	height : 18%;
-	line-height : 250%;
+	height : 20%;
+	line-height : 230%;
 }
 
 
@@ -259,8 +285,8 @@ height : 20%;
 
 .awd_title, .awd_price, .awd_date, .awd_phone,.awd_proid{
 	float : left;
-	height : 18%;
-	line-height : 250%;
+	height : 20%;
+	line-height : 230%;
 
 }
 
@@ -368,8 +394,45 @@ height : 20%;
 }
 
 
+/*페이징*/
+.bid_list_ul{
 
+}
 
+.reg_list_ul{
+
+}
+.awd_list_ul{
+	
+}
+
+.bid_list_ul, .reg_list_ul, .awd_list_ul{
+	width : 100%;
+	height : 9%;
+	display : flex;
+	justify-content:flex-end;
+}
+
+.bid_list_ul div{
+	height : 100%;
+	width : 5%;
+	background : #FFF6E1;
+	border:1px solid #eee;
+}
+
+.reg_list_ul div{
+	height : 100%;
+	width : 5%;
+	background : #FFF6E1;
+	border:1px solid #eee;
+}
+
+.awd_list_ul div{
+	height : 100%;
+	width : 5%;
+	background : #FFF6E1;
+	border:1px solid #eee;
+}
 
 </style>
 
@@ -381,7 +444,7 @@ var product_id;
 
 $( function(){
 	
-	$(".delete_product").on("click", function(){
+	$(".delete_product_div").on("click", function(){
 		
 		var modal = document.querySelector(".modal_wrapper");
 		modal.style.display = "flex";
@@ -463,7 +526,26 @@ $( function(){
 				<div class="bid_date">${BidListDate[status.index]}</div>
 				<div class = "bid_etc">${BidListEtc[status.index]}</div>
 			</c:forEach>
-			</div>
+		</div>
+			
+	<div class="bid_list_ul">
+    	<c:if test="${BidListPage.prev}">
+   			<div>
+      			<a href='<c:url value="/info/bid?bid_page=${BidListPage.startPage-1}&amp;reg_page=${reh_page_model}&awd_page=${awd_page_model}"/>'>pre</a>
+   			</div>
+   		</c:if>
+  		<c:forEach begin="${BidListPage.startPage}" end="${BidListPage.endPage}" var="pageNum">
+   			 <div>
+        		<a href='<c:url value="/info/bid?bid_page=${pageNum}&amp;reg_page=${reg_page_model}&awd_page=${awd_page_model}"/>'>${pageNum}</a>
+  			 </div>
+  		</c:forEach>
+   		<c:if test="${BidListPage.next && BidListPage.endPage > 0}">
+   			<div>
+        <a href='<c:url value="/info/bid?bid_page=${BidListPage.endPage+1}&amp;reg_page=${reg_page_model}&awd_page=${awd_page_model}"/>'>next</a>
+    		</div>
+    	</c:if>
+	</div>	
+			
 		</div>
 		<div class = "total_reg_wrap">
 			<div class = "total_reg_list_wrap_des">등록 내역</div>
@@ -480,10 +562,31 @@ $( function(){
 				<div class = "product_title_reg">${proList.title}</div>
 				<div class = "current_price_reg">${proList.current_price}원</div>
 				<div class = "regist_date">${RegListDate[status.index]}</div>
-				<div class = "delete_product">삭제<input class = "prolist_proid" type ="hidden" value="${proList.product_id}"></div>
+				<div class = "delete_product"><div class ="delete_product_div">삭제<input class = "prolist_proid" type ="hidden" value="${proList.product_id}"></div></div>
 				
-			</c:forEach>		
-			</div>
+			</c:forEach>
+			
+		</div>
+		
+			
+			<!--  페이징  -->
+	<div class="reg_list_ul">
+    	<c:if test="${productListPage.prev}">
+   			<div>
+      			<a href='<c:url value="/info/bid?bid_page=${bid_page_model}&amp;reg_page=${productListPage.startPage-1}&awd_page=${awd_page_model}"/>'>pre</a>
+   			</div>
+   		</c:if>
+  		<c:forEach begin="${productListPage.startPage}" end="${productListPage.endPage}" var="pageNum">
+   			 <div>
+        		<a href='<c:url value="/info/bid?bid_page=${bid_page_model}&amp;reg_page=${pageNum}&awd_page=${awd_page_model}"/>'>${pageNum}</a>
+  			 </div>
+  		</c:forEach>
+   		<c:if test="${productListPage.next && productListPage.endPage > 0}">
+   			<div>
+        <a href='<c:url value="/info/bid?bid_page=${bid_page_model}&amp;reg_page=${productListPage.endPage+1}&awd_page=${awd_page_model}"/>'>next</a>
+    		</div>
+    	</c:if>
+	</div>
 		</div>	
 		<div class = "total_end_wrap">
 			<div class = "total_end_list_wrap_des">낙찰 내역</div>
@@ -494,16 +597,32 @@ $( function(){
 					<div class = "total_end_list_wrap_des2_date">낙찰일</div>
 					<div class = "total_end_list_wrap_des2_phone">판매자 전화번호</div>
 				</div>
-			
-			<c:forEach items="${AwardList}" var="awaList" varStatus = "status">
-				<div class = "awd_proid">${awaList.product_id}</div>
-				<div class = "awd_title">${awaList.title}</div>
-				<div class = "awd_price">${awaList.current_price}원</div>
-				<div class = "awd_date">${AwardDate[status.index]}</div>
-				<div class = "awd_phone">${AwardNum[status.index]}</div>
-				
-			</c:forEach>		
+			<div class = "total_end_list_wrap">
+				<c:forEach items="${AwardList2}" var="awaList" varStatus = "status">
+					<div class = "awd_proid">${awaList.product_id}</div>
+					<div class = "awd_title">${awaList.title}</div>
+					<div class = "awd_price">${awaList.current_price}원</div>
+					<div class = "awd_date">${AwardDate2[status.index]}</div>
+					<div class = "awd_phone">${AwardNum2[status.index]}</div>
+				</c:forEach>
 			</div>
+		<div class="awd_list_ul">
+    		<c:if test="${AwdListPage.prev}">
+   				<div>
+      				<a href='<c:url value="/info/bid?bid_page=${bid_page_model}&amp;reg_page=${reg_page_model}&awd_page=${AwdListPage.startPage-1}"/>'>pre</a>
+   				</div>
+   			</c:if>
+  			<c:forEach begin="${AwardListPage.startPage}" end="${AwardListPage.endPage}" var="pageNum">
+   				<div>
+        			<a href='<c:url value="/info/bid?bid_page=${pageNum}&amp;reg_page=${reg_page_model}&awd_page=${awd_page_model}"/>'>${pageNum}</a>
+  				</div>
+  			</c:forEach>
+   			<c:if test="${AwdListPage.next && AwdListPage.endPage > 0}">
+   			<div>
+       			<a href='<c:url value="/info/bid?bid_page=${bid_page_model}&amp;reg_page=${reg_page_model}&awd_page=${AwdListPage.endPage+1}"/>'>next</a>
+    		</div>
+    		</c:if>
+		</div>		
 		</div>	
 	</div>
 	

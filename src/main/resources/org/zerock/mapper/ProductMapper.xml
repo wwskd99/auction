@@ -41,13 +41,16 @@ select title from product where product_id = #{product_id};
 </select>
 
 	<select id="readProductlist" resultType="org.zerock.domain.ProductVO">
-		select * from product where user_id = #{user_id};
+		select * from product where user_id = #{user_id} limit #{cri.pageStart},#{cri.onePageNum}
 	</select>
 
 <select resultType="Date" id="readRegDate">
 select date from product where product_id = #{product_id}; 
 </select>
-	
+
+	<select id="readProductlistCount" resultType="int">
+		select count(B.product_id) from (select * from product where user_id = #{user_id}) as B;
+	</select>
 	
 <!-- 아래 동길 -->
 
@@ -92,9 +95,6 @@ select * from product where product_id > 0 order by product_id desc
 	</update>
 
 <!-- 호준 -->
-<select id="readBidList" resultType="org.zerock.domain.Bid_historyVO">
-	select * from bid_history where user_id = #{user_id}
-</select>
 <update id="updateDeadline"> 
 	update product set 
 	deadline = 1

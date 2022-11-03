@@ -146,10 +146,7 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	// 호준
-	@Override
-	public List<Bid_historyVO> readBidList(String user_id) {
-		return pMapper.readBidList(user_id);
-	}
+	
 	@Override
 	public void updateDeadline(ProductVO pVo) {
 		pMapper.updateDeadline(pVo);
