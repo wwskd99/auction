@@ -178,5 +178,8 @@ public class ProductServiceImpl implements ProductService {
 	public void priceSale(ProductVO pVo) {
 		pMapper.priceSale(pVo);
 	}
-	
+	@Override
+	public GPSVO selectGPS(int product_id) {
+		return pMapper.selectGPS(product_id);
+	}
 }

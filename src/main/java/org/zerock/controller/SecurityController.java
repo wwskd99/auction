@@ -32,16 +32,5 @@ public class SecurityController {
 	public void doAdmin() {
 		log.info("관리자만 접근할 수 있음");
 	}	// View 페이지 이름 : /security/admin.jsp
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')")
-	@GetMapping("/annoMember")
-	public void doMember2() {
-		log.info("logined annotation member");
-	}
-	
-	@Secured({"ROLE_ADMIN"})
-	@GetMapping("/annoAdmin")
-	public void doAdmin2() {
-		log.info("admin annotation only");
-	}
 
 }

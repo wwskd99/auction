@@ -205,7 +205,6 @@ public class ChatController {
 		
 		List<ChatStorageVO> storageVo = cService.selectStorage(product_id);
 		mv.addObject("log", storageVo);
-
 		
 		return mv;
 	}

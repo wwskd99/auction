@@ -52,33 +52,31 @@ body {
 	width: 100%;
 	box-shadow: 0 5px 10px rgb(0 0 0/ 10%);
 	animation: float 5s infinite;
-	margin-top: 15px;
+	
 }
 
-.roomList th {
-	border: 1px solid #FFBB00;
-	background-color: #fff;
-	color: #FFBB00;
-	border-bottom: 4px solid #ffe223;
-	font-size: 23px;
-	font-weight: 100;
-	padding: 19px;
-	text-align: left;
-	text-shadow: 0 1px 1px rgb(0 0 0/ 10%);
-	vertical-align: middle;
+.roomList .chat_list_wrap{
+	display: table;
+    color: #FFBB00;
+    border-bottom: 4px solid #ffe223;
+    font-size: 23px;
+    vertical-align: middle;
+    margin-bottom: 5px;
 }
 
-.roomList td {
-	border: 1px solid #FFBB00;
-	background-color: #fff;
-	text-align: left;
-	color: #FFBB00;
+.chats_wrap{
+	
+    color: #FFBB00;
+    border-bottom: 4px solid #ffe223;
+    font-size: 23px;
+    vertical-align: middle;
+    margin-bottom: 5px;
 }
 
-tr:hover td {
-  background:#ffd700;
-  color:#FFFFFF;
-  border-top: 1px solid #22262e;
+.chats_wrap:hover  {
+  background:#f5f5dc;
+  color: #FFBB00;;
+ 
 }
 
 td {
@@ -94,16 +92,20 @@ td {
 
 .roomList .num {
 	width: 75px;
-	text-align: center;
+	display: table-cell;
+	color: #FFBB00;
 }
 
 .roomList .room {
 	width: 350px;
+	text-align: left;
+	display: table-cell;
 }
 
 .roomList .go {
 	width: 71px;
-	text-align: center;
+	text-align: left;
+	display: table-cell;
 }
 
 button {
@@ -202,13 +204,14 @@ button {
 
 	function createChatingRoom(res) {
 		if (res != null) {
-			var tag = "<div><div class='num'>번호</div><div class='room'>방 이름</div><th class='go'></th></div>";
+			var tag = "<div class='chat_list_wrap'><div class='num'>번호</div><div class='room'>방 이름</div><div class='go'></div></div>";
 			res
 					.forEach(function(d, idx) {
 						var rn = d.roomName.trim();
 						var room_id = d.room_id;
 						var user_id = '${sessionScope.userid}';
-						tag +=  "<div class='num'>"
+						tag +=  "<ul class='chats_wrap'>"
+								+ "<div class='num'>"
 								+ (idx + 1)
 								+ "</div>"
 								+ "<div class='room'>"
@@ -216,7 +219,7 @@ button {
 								+ "</div>"
 								+ "<div class='go'><button type='button' onclick='goRoom(\""
 								+ room_id + "\", \"" + rn + "\", \"" + user_id
-								+ "\")'>참여</button></td>";
+								+ "\")'>참여</button></ul>";
 					});
 			$("#roomList").empty().append(tag);
 		}

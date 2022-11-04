@@ -10,13 +10,7 @@
 <body>
 <h1>/security/all 페이지</h1>
 
-<sec:authorize access="isAnonymous()"><!-- 로그인하지 않은 경우 -->
-  <a href="/customLogin">로그인</a>
-</sec:authorize>
 
-<sec:authorize access="isAuthenticated()"><!-- 인증(로그인)이 되었다면 -->
-  <a href="/customLogout">로그아웃</a>
-</sec:authorize>
 
 </body>
 </html>

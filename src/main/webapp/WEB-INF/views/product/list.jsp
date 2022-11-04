@@ -320,18 +320,31 @@ function pronew(){
 };
 
 function distance(){
+	var latitude;
+	var longitude;
+	if (!navigator.geolocation) {
+        throw "위치 정보가 지원되지 않습니다.";
+    }
+    function success({coords}) {
+    	latitude = coords.latitude;
+    	longitude = coords.longitude;
+    	
+    	$.ajax({
+    		url : "/product/5km",
+    		type : "get",
+    		data : {"latitude": latitude,
+    				"longitude": longitude},
+    		success : function(data){
+    			$("#item").html(data);			
+    		},
+    		error : function(reqeust, status, error){
+    			alert("error");
+    		}
+    	});
+	}
+    
+    navigator.geolocation.getCurrentPosition(success);
 
-	$.ajax({
-		url : "/product/new",
-		type : "get",
-		data : "",
-		success : function(data){
-			$("#item").html(data);			
-		},
-		error : function(reqeust, status, error){
-			alert("error");
-		}
-	});
 };
 
 </script>

@@ -6,7 +6,7 @@
 
 
 <insert id="registProductGPS">
-insert into product_gps (product_id, product_latitude, product_longitude) values (#{product_id},#{latitude},#{longitude});
+insert into product_gps (product_id, latitude, longitude) values (#{product_id},#{latitude},#{longitude});
 </insert>
 
 <delete id="deleteGPS">

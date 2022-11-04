@@ -1,50 +1,198 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../includes/header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <meta charset="UTF-8">
-	<title>Chating</title>
-	<style>
-		*{
-			margin:0;
-			padding:0;
-		}
-		.container{
-			width: 500px;
-			margin: 0 auto;
-			padding: 25px
-		}
-		.container h1{
-			text-align: left;
-			padding: 5px 5px 5px 15px;
-			color: #FFBB00;
-			border-left: 3px solid #FFBB00;
-			margin-bottom: 20px;
-		}
-		.chating{
-			background-color: #000;
-			width: 500px;
-			height: 500px;
-			overflow: auto;
-		}
-		.chating .me{
-			color: #F6F6F6;
-			text-align: right;
-		}
-		.chating .others{
-			color: #FFE400;
-			text-align: left;
-		}
-		input{
-			width: 330px;
-			height: 25px;
-		}
-		#yourMsg{
-			display: block;
-		}
+<title>Chatting</title>
+<style>
+
+main{
+	min-width : 500px;
+	width : 70%;
+	margin: 0 auto;
+	height : 35vw;
+	min-height : 800px;
+}
+
+
+/* 1-1 */
+.chatting_top_wrapper{
+	width : 100%;
+	height : 10%;
+	position : relative;
+	background : #FFBF2C;
+}
+
+.chatting_center_wrapper{
+	width : 100%;
+	background-color: #FFF2AB;
+	overflow: auto;
+	height : 100%;
+	
+	-ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.chatting_center_wrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+/*1-1-1 */
+.roomName_wrap{
+	position : absolute;
+	left : 10%;
+	top : 25%;
+	color : #F6EEDC;
+	font-size : 1.8rem;
+	max-width : 70%;
+	
+}
+
+.complete_wrap{
+	position : absolute;
+	right : 5%;
+	top : 30%;
+	
+}
+
+#btn-modal {
+	border : none;
+	background : #94918A;
+	width : 80px;
+	height : 40px;
+	color : white;
+	border-radius : 10px;
+	cursor : pointer;
+}
+
+
+/* 2-1 */
+.chatting_me_box_wrap{
+	display: flex;
+    justify-content: flex-end;
+	width : 100%;
+	margin-bottom : 20px;
+	margin-top : 20px;
+	
+} 
+
+.chatting_others_box_wrap{
+	display: flex;
+    justify-content: flex-front;
+	width : 100%;
+	margin-bottom : 20px;
+	margin-top : 20px;
+	
+} 
+
+
+/*2-1-1 */
+.user_icon_div {
+	position : relative;
+	overflow : hidden;
+	width : 50px;
+	height : 50px;
+	border-radius : 50%;
+	margin : 5px;
+	margin-right : 20px;
+	margin-left : 20px;
+	
+
+}
+
+.others_chat{
+	width : 100px;
+	height : 30px;
+	
+}
+
+.user_icon_img{
+	width : 70px;
+	height : 70px;
+	position : absolute;
+	background : white;
+	left : 50%;
+	top: -20%;
+	transform : translateX(-50%);
+}
+
+
+.chatting_me_box{
+	max-width: 80%;
+	border-radius: 10px;
+	background : #F7DF66;
+	display : inline-block;
+	margin-right : 20px;
+	padding-left : 20px;
+	padding-right : 20px;
+	font-size : 1.1rem;	
+	
+}
+
+.chatting_others_box{
+	display : flex;
+	flex-direction : column;
+}
+
+.others_chat_chat{
+	max-width: 80%;
+	border-radius: 10px;
+	background : white;
+	display : inline-block;
+	margin-right : 20px;
+	padding-left : 20px;
+	padding-right : 20px;
+	font-size : 1.1rem;	
+
+
+}
+
+
+
+
+
+/*2-2*/
+.input_msg{
+	width : 100%;
+	display : flex;
+	justify-content: center;
+}
+
+.input_msg div{
+	padding : 10px;
+}
+
+.input_msg_center{
+	width : 70%;
+	height : 30px;
+	display : flex;
+	justify-content: center;
+}
+.input_msg_bottom{
+	width : 15%;
+	height : 30px;
+	display : flex;
+	justify-content: center;
+}	
+.input_msg_center input {
+	
+	width : 100%;
+	height : 25px;
+	
+}
+
+.input_msg_bottom_button{
+	width : 100%;
+	height : 25px;
+}
+
+
+
+
 		
 		#modal.modal-overlay {
             width: 100%;
@@ -101,10 +249,18 @@
             text-shadow: 1px 1px 2px gray;
             color: white;
         }
-	</style>
+        
+
+   
+
+
+      
+
+</style>
 </head>
 
 <script type="text/javascript">
+	
 	var ws;
 
 	function wsOpen(){
@@ -130,13 +286,23 @@
 						$("#sessionId").val(si); 
 					}
 
+			
+					
 				}else if(d.type == "message"){
 					if(d.sessionId == $("#sessionId").val()){
-						$("#chating").append("<p class='me'>나 : " + d.msg + "</p>");	
+						$("#chating").append("<div class= 'chatting_me_box_wrap'>");
+						$("#chating").append("<div class = 'user_icon_div'><img class = 'user_icon_img' src = '../../resources/img/chatting/user_icon.jpg'></div>");
+						$("#chating").append("<div class = 'chatting_me_box'>");
+						$("#chating").append("<p class='me'>" + d.msg + "</p></div></div>");
+						
+					
+						
+						
 					}else{
 						$("#chating").append("<p class='others'>" + d.userName + " : " + d.msg + "</p>");
 					}
-						
+					let chating = document.getElementById("chatting_center_wrapper"); 
+			   	 	chating.scrollTop = chating.scrollHeight;	
 				}else{
 					console.warn("unknown type!")
 				}
@@ -171,19 +337,58 @@
 		ws.send(JSON.stringify(option))
 		$('#chatting').val("");
 	}
+
 	
+	
+
+    window.onload=function(){
+    	let chating = document.getElementById("chatting_center_wrapper"); 
+   	 	chating.scrollTop = chating.scrollHeight;
+    };
 </script>
 <body>
-	<div id="container" class="container">
-		<h1>${roomName}의 채팅방</h1>
+<main>
+	<div  class="chatting_top_wrapper">
+		<div class = "roomName_wrap">${roomName}</div>
 		<input type="hidden" id="sessionId" value="">
 		<input type="hidden" id="room_id" value="${room_id}">
 
-		<div id="container">
+		<div class="complete_wrap">
 			<button id="btn-modal">거래 완료</button>
 		</div>
 
-		<!-- 모달창 -->
+	</div>
+		
+		
+	<div class ="chatting_center_wrapper" id="chatting_center_wrapper">
+		<div id="chating" class="chating">
+			<c:forEach var="chat" items="${chat_log}">
+				<c:choose>
+					<c:when test="${chat.user_id == sessionScope.userid}">
+						<div class = "chatting_me_box_wrap">
+							<div class = "chatting_me_box"><p class='me'>${chat.chat}</p></div>
+						</div>
+					</c:when>
+					<c:otherwise>
+					<div class = "chatting_others_box_wrap">
+						<div class = "user_icon_div"><img class = "user_icon_img" src = "../../resources/img/chatting/user_icon.jpg"></div>
+						<div class = "chatting_others_box">
+							<div class = "others_chat">${chat.user_id}</div>
+							<div class = "others_chat_chat"><p class='others'>${chat.chat}</p></div>				
+						</div>
+					</div>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+		</div>
+		<div class="input_msg">
+	
+				
+					<div class = "input_msg_center"><input id="chatting" placeholder="보내실 메시지를 입력하세요."></div>
+					<div class = "input_msg_bottom"><button class = "input_msg_bottom_button" onclick="send()" id="sendBtn">보내기</button></div>
+		</div>
+	</div>
+	<!-- 모달창 -->
 		
 		<div id="modal" class="modal-overlay">
 			<div class="modal-window">
@@ -224,31 +429,10 @@
 				</form>
 			</div>
 		</div>
-		
-		<!-- 모달창 끝 -->
-		
-		<div id="chating" class="chating">
-			<c:forEach var="chat" items="${chat_log}">
-				<c:choose>
-					<c:when test="${chat.user_id == sessionScope.userid}">
-						<p class='me'>나 : ${chat.chat}</p>
-					</c:when>
-					<c:otherwise>
-						<p class='others'>${chat.user_id} : ${chat.chat}</p>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-		</div>
-		<div id="yourMsg">
-			<table class="inputTable">
-				<tr>
-					<th>메시지</th>
-					<th><input id="chatting" placeholder="보내실 메시지를 입력하세요."></th>
-					<th><button onclick="send()" id="sendBtn">보내기</button></th>
-				</tr>
-			</table>
-		</div>
-	</div>
+	
+	
+	
+	</main>
 </body>
 <script type="text/javascript">
 const modal = document.getElementById("modal")
