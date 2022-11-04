@@ -8,4 +8,8 @@
 insert into picture (picture_name, picture_path, product_id) values (#{picture_name},#{picture_path},#{product_id})
 </insert>
 
+<select id="readProductPicOne" resultType="org.zerock.domain.ProductPicVO">
+select * from picture where product_id = #{product_id} order by picture_id limit 1;
+</select>
+
 </mapper>

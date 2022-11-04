@@ -1,6 +1,8 @@
 package org.zerock.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.zerock.domain.ChatStorageVO;
 import org.zerock.domain.ChatVO;
 import org.zerock.domain.CompleteVO;
+import org.zerock.domain.ProductPicVO;
+import org.zerock.domain.ProductVO;
 import org.zerock.domain.Room;
 import org.zerock.domain.ScoreVO;
 import org.zerock.service.ChatService;
@@ -40,6 +45,7 @@ public class ChatController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private ProductService pService;
+		
 	
 	List<Room> roomList = new ArrayList<Room>();
 	
@@ -94,6 +100,8 @@ public class ChatController {
 		return roomList;
 	}
 	
+	
+	
 	/**
 	 * 방 정보가져오기
 	 * @param params
@@ -108,6 +116,18 @@ public class ChatController {
 
 		roomList = rService.selectSellerRoom(user_id); // 특정인만 출력
 		roomList.addAll(rService.selectBuyerRoom(user_id)); 
+		
+		List<ChatVO> chat_data = new ArrayList<ChatVO>();
+		
+		for (int i = 0; i < roomList.size(); i++) {
+			ChatVO cVo = new ChatVO();
+			
+			cVo = cService.chatDataRead(roomList.get(i).getRoom_id());
+			chat_data.add(cVo);
+		}
+		
+		
+		
 		
 		return roomList;
 	}
@@ -138,6 +158,20 @@ public class ChatController {
 			mv.addObject("room_id", params.get("room_id"));
 			mv.addObject("chat_log",chat_log);
 			mv.addObject("product_id", room.getProduct_id());
+			
+			List<String> chat_date = new ArrayList<String>();
+			
+			for (int i = 0; i < chat_log.size(); i++) {
+
+				Date chatting_date = chat_log.get(i).getChat_date();
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 MM분 ss초");
+				String a = simpleDateFormat.format(chatting_date);
+				chat_date.add(a);
+			}
+			
+			mv.addObject("chat_date",chat_date);
+			
+			
 
 			mv.setViewName("chatting/chat");
 		}else {
@@ -209,4 +243,39 @@ public class ChatController {
 		
 		return mv;
 	}
+	
+	@GetMapping("/room2")
+	public void roomList(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		String sessionUser = (String)session.getAttribute("sessionUser");
+		
+		List<Room> room = new ArrayList<Room>();
+		
+		room = rService.selectSellerRoom(sessionUser); 
+		room.addAll(rService.selectBuyerRoom(sessionUser)); 
+		
+		List<ChatVO> chat_data = new ArrayList<ChatVO>();
+		
+		for (int i = 0; i < roomList.size(); i++) {
+			ChatVO cVo = new ChatVO();
+			cVo = cService.chatDataRead(roomList.get(i).getRoom_id());
+			chat_data.add(cVo);
+		}
+		
+
+		List<ProductPicVO> pic_data = new ArrayList<ProductPicVO>();
+		
+		for (int i = 0; i < roomList.size(); i++) {
+			ProductPicVO pPicVo = new ProductPicVO();
+			pPicVo =cService.readProductPicOne(room.get(i).getProduct_id());
+			pic_data.add(pPicVo);
+			
+			
+		}
+		
+		model.addAttribute("room",room);
+		model.addAttribute("room_chat", chat_data);
+		model.addAttribute("room_pic", pic_data);
+	}
+
 }
