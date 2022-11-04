@@ -2,6 +2,7 @@ package org.zerock.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -163,11 +165,28 @@ public class ChatController {
 			List<String> chat_date = new ArrayList<String>();
 			
 			for (int i = 0; i < chat_log.size(); i++) {
-
+				
 				Date chatting_date = chat_log.get(i).getChat_date();
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 MM분 ss초");
-				String a = simpleDateFormat.format(chatting_date);
-				chat_date.add(a);
+				String chat_message;
+				
+				Date current_date = new Date();
+				long current_time = current_date.getTime();
+				long chat_time = chatting_date.getTime();
+				
+				if(current_time - chat_time > 0 && current_time - chat_time < 60000 ) {
+					chat_message = "몇초전";	
+					
+				}else if (current_date.getDate() == chatting_date.getDate()){
+					
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("a h시 mm분");
+					chat_message = simpleDateFormat.format(chatting_date);	
+				} else {
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("a MM월 dd일 h시 mm분");
+					chat_message = simpleDateFormat.format(chatting_date);
+					
+				}
+				
+				chat_date.add(chat_message);
 			}
 			
 			mv.addObject("chat_date",chat_date);
@@ -282,6 +301,7 @@ public class ChatController {
 		model.addAttribute("room_pic", pic_data);
 	}
 	
+
 	@PostMapping("/ajaxChatting")
 	public void ajaxChatting(@RequestParam("room_id") int room_id, Model model) {
 		List<ChatVO> chat_log = cService.SelectChat(room_id);
@@ -291,14 +311,31 @@ public class ChatController {
 		
 		List<String> chat_date = new ArrayList<String>();
 		
-		for (int i = 0; i < chat_log.size(); i++) {
-
-			Date chatting_date = chat_log.get(i).getChat_date();
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 MM분 ss초");
-			String a = simpleDateFormat.format(chatting_date);
-			chat_date.add(a);
-		}
 		
+		for (int i = 0; i < chat_log.size(); i++) {
+			
+			Date chatting_date = chat_log.get(i).getChat_date();
+			String chat_message;
+			
+			Date current_date = new Date();
+			long current_time = current_date.getTime();
+			long chat_time = chatting_date.getTime();
+			
+			if(current_time - chat_time > 0 && current_time - chat_time < 60000 ) {
+				chat_message = "몇초전";	
+				
+			}else if (current_date.getDate() == chatting_date.getDate()){
+				
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("a h시 mm분");
+				chat_message = simpleDateFormat.format(chatting_date);	
+			} else {
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("a MM월 dd일 h시 mm분");
+				chat_message = simpleDateFormat.format(chatting_date);
+				
+			}
+			
+			chat_date.add(chat_message);
+		}
 		model.addAttribute("chat_date",chat_date);
 	}
 

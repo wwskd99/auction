@@ -152,8 +152,21 @@ main{
 
 }
 
+.chatting_me_box_date{
+	
+}
+
+.chatting_me_box_date p{
+ margin-top : 37px;
+ font-size : 0.8rem;
+ margin-right : 10px;
+ margin-bottom : 0px;
+}
 
 
+.chatting_others_box_date{
+
+}
 
 
 /*2-2*/
@@ -395,8 +408,8 @@ main{
 				<c:choose>
 					<c:when test="${chat.user_id == sessionScope.userid}">
 						<div class = "chatting_me_box_wrap">
-							<div class = "chatting_me_box"><p class='me'>${chat.chat}</p></div>
 							<div class = "chatting_me_box_date"><p>${chat_date[status.index]}</p></div>
+							<div class = "chatting_me_box"><p class='me'>${chat.chat}</p></div>
 						</div>
 					</c:when>
 					<c:otherwise>
