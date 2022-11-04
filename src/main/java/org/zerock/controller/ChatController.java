@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -244,6 +245,9 @@ public class ChatController {
 		return mv;
 	}
 	
+	
+	
+	//동규
 	@GetMapping("/room2")
 	public void roomList(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
@@ -276,6 +280,26 @@ public class ChatController {
 		model.addAttribute("room",room);
 		model.addAttribute("room_chat", chat_data);
 		model.addAttribute("room_pic", pic_data);
+	}
+	
+	@PostMapping("/ajaxChatting")
+	public void ajaxChatting(@RequestParam("room_id") int room_id, Model model) {
+		List<ChatVO> chat_log = cService.SelectChat(room_id);
+		model.addAttribute("chat_log",chat_log);
+		
+		System.out.println(chat_log);
+		
+		List<String> chat_date = new ArrayList<String>();
+		
+		for (int i = 0; i < chat_log.size(); i++) {
+
+			Date chatting_date = chat_log.get(i).getChat_date();
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 MM분 ss초");
+			String a = simpleDateFormat.format(chatting_date);
+			chat_date.add(a);
+		}
+		
+		model.addAttribute("chat_date",chat_date);
 	}
 
 }
