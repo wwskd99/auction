@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../includes/header.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -362,11 +363,12 @@ main{
 		
 	<div class ="chatting_center_wrapper" id="chatting_center_wrapper">
 		<div id="chating" class="chating">
-			<c:forEach var="chat" items="${chat_log}">
+			<c:forEach var="chat" items="${chat_log}" varStatus = "status">
 				<c:choose>
 					<c:when test="${chat.user_id == sessionScope.userid}">
 						<div class = "chatting_me_box_wrap">
 							<div class = "chatting_me_box"><p class='me'>${chat.chat}</p></div>
+							<div class = "chatting_me_box_date"><p>${chat_date[status.index]}</p></div>
 						</div>
 					</c:when>
 					<c:otherwise>

@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.ChatStorageVO;
 import org.zerock.domain.ChatVO;
+import org.zerock.domain.ProductPicVO;
 import org.zerock.mapper.ChatMapper;
+import org.zerock.mapper.ProductPicMapper;
 
 import lombok.AllArgsConstructor;
 
@@ -14,6 +16,7 @@ import lombok.AllArgsConstructor;
 public class ChatServiceImpl implements ChatService{
 	
 	private ChatMapper chatmapper;
+	private ProductPicMapper pPicMapper;
 	
 	@Override
 	public void insertChat(ChatVO chat) {
@@ -40,4 +43,15 @@ public class ChatServiceImpl implements ChatService{
 		return chatmapper.selectStorage(product_id);
 	}
 	
+	@Override
+	public ChatVO chatDataRead(int room_id) {
+
+		return chatmapper.readChatData(room_id);
+	}
+	
+	@Override
+	public ProductPicVO readProductPicOne(int product_id) {
+		
+		return pPicMapper.readProductPicOne(product_id);
+	}
 }
