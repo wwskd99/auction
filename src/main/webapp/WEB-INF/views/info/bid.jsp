@@ -602,7 +602,7 @@ $( function(){
 				</div>
 			<div class = "total_end_list_wrap">
 				<c:forEach items="${AwardList2}" var="awaList" varStatus = "status">
-					<div class = "awd_proid">${awaList.product_id}</div>
+					<div class = "awd_proid">${awaList.product_id}번</div>
 					<div class = "awd_title">${awaList.title}</div>
 					<div class = "awd_price">${awaList.current_price}원</div>
 					<div class = "awd_date">${AwardDate2[status.index]}</div>

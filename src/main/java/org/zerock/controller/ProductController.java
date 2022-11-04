@@ -165,22 +165,36 @@ public class ProductController {
 		
 		ProductVO pVo = pService.productRead(product_id);
 		
-		if (sessionUser.equals(pVo.getUser_id())) {
+		
+		Date date = new Date();
+		Date regDate = pService.regDateRead(product_id);
+		long endDate = regDate.getTime()+259200000;
+		long currentDate = date.getTime();
+		
+		if(endDate < currentDate) {
 			
-			if (pVo.getCurrent_price() != 0) {
-				requestMessage = "현재 경매 입찰중입니다. 삭제할 수 없습니다.";				
-			}else {
-				pService.productDelete(product_id);
-				requestMessage = "경매 삭제 완료";
-			}
+			requestMessage = "마감된 경매 입니다.";
+			
+		}else {
+		
+			if (sessionUser.equals(pVo.getUser_id())) {
+			
+				if (pVo.getCurrent_price() != 0) {
+					requestMessage = "현재 경매 입찰중입니다. 삭제할 수 없습니다.";				
+				}else {
+					pService.productDelete(product_id);
+					requestMessage = "경매 삭제 완료";
+				}
 			
 		
-		}else {
+			}else {
 			
-			requestMessage = "아이디 정보가 없습니다. 정상적인 경로로 접근해주십시오";
+				requestMessage = "아이디 정보가 없습니다. 정상적인 경로로 접근해주십시오";
 			
-		}
+			}
 	
+
+		}
 		return requestMessage;
 	}
 		
