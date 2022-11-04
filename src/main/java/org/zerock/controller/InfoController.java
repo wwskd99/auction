@@ -49,7 +49,19 @@ public class InfoController {
 		List<Bid_historyVO> BidList2 = new ArrayList<Bid_historyVO>();
 		String user_id = (String) session.getAttribute("sessionUser");
 		
-
+		
+		if(bid_page == 0) {
+			bid_page = 1;
+		}
+		
+		if(reg_page == 0) {
+			reg_page = 1;
+		}
+		
+		if(awd_page == 0) {
+			awd_page = 1;
+		}
+		
 	
 		Criteria bid_cri = new Criteria();
 		bid_cri.setCurrentPage(bid_page);
