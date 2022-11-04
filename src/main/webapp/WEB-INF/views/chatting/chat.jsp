@@ -7,7 +7,7 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <meta charset="UTF-8">
-<title>Chating</title>
+<title>Chatting</title>
 <style>
 
 main{
@@ -78,8 +78,7 @@ main{
 	margin-right : 20px;
 	padding-left : 20px;
 	padding-right : 20px;
-	font-size : 1.1rem;
-	
+	font-size : 1.1rem;	
 	
 }
 
@@ -230,10 +229,12 @@ main{
 					
 				}else if(d.type == "message"){
 					if(d.sessionId == $("#sessionId").val()){
-						$("#chating").append("<div class= 'chatting_me_box_wrap'>");
-						$("#chating").append("<div class = 'user_icon_div'><img class = 'user_icon_img' src = '../../resources/img/chatting/user_icon.jpg'></div>");
-						$("#chating").append("<div class = 'chatting_me_box'>");
-						$("#chating").append("<p class='me'>" + d.msg + "</p></div></div>");
+						$("#chating").append("<div class= 'chatting_me_box_wrap'>").trigger("create");
+						$("#chating").append("<div class = 'user_icon_div'><img class = 'user_icon_img' src = '../../resources/img/chatting/user_icon.jpg'></div>").trigger("create");
+						$("#chating").append("<div class = 'chatting_me_box'>").trigger("create");
+						$("#chating").append("<p class='me'>" + d.msg + "</p></div></div>").trigger("create");
+						
+					
 						
 						
 					}else{
@@ -275,11 +276,7 @@ main{
 		$('#chatting').val("");
 	}
 	
-	window.onload = function() {
-		var location = document.querySelector(".chatting_center_wrapper").offsetTop;
-		var height = document.querySelector(".chatting_center_wrapper").height / 2;
-		window.scrollTo({top:location-height});
-	};
+	
 	
 	
 </script>
