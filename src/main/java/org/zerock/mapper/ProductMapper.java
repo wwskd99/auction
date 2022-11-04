@@ -40,6 +40,8 @@ public interface ProductMapper {
 	public int update(ProductVO product);
 	public List<ProductVO> searchList(Criteria cri);
 	public List<ProductVO> price_desc();
+	public List<ProductVO> pronew();
+	public List<ProductVO> distance();
 	
 	// 호준
 	public void updateDeadline(ProductVO pVo);
@@ -48,4 +50,6 @@ public interface ProductMapper {
 	public TradeVO selectTrade(String user_id);
 	public void priceSale(ProductVO pVo);
 	public List<Bid_historyVO> readBidList(String user_id);
+	
+	
 }

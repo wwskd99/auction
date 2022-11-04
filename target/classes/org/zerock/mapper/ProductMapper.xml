@@ -128,7 +128,13 @@ select * from product where product_id > 0 order by product_id desc
 	<select id="price_desc" resultType="org.zerock.domain.ProductVO">
 		select * from product order by start_price desc
 	</select>
-
+	<select id="pronew" resultType="org.zerock.domain.ProductVO">
+		select * from product order by date desc
+	</select>
+	
+	<select id="distance" resultType="org.zerock.domain.ProductVO">
+		select * from product where neighborhood like "yes";
+	</select>
 <!-- 호준 -->
 <update id="updateDeadline"> 
 	update product set 

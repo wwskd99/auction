@@ -64,11 +64,6 @@ public class ProductController {
 		log.info("----- view page controller end -----");
 
 		model.addAttribute("piccount", picCount);
-
-		
-		
-		
-		
 		
 		model.addAttribute("productView", pVo);
 
@@ -83,7 +78,7 @@ public class ProductController {
 		model.addAttribute("currentPriceUser",currentPriceUser);
 		
 		TradeVO tVo = pService.selectTrade(pVo.getUser_id());
-		if (tVo == null) {
+		if (tVo == null || tVo.getTotal_count_s() == 0) {
 			model.addAttribute("msg", "첫 경매 판매자입니다.");
 		} else {
 			model.addAttribute("trade", tVo);
@@ -222,9 +217,16 @@ public class ProductController {
 	
 	@GetMapping("/new")
 	public String pronew(Model model) {
-//		List<ProductVO> pnew = pService.pronew();
-//		model.addAllAttributes("list", pnew);
-		return "/product/price";
+		List<ProductVO> pnew = pService.pronew();
+		model.addAttribute("list", pnew);
+		return "/product/new";
+	}
+	
+	@GetMapping("/pro5km")
+	public String distance(Model model) {
+		List<ProductVO> pdist = pService.distance();
+		model.addAttribute("list", pdist);
+		return "/product/pro5km";
 	}
 	
 	@GetMapping("/searchList")
