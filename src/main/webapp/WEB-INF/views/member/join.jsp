@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,5 +37,10 @@
 			</tr>
 		</table>
 	</form>
+	<c:if test="${!empty join_message}">
+		<script>
+			alert("${join_message}")
+		</script>
+	</c:if>
 </body>
 </html>
