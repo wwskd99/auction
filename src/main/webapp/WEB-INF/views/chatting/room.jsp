@@ -5,8 +5,8 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <meta charset="UTF-8">
-	<title>Room</title>
-	<style>
+<title>Room</title>
+<style>
 		*{
 			margin:0;
 			padding:0;
@@ -86,6 +86,7 @@
 		});
 	}
 	
+	
 	function createRoom(){
 		$("#createRoom").click(function(){
 			var msg = {	
@@ -103,26 +104,26 @@
 		});
 	}
 
-	function goRoom(number, name, user){
-		location.href="/chatting/moveChating?roomName="+name+"&"+"room_id="+number + "&" + "user_id=" + user;
-	}
+function goRoom(number, name, user){
+	location.href="/chatting/moveChating?roomName="+name+"&"+"room_id="+number + "&" + "user_id=" + user;
+}
 
-	function createChatingRoom(res){
-		if(res != null){
-			var tag = "<tr><th class='num'>번호</th><th class='room'>방 이름</th><th class='go'></th></tr>";
-			res.forEach(function(d, idx){
-				var rn = d.roomName.trim();
-				var room_id = d.room_id;
-				var user_id = '${sessionScope.userid}';
-				tag += "<tr>"+
-							"<td class='num'>"+(idx+1)+"</td>"+
-							"<td class='room'>"+ rn +"</td>"+
-							"<td class='go'><button type='button' onclick='goRoom(\""+room_id+"\", \""+rn+"\", \""+user_id+"\")'>참여</button></td>" +
-						"</tr>";	
-			});
-			$("#roomList").empty().append(tag);
-		}
+function createChatingRoom(res){
+	if(res != null){
+		var tag = "<tr><th class='num'>번호</th><th class='room'>방 이름</th><th class='go'></th></tr>";
+		res.forEach(function(d, idx){
+			var rn = d.roomName.trim();
+			var room_id = d.room_id;
+			var user_id = '${sessionScope.userid}';
+			tag += "<tr>"+
+						"<td class='num'>"+(idx+1)+"</td>"+
+						"<td class='room'>"+ rn +"</td>"+
+						"<td class='go'><button type='button' onclick='goRoom(\""+room_id+"\", \""+rn+"\", \""+user_id+"\")'>참여</button></td>" +
+					"</tr>";	
+		});
+		$("#roomList").empty().append(tag);
 	}
+}
 
 	function commonAjax(url, parameter, type, calbak, contentType){
 		$.ajax({
@@ -139,6 +140,8 @@
 			}
 		});
 	}
+	
+	
 </script>
 <body>
 	<div class="container">
