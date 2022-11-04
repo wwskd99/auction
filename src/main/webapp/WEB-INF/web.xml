@@ -55,6 +55,15 @@
 		<!-- <servlet-name>appServlet</servlet-name> -->
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<!-- Security 관련된 필터를 추가 : Encoding 필터 뒤에 추가한다. -->
+<!-- 	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
 	
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>  -->
 	
 </web-app>
