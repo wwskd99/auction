@@ -45,6 +45,6 @@ public interface ProductService {
 	public TradeVO selectTrade(String user_id);
 	public void priceSale(ProductVO pVo);
 	public List<Bid_historyVO> readBidList(String user_id);
-	
+	public GPSVO selectGPS(int product_id);
 	
 }

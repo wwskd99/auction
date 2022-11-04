@@ -1,6 +1,8 @@
 package org.zerock.controller;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -222,11 +224,29 @@ public class ProductController {
 		return "/product/new";
 	}
 	
-	@GetMapping("/pro5km")
-	public String distance(Model model) {
+	@GetMapping("/5km")
+	public String distance(Model model, HttpServletRequest request) {
+
+		BigDecimal latitude = new BigDecimal(request.getParameter("latitude"));
+		BigDecimal longitude = new BigDecimal(request.getParameter("longitude"));
+		double lat = latitude.doubleValue();
+		double lnt = longitude.doubleValue();
 		List<ProductVO> pdist = pService.distance();
-		model.addAttribute("list", pdist);
-		return "/product/pro5km";
+		List<ProductVO> innerList = new ArrayList<ProductVO>();
+ 		pdist.forEach(product -> {
+			GPSVO gps = pService.selectGPS(product.getProduct_id());
+			double distance = getDistance(lat, lnt, gps.getLatitude().doubleValue(), gps.getLongitude().doubleValue());
+			log.info(distance);
+			if(distance<5) {
+				innerList.add(product);
+			} else {
+				return;
+			}
+		});
+ 		log.info(latitude);
+ 		log.info(longitude);
+		model.addAttribute("list", innerList);
+		return "/product/5km";
 	}
 	
 	@GetMapping("/searchList")
@@ -240,6 +260,26 @@ public class ProductController {
 			model.addAttribute("listcheck", "empty");
 		}
 		return "/product/list";
+	}
+	
+	private Double getDistance(Double lat, Double lnt, Double lat2, Double lnt2) {
+
+	    double theta = lnt - lnt2;
+	    double dist = Math.sin(deg2rad(lat))* Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat))*Math.cos(deg2rad(lat2))*Math.cos(deg2rad(theta));
+	    dist = Math.acos(dist);
+	    dist = rad2deg(dist);
+	    dist = dist * 60*1.1515*1609.344;
+
+	    return dist/1000;	// 킬로미터단위
+	}
+
+	//10진수를 radian(라디안)으로 변환
+	private static double deg2rad(double deg){
+	    return (deg * Math.PI/180.0);
+	}
+	//radian(라디안)을 10진수로 변환
+	private static double rad2deg(double rad){
+	    return (rad * 180 / Math.PI);
 	}
 }
 

@@ -15,23 +15,59 @@ main{
 	width : 70%;
 	margin: 0 auto;
 	height : 35vw;
-	min-height : 700px;
+	min-height : 800px;
 }
 
 
 /* 1-1 */
 .chatting_top_wrapper{
 	width : 100%;
-	
+	height : 10%;
+	position : relative;
+	background : #FFBF2C;
 }
 
 .chatting_center_wrapper{
 	width : 100%;
-	background-color: #A8C0D6;
+	background-color: #FFF2AB;
 	overflow: auto;
 	height : 100%;
+	
+	-ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 
+.chatting_center_wrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+/*1-1-1 */
+.roomName_wrap{
+	position : absolute;
+	left : 10%;
+	top : 25%;
+	color : #F6EEDC;
+	font-size : 1.8rem;
+	max-width : 70%;
+	
+}
+
+.complete_wrap{
+	position : absolute;
+	right : 5%;
+	top : 30%;
+	
+}
+
+#btn-modal {
+	border : none;
+	background : #94918A;
+	width : 80px;
+	height : 40px;
+	color : white;
+	border-radius : 10px;
+	cursor : pointer;
+}
 
 
 /* 2-1 */
@@ -39,11 +75,20 @@ main{
 	display: flex;
     justify-content: flex-end;
 	width : 100%;
-	height : 8%;
 	margin-bottom : 20px;
 	margin-top : 20px;
 	
 } 
+
+.chatting_others_box_wrap{
+	display: flex;
+    justify-content: flex-front;
+	width : 100%;
+	margin-bottom : 20px;
+	margin-top : 20px;
+	
+} 
+
 
 /*2-1-1 */
 .user_icon_div {
@@ -52,11 +97,17 @@ main{
 	width : 50px;
 	height : 50px;
 	border-radius : 50%;
-	background-color : #93D9FC;
 	margin : 5px;
 	margin-right : 20px;
+	margin-left : 20px;
 	
 
+}
+
+.others_chat{
+	width : 100px;
+	height : 30px;
+	
 }
 
 .user_icon_img{
@@ -69,18 +120,38 @@ main{
 	transform : translateX(-50%);
 }
 
+
 .chatting_me_box{
-	max-width: calc(100% - 100px);
+	max-width: 80%;
 	border-radius: 10px;
-	background : #FDED5E;
+	background : #F7DF66;
 	display : inline-block;
-	position : relative;
 	margin-right : 20px;
 	padding-left : 20px;
 	padding-right : 20px;
 	font-size : 1.1rem;	
 	
 }
+
+.chatting_others_box{
+	display : flex;
+	flex-direction : column;
+}
+
+.others_chat_chat{
+	max-width: 80%;
+	border-radius: 10px;
+	background : white;
+	display : inline-block;
+	margin-right : 20px;
+	padding-left : 20px;
+	padding-right : 20px;
+	font-size : 1.1rem;	
+
+
+}
+
+
 
 
 
@@ -95,12 +166,6 @@ main{
 	padding : 10px;
 }
 
-.input_msg_top{
-	width : 10%;
-	height : 30px;
-	display : flex;
-	justify-content: center;
-}
 .input_msg_center{
 	width : 70%;
 	height : 30px;
@@ -108,7 +173,7 @@ main{
 	justify-content: center;
 }
 .input_msg_bottom{
-	width : 10%;
+	width : 15%;
 	height : 30px;
 	display : flex;
 	justify-content: center;
@@ -120,7 +185,10 @@ main{
 	
 }
 
-
+.input_msg_bottom_button{
+	width : 100%;
+	height : 25px;
+}
 
 
 
@@ -186,14 +254,7 @@ main{
    
 
 
-
-
-    
-.chatting_others_box{
-
-}        
-        
-        
+      
 
 </style>
 </head>
@@ -229,10 +290,10 @@ main{
 					
 				}else if(d.type == "message"){
 					if(d.sessionId == $("#sessionId").val()){
-						$("#chating").append("<div class= 'chatting_me_box_wrap'>").trigger("create");
-						$("#chating").append("<div class = 'user_icon_div'><img class = 'user_icon_img' src = '../../resources/img/chatting/user_icon.jpg'></div>").trigger("create");
-						$("#chating").append("<div class = 'chatting_me_box'>").trigger("create");
-						$("#chating").append("<p class='me'>" + d.msg + "</p></div></div>").trigger("create");
+						$("#chating").append("<div class= 'chatting_me_box_wrap'>");
+						$("#chating").append("<div class = 'user_icon_div'><img class = 'user_icon_img' src = '../../resources/img/chatting/user_icon.jpg'></div>");
+						$("#chating").append("<div class = 'chatting_me_box'>");
+						$("#chating").append("<p class='me'>" + d.msg + "</p></div></div>");
 						
 					
 						
@@ -275,39 +336,46 @@ main{
 		ws.send(JSON.stringify(option))
 		$('#chatting').val("");
 	}
+
 	
 	
-	
-	
+
+    window.onload=function(){
+    	let chating = document.getElementById("chatting_center_wrapper"); 
+   	 	chating.scrollTop = chating.scrollHeight;
+    };
 </script>
 <body>
 <main>
 	<div  class="chatting_top_wrapper">
-		<div><h1>${roomName}</h1></div>
+		<div class = "roomName_wrap">${roomName}</div>
 		<input type="hidden" id="sessionId" value="">
 		<input type="hidden" id="room_id" value="${room_id}">
 
-		<div id="container">
+		<div class="complete_wrap">
 			<button id="btn-modal">거래 완료</button>
 		</div>
 
 	</div>
 		
 		
-	<div class = "chatting_center_wrapper">
+	<div class ="chatting_center_wrapper" id="chatting_center_wrapper">
 		<div id="chating" class="chating">
 			<c:forEach var="chat" items="${chat_log}">
 				<c:choose>
 					<c:when test="${chat.user_id == sessionScope.userid}">
 						<div class = "chatting_me_box_wrap">
-							<div class = "user_icon_div"><img class = "user_icon_img" src = "../../resources/img/chatting/user_icon.jpg"></div>
 							<div class = "chatting_me_box"><p class='me'>${chat.chat}</p></div>
 						</div>
 					</c:when>
 					<c:otherwise>
+					<div class = "chatting_others_box_wrap">
+						<div class = "user_icon_div"><img class = "user_icon_img" src = "../../resources/img/chatting/user_icon.jpg"></div>
 						<div class = "chatting_others_box">
-							<p class='others'>${chat.user_id} : ${chat.chat}</p>
+							<div class = "others_chat">${chat.user_id}</div>
+							<div class = "others_chat_chat"><p class='others'>${chat.chat}</p></div>				
 						</div>
+					</div>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -316,10 +384,9 @@ main{
 	
 				
 					<div class = "input_msg_center"><input id="chatting" placeholder="보내실 메시지를 입력하세요."></div>
-					<div class = "input_msg_bottom"><button onclick="send()" id="sendBtn">보내기</button></div>
+					<div class = "input_msg_bottom"><button class = "input_msg_bottom_button" onclick="send()" id="sendBtn">보내기</button></div>
 		</div>
 	</div>
-		
 	<!-- 모달창 -->
 		
 		<div id="modal" class="modal-overlay">
