@@ -1,50 +1,131 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../includes/header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <meta charset="UTF-8">
-	<title>Chating</title>
-	<style>
-		*{
-			margin:0;
-			padding:0;
-		}
-		.container{
-			width: 500px;
-			margin: 0 auto;
-			padding: 25px
-		}
-		.container h1{
-			text-align: left;
-			padding: 5px 5px 5px 15px;
-			color: #FFBB00;
-			border-left: 3px solid #FFBB00;
-			margin-bottom: 20px;
-		}
-		.chating{
-			background-color: #000;
-			width: 500px;
-			height: 500px;
-			overflow: auto;
-		}
-		.chating .me{
-			color: #F6F6F6;
-			text-align: right;
-		}
-		.chating .others{
-			color: #FFE400;
-			text-align: left;
-		}
-		input{
-			width: 330px;
-			height: 25px;
-		}
-		#yourMsg{
-			display: block;
-		}
+<title>Chating</title>
+<style>
+
+main{
+	min-width : 500px;
+	width : 70%;
+	margin: 0 auto;
+	height : 35vw;
+	min-height : 700px;
+}
+
+
+/* 1-1 */
+.chatting_top_wrapper{
+	width : 100%;
+	
+}
+
+.chatting_center_wrapper{
+	width : 100%;
+	background-color: #A8C0D6;
+	overflow: auto;
+	height : 100%;
+}
+
+
+
+/* 2-1 */
+.chatting_me_box_wrap{
+	display: flex;
+    justify-content: flex-end;
+	width : 100%;
+	height : 8%;
+	margin-bottom : 20px;
+	margin-top : 20px;
+	
+} 
+
+/*2-1-1 */
+.user_icon_div {
+	position : relative;
+	overflow : hidden;
+	width : 50px;
+	height : 50px;
+	border-radius : 50%;
+	background-color : #93D9FC;
+	margin : 5px;
+	margin-right : 20px;
+	
+
+}
+
+.user_icon_img{
+	width : 70px;
+	height : 70px;
+	position : absolute;
+	background : white;
+	left : 50%;
+	top: -20%;
+	transform : translateX(-50%);
+}
+
+.chatting_me_box{
+	max-width: calc(100% - 100px);
+	border-radius: 10px;
+	background : #FDED5E;
+	display : inline-block;
+	position : relative;
+	margin-right : 20px;
+	padding-left : 20px;
+	padding-right : 20px;
+	font-size : 1.1rem;
+	
+	
+}
+
+
+
+/*2-2*/
+.input_msg{
+	width : 100%;
+	display : flex;
+	justify-content: center;
+}
+
+.input_msg div{
+	padding : 10px;
+}
+
+.input_msg_top{
+	width : 10%;
+	height : 30px;
+	display : flex;
+	justify-content: center;
+}
+.input_msg_center{
+	width : 70%;
+	height : 30px;
+	display : flex;
+	justify-content: center;
+}
+.input_msg_bottom{
+	width : 10%;
+	height : 30px;
+	display : flex;
+	justify-content: center;
+}	
+.input_msg_center input {
+	
+	width : 100%;
+	height : 25px;
+	
+}
+
+
+
+
+
+
 		
 		#modal.modal-overlay {
             width: 100%;
@@ -101,10 +182,25 @@
             text-shadow: 1px 1px 2px gray;
             color: white;
         }
-	</style>
+        
+
+   
+
+
+
+
+    
+.chatting_others_box{
+
+}        
+        
+        
+
+</style>
 </head>
 
 <script type="text/javascript">
+	
 	var ws;
 
 	function wsOpen(){
@@ -130,9 +226,16 @@
 						$("#sessionId").val(si); 
 					}
 
+			
+					
 				}else if(d.type == "message"){
 					if(d.sessionId == $("#sessionId").val()){
-						$("#chating").append("<p class='me'>나 : " + d.msg + "</p>");	
+						$("#chating").append("<div class= 'chatting_me_box_wrap'>");
+						$("#chating").append("<div class = 'user_icon_div'><img class = 'user_icon_img' src = '../../resources/img/chatting/user_icon.jpg'></div>");
+						$("#chating").append("<div class = 'chatting_me_box'>");
+						$("#chating").append("<p class='me'>" + d.msg + "</p></div></div>");
+						
+						
 					}else{
 						$("#chating").append("<p class='others'>" + d.userName + " : " + d.msg + "</p>");
 					}
@@ -172,10 +275,18 @@
 		$('#chatting').val("");
 	}
 	
+	window.onload = function() {
+		var location = document.querySelector(".chatting_center_wrapper").offsetTop;
+		var height = document.querySelector(".chatting_center_wrapper").height / 2;
+		window.scrollTo({top:location-height});
+	};
+	
+	
 </script>
 <body>
-	<div id="container" class="container">
-		<h1>${roomName}의 채팅방</h1>
+<main>
+	<div  class="chatting_top_wrapper">
+		<div><h1>${roomName}</h1></div>
 		<input type="hidden" id="sessionId" value="">
 		<input type="hidden" id="room_id" value="${room_id}">
 
@@ -183,7 +294,36 @@
 			<button id="btn-modal">거래 완료</button>
 		</div>
 
-		<!-- 모달창 -->
+	</div>
+		
+		
+	<div class = "chatting_center_wrapper">
+		<div id="chating" class="chating">
+			<c:forEach var="chat" items="${chat_log}">
+				<c:choose>
+					<c:when test="${chat.user_id == sessionScope.userid}">
+						<div class = "chatting_me_box_wrap">
+							<div class = "user_icon_div"><img class = "user_icon_img" src = "../../resources/img/chatting/user_icon.jpg"></div>
+							<div class = "chatting_me_box"><p class='me'>${chat.chat}</p></div>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class = "chatting_others_box">
+							<p class='others'>${chat.user_id} : ${chat.chat}</p>
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+		</div>
+		<div class="input_msg">
+	
+				
+					<div class = "input_msg_center"><input id="chatting" placeholder="보내실 메시지를 입력하세요."></div>
+					<div class = "input_msg_bottom"><button onclick="send()" id="sendBtn">보내기</button></div>
+		</div>
+	</div>
+		
+	<!-- 모달창 -->
 		
 		<div id="modal" class="modal-overlay">
 			<div class="modal-window">
@@ -224,31 +364,10 @@
 				</form>
 			</div>
 		</div>
-		
-		<!-- 모달창 끝 -->
-		
-		<div id="chating" class="chating">
-			<c:forEach var="chat" items="${chat_log}">
-				<c:choose>
-					<c:when test="${chat.user_id == sessionScope.userid}">
-						<p class='me'>나 : ${chat.chat}</p>
-					</c:when>
-					<c:otherwise>
-						<p class='others'>${chat.user_id} : ${chat.chat}</p>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-		</div>
-		<div id="yourMsg">
-			<table class="inputTable">
-				<tr>
-					<th>메시지</th>
-					<th><input id="chatting" placeholder="보내실 메시지를 입력하세요."></th>
-					<th><button onclick="send()" id="sendBtn">보내기</button></th>
-				</tr>
-			</table>
-		</div>
-	</div>
+	
+	
+	
+	</main>
 </body>
 <script type="text/javascript">
 const modal = document.getElementById("modal")
