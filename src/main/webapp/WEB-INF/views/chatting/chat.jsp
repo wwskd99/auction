@@ -30,8 +30,14 @@ main{
 	background-color: #A8C0D6;
 	overflow: auto;
 	height : 100%;
+	
+	-ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 
+.chatting_center_wrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
 
 
 /* 2-1 */
@@ -274,14 +280,10 @@ main{
 		ws.send(JSON.stringify(option))
 		$('#chatting').val("");
 	}
-	
-	window.onload = function() {
-		var location = document.querySelector(".chatting_center_wrapper").offsetTop;
-		var height = document.querySelector(".chatting_center_wrapper").height / 2;
-		window.scrollTo({top:location-height});
-	};
-	
-	
+    window.onload=function(){
+    	let chating = document.getElementById("chatting_center_wrapper"); 
+   	 	chating.scrollTop = chating.scrollHeight;
+    };
 </script>
 <body>
 <main>
@@ -297,7 +299,7 @@ main{
 	</div>
 		
 		
-	<div class = "chatting_center_wrapper">
+	<div class ="chatting_center_wrapper" id="chatting_center_wrapper">
 		<div id="chating" class="chating">
 			<c:forEach var="chat" items="${chat_log}">
 				<c:choose>
@@ -322,7 +324,6 @@ main{
 					<div class = "input_msg_bottom"><button onclick="send()" id="sendBtn">보내기</button></div>
 		</div>
 	</div>
-		
 	<!-- 모달창 -->
 		
 		<div id="modal" class="modal-overlay">
