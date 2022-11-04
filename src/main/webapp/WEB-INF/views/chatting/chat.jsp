@@ -245,7 +245,8 @@ main{
 					}else{
 						$("#chating").append("<p class='others'>" + d.userName + " : " + d.msg + "</p>");
 					}
-						
+					let chating = document.getElementById("chatting_center_wrapper"); 
+			   	 	chating.scrollTop = chating.scrollHeight;	
 				}else{
 					console.warn("unknown type!")
 				}
