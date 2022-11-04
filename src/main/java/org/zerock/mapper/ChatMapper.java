@@ -11,4 +11,8 @@ public interface ChatMapper {
 	public void insertStorage(ChatStorageVO storage);
 	public void deleteLog(int room_id);
 	public List<ChatStorageVO> selectStorage(int product_id);
+	
+	
+	//동규
+	public ChatVO readChatData(int room_id);
 }

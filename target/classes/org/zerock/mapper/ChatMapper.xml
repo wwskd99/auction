@@ -19,4 +19,8 @@
 <select id="selectStorage" resultType="org.zerock.domain.ChatStorageVO">
 	select * from chat_storage where product_id = #{product_id}
 </select>
+
+<select id="readChatData" resultType="org.zerock.domain.ChatVO">
+	select * from chatting_log where room_id = #{room_id} order by chat_date desc limit 1
+</select>
 </mapper>

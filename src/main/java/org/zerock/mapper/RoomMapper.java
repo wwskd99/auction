@@ -29,4 +29,6 @@ public interface RoomMapper {
 	public void insertSuccessTradeBuyer(String user_id);
 	public void insertFailTradeSeller(String user_id);
 	public void insertFailTradeBuyer(String user_id);
+	
+	
 }
