@@ -291,16 +291,44 @@ main{
 					
 				}else if(d.type == "message"){
 					if(d.sessionId == $("#sessionId").val()){
-						$("#chating").append("<div class= 'chatting_me_box_wrap'>");
-						$("#chating").append("<div class = 'user_icon_div'><img class = 'user_icon_img' src = '../../resources/img/chatting/user_icon.jpg'></div>");
-						$("#chating").append("<div class = 'chatting_me_box'>");
-						$("#chating").append("<p class='me'>" + d.msg + "</p></div></div>");
+						var room_id_ajax = "${room_id}";
 						
+						$.ajax({
+							url : '/chatting/ajaxChatting',
+							data : {'room_id':room_id_ajax},
+							type : 'POST',
+							success : function(result) { 
+								
+								$(".chating").html(result);
+								let chating = document.getElementById("chatting_center_wrapper"); 
+						   	 	chating.scrollTop = chating.scrollHeight;
+
+							},
+							error: function(){
+								alert("실패");
+							}
+						});
 					
 						
 						
 					}else{
-						$("#chating").append("<p class='others'>" + d.userName + " : " + d.msg + "</p>");
+						var room_id_ajax = "${room_id}";
+						
+						$.ajax({
+							url : '/chatting/ajaxChatting',
+							data : {'room_id':room_id_ajax},
+							type : 'POST',
+							success : function(result) { 
+								
+								$(".chating").html(result);
+								let chating = document.getElementById("chatting_center_wrapper"); 
+						   	 	chating.scrollTop = chating.scrollHeight;
+
+							},
+							error: function(){
+								alert("실패");
+							}
+						});
 					}
 					let chating = document.getElementById("chatting_center_wrapper"); 
 			   	 	chating.scrollTop = chating.scrollHeight;	

@@ -162,6 +162,8 @@ button {
     content: "\f007";
 }
 </style>
+
+
 </head>
 
 <script type="text/javascript">
@@ -171,36 +173,34 @@ button {
 		createRoom();
 	}
 
+
 	function getRoom() {
 		commonAjax('/chatting/getRoom.json?user_id=${sessionScope.userid}', "",
 				'post', function(result) {
 					createChatingRoom(result);
 				});
+	
+	function createRoom(){
+		$("#createRoom").click(function(){
+			var msg = {	
+				roomName : $('#roomName').val(),
+				product_id : $('#product_id').val(),
+				buyer : $('#buyer').val(),
+				seller : $('#seller').val()
+			};
+
+			commonAjax('/chatting/createRoom.json', msg, 'post', function(result){
+				createChatingRoom(result);
+			});
+
+			$("#roomName").val("");
+		});
+
 	}
 
-	function createRoom() {
-		$("#createRoom").click(
-				function() {
-					var msg = {
-						roomName : $('#roomName').val(),
-						product_id : $('#product_id').val(),
-						buyer : $('#buyer').val(),
-						seller : $('#seller').val()
-					};
-
-					commonAjax('/chatting/createRoom.json', msg, 'post',
-							function(result) {
-								createChatingRoom(result);
-							});
-
-					$("#roomName").val("");
-				});
-	}
-
-	function goRoom(number, name, user) {
-		location.href = "/chatting/moveChating?roomName=" + name + "&"
-				+ "room_id=" + number + "&" + "user_id=" + user;
-	}
+function goRoom(number, name, user){
+	location.href="/chatting/moveChating?roomName="+name+"&"+"room_id="+number + "&" + "user_id=" + user;
+}
 
 	function createChatingRoom(res) {
 		if (res != null) {
@@ -210,7 +210,7 @@ button {
 						var rn = d.roomName.trim();
 						var room_id = d.room_id;
 						var user_id = '${sessionScope.userid}';
-						tag +=  "<ul class='chats_wrap'>"
+						tag +=  "<div class='chats_wrap'>"
 								+ "<div class='num'>"
 								+ (idx + 1)
 								+ "</div>"
@@ -219,11 +219,12 @@ button {
 								+ "</div>"
 								+ "<div class='go'><button type='button' onclick='goRoom(\""
 								+ room_id + "\", \"" + rn + "\", \"" + user_id
-								+ "\")'>참여</button></ul>";
+								+ "\")'>참여</button></div>";
 					});
 			$("#roomList").empty().append(tag);
 		}
-	}
+
+}
 
 	function commonAjax(url, parameter, type, calbak, contentType) {
 		$.ajax({
@@ -241,6 +242,8 @@ button {
 			}
 		});
 	}
+	
+	
 </script>
 <body>
 <main>
