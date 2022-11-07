@@ -25,6 +25,9 @@
 <insert id="insertScore">
 	insert into score (user_id,product_id,user_score,cause) values (#{user_id}, #{product_id}, #{user_score}, #{cause})
 </insert>
+<select id="selectScore" resultType="org.zerock.domain.ScoreVO">
+	select * from score where user_id = #{user_id}
+</select>
 <select id="selectOneRoom" resultType="org.zerock.domain.Room">
 	select * from room where room_id = #{room_id}
 </select>

@@ -231,9 +231,6 @@ $(document).ready( function() {
 	<div class = "chat_list">
 		<a class = "chat_list_click">채팅</a>
 			<div class="dropDown_list">
-				<div class="chat_log">
-					<a class="chat_log_click">예전 채팅방 기록</a>
-				</div>
 			</div>
 		</div>
 	<div class = "myPage_list_dropDown">
@@ -244,6 +241,9 @@ $(document).ready( function() {
 				<div id = "bid_regist"><a class = "bid_regist_click">경매 등록</a></div>
 				<div id = "total_bid_list"><a class = "myPage_bid_click">통합 경매 내역</a></div>
 				<div id = "myPage_resign"><a class = "myPage_resign_click">회원 탈퇴</a></div>
+				<div class="chat_log">
+					<a class="chat_log_click">예전 채팅방 기록</a>
+				</div>
 			</div>
 	</div>
 
