@@ -192,12 +192,12 @@ p input:valid + label::after {
 			</form>
 		</div>
 	</div>
-	<!-- 
+
 	<c:if test="${!empty join_message}">
 		<script>
 			alert("${join_message}")
 		</script>
-	</c:if> -->
+	</c:if>
 	
 </main>	
 </body>
