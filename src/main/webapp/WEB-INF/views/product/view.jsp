@@ -707,8 +707,8 @@ $(document).ready( function bidUnit(){
 		</div>
 
 		<div class="page-nav">
-			<a onclick ="prev()" class ="prev">  </a>
-			<a onclick ="next()" class="next">  </a>
+			<a onclick ="prev()" class ="prev"> < </a>
+			<a onclick ="next()" class="next"> > </a>
 		</div>
 	</div>
 	
