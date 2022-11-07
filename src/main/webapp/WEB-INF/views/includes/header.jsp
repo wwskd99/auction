@@ -216,6 +216,7 @@ $(document).ready( function() {
 		$("#total_bid_list").hide();
 		$("#myPage_resign").hide();
 		$("#bid_regist").hide();
+		$(".chat_log").hide();
 	}
 });
 </script>
