@@ -2,6 +2,7 @@ package org.zerock.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,10 @@ public class UploadController {
 	
 		@PostMapping("/uploadImages")
 		public ResponseEntity<List<ProductPicVO>> uploadImages(@RequestParam("uploadImgs")MultipartFile[] uploadFile, Model model){			
+			
+			
+			
+			
 			String uploadFolder = "C:\\auction\\upload";
 			String voUploadFolder = "/upload";
 			List<ProductPicVO> picList = new ArrayList<ProductPicVO>();
@@ -32,10 +37,29 @@ public class UploadController {
 			for(MultipartFile multipartFile : uploadFile) {
 				ProductPicVO productPic = new ProductPicVO();
 				String fileName = multipartFile.getOriginalFilename();
+				String fileCutName = fileName.substring(0,fileName.lastIndexOf("."));
+				String fileExt = fileName.substring(fileName.lastIndexOf(".")+1);			
+				
+				
+				
+				File saveFile = new File(uploadFolder, fileName);
+				// 저 경로에 저 파일이름이 존재하냐? true 라면
+				if(saveFile.exists()) {
+					int index = 0;
+					boolean fileExist = true;
+					while(fileExist) {
+						index ++;
+						fileName = fileCutName + "(" + index + ")" +"."+ fileExt;
+						saveFile = new File(uploadFolder,fileName);
+						if(saveFile.exists() == false) {
+							fileExist = false;
+						}
+					}
+				}
+				
 				productPic.setPicture_name(fileName);
 				productPic.setPicture_path(voUploadFolder);
 				
-				File saveFile = new File(uploadFolder, fileName);
 				try {
 					picList.add(productPic);
 					multipartFile.transferTo(saveFile);

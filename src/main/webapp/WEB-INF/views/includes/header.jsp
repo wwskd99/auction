@@ -140,10 +140,7 @@ $( function(){
 		window.location.href='../info/bid?bid_page=1&reg_page=1&awd_page=1';
 	});
 	$( '.myPage_resign_click' ).on("click", function() {
-		var flag=confirm("정말로 탈퇴하시겠습니까?");
-		if (flag){
-			window.location.href='../member/resign';
-		}
+		window.location.href='../member/resign';
 	});
 	$( '.bid_regist_click' ).on("click", function() {
 		window.location.href='../product/register';
