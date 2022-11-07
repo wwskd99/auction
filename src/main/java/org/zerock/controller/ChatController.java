@@ -165,7 +165,7 @@ public class ChatController {
 			for (int i = 0; i < chat_log.size(); i++) {
 
 				Date chatting_date = chat_log.get(i).getChat_date();
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 MM분 ss초");
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(" HH시 MM분 ");
 				String a = simpleDateFormat.format(chatting_date);
 				chat_date.add(a);
 			}
@@ -262,6 +262,7 @@ public class ChatController {
 		for (int i = 0; i < roomList.size(); i++) {
 			ChatVO cVo = new ChatVO();
 			cVo = cService.chatDataRead(roomList.get(i).getRoom_id());
+			log.warn(cVo);
 			chat_data.add(cVo);
 		}
 		
@@ -275,7 +276,6 @@ public class ChatController {
 			
 			
 		}
-		
 		model.addAttribute("room",room);
 		model.addAttribute("room_chat", chat_data);
 		model.addAttribute("room_pic", pic_data);
@@ -293,7 +293,7 @@ public class ChatController {
 		for (int i = 0; i < chat_log.size(); i++) {
 
 			Date chatting_date = chat_log.get(i).getChat_date();
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 MM분 ss초");
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(" HH시 MM분 ");
 			String a = simpleDateFormat.format(chatting_date);
 			chat_date.add(a);
 		}

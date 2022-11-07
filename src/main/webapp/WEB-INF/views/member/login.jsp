@@ -6,49 +6,10 @@
 <head>
 <style type="text/css">
 .login {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	background: #fff;
+	padding: 50px 0;
+	width: 60%;
+	max-width: 100%;
 }
-
- .login-content {
-    width: 420px;
-    padding: 40px;
-    height: 500px;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    position: absolute;
-    background: #FFF;
-    box-shadow: 0 0px 70px rgba(0, 0, 0, 0.1);
-    border-top: 5px solid @green;
-    float: left;
-    -webkit-transition: all 0.2s ease-out;
-    transition: all 0.2s ease-out;
-    transition-delay: 0.2s;
-
-   
-     &.login-content-signin.ng-hide:not(.ng-hide-animate) {
-      transition-delay: 0s;
-      display: block!important;
-      opacity: 0;
-      z-index: -1;
-      -webkit-transform: translate(-45%, -50%);
-      transform: translate(-45%, -50%);
-    }
-    &.login-content-signup.ng-hide:not(.ng-hide-animate) {
-      transition-delay: 0s;
-      display: block!important;
-      opacity: 0;
-      z-index: -1;
-      -webkit-transform: translate(-55%, -50%);
-      transform: translate(-55%, -50%);
-    }
 
 form {
 	padding: 10px;
@@ -59,7 +20,6 @@ form {
 </head>
 <body>
 	<div class=login>
-	 <div class="login-content login-content-signin" ng-hide="showSignIn">
 		<form action="loginb" method="post">
 			<div class="input_box">
 				<label for="userid">¾ÆÀÌµð : </label><input type="text" name="user_id"
@@ -78,7 +38,6 @@ form {
 				alert("${login_message}")
 			</script>
 		</c:if>
-	</div>
 	</div>
 </body>
 </html>

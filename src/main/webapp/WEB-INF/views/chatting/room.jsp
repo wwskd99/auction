@@ -242,7 +242,7 @@ function goRoom(number, name, user){
 			}
 		});
 	}
-	
+}
 	
 </script>
 <body>
