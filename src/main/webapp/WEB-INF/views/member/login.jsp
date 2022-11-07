@@ -93,6 +93,7 @@ p input:valid + label::after {
 	margin : 0 auto;
 	font-weight: 700;
 	font-size : 32px;
+	color : #575757;
 }
 
 .login_top p{
