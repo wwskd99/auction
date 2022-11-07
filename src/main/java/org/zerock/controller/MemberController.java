@@ -141,7 +141,6 @@ public class MemberController {
 	}
 
 	@RequestMapping("/resignb")
-	@ResponseBody
 	public String memberResign(HttpServletRequest request, RedirectAttributes rttr) {
 
 		HttpSession session = request.getSession();
