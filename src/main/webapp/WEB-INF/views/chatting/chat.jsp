@@ -205,7 +205,11 @@ main{
 }
 
 
-
+.chatting_others_box_date{
+	margin-bottom : 0px;
+	margin-top : 55px;
+	font-size : 0.8rem;
+}
 
 		
 		#modal.modal-overlay {
@@ -419,6 +423,7 @@ main{
 							<div class = "others_chat">${chat.user_id}</div>
 							<div class = "others_chat_chat"><p class='others'>${chat.chat}</p></div>				
 						</div>
+						<div class = "chatting_others_box_date"><p>${chat_date[status.index]}</p></div>
 					</div>
 					</c:otherwise>
 				</c:choose>
