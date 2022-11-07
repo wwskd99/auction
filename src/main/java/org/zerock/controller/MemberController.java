@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -139,7 +140,7 @@ public class MemberController {
 		}
 	}
 
-	@RequestMapping("/resign")
+	@RequestMapping("/resignb")
 	@ResponseBody
 	public String memberResign(HttpServletRequest request, RedirectAttributes rttr) {
 
@@ -161,6 +162,12 @@ public class MemberController {
 			
 			return "redirect:/main";
 		}
+	}
+	
+	@GetMapping("/resign")
+	public void memberResignPage(Model model,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		model.addAttribute("mVo",session.getAttribute("sessionMember"));	
 	}
 
 	@RequestMapping("/update")
