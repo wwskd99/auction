@@ -24,11 +24,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.zerock.domain.ChatStorageVO;
 import org.zerock.domain.ChatVO;
 import org.zerock.domain.CompleteVO;
+import org.zerock.domain.MemberVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.domain.Room;
 import org.zerock.domain.ScoreVO;
 import org.zerock.service.ChatService;
+import org.zerock.service.MemberService;
 import org.zerock.service.ProductService;
 import org.zerock.service.RoomService;
 import lombok.Setter;
@@ -39,7 +41,9 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/chatting/*")
 public class ChatController {
 	
-
+	@Setter(onMethod_ = @Autowired)
+	private MemberService mService;
+	
 	@Setter(onMethod_ = @Autowired)
 	private RoomService rService;
 	
@@ -152,9 +156,37 @@ public class ChatController {
 			if(user_id.equals(room.getBuyer())) {
 				mv.addObject("seller",room.getSeller());
 				mv.addObject("buyer", user_id);
+				mv.addObject("member", mService.MemberRead(room.getSeller()));
+				List<ScoreVO> scores = rService.selectScore(room.getSeller());
+				log.info(scores);
+				float average=0.0f;
+				int count=0;
+				if (scores.isEmpty()) {
+					mv.addObject("info_msg", "평가받은 적이 없는 사람입니다.");
+				} else {
+					for(int i=0; i<scores.size(); i++) {
+						average+=scores.get(i).getUser_score();
+						count++;
+					}
+					mv.addObject("average", average / count);
+				}
 			} else {
 				mv.addObject("seller", user_id);
 				mv.addObject("buyer",room.getBuyer());
+				mv.addObject("member", mService.MemberRead(room.getBuyer()));
+				List<ScoreVO> scores = rService.selectScore(room.getBuyer());
+				log.info(scores);
+				float average=0.0f;
+				int count=0;
+				if (scores.isEmpty()) {
+					mv.addObject("info_msg", "평가받은 적이 없는 사람입니다.");
+				} else {
+					for(int i=0; i<scores.size(); i++) {
+						average+=scores.get(i).getUser_score();
+						count++;
+					}
+					mv.addObject("average", average / count);
+				}
 			}
 			List<ChatVO> chat_log = cService.SelectChat(room_id);
 			mv.addObject("roomName", params.get("roomName"));
@@ -190,7 +222,11 @@ public class ChatController {
 			}
 			
 			mv.addObject("chat_date",chat_date);
-			
+				
+			ProductPicVO pPicVo = new ProductPicVO();
+			pPicVo =cService.readProductPicOne(room.getProduct_id());
+						
+			mv.addObject("picture", pPicVo);
 			
 
 			mv.setViewName("chatting/chat");

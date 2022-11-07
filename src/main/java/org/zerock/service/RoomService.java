@@ -17,6 +17,7 @@ public interface RoomService {
 	public void deleteRoom(int room_id);
 	
 	public void insertScore(ScoreVO score);
+	public List<ScoreVO> selectScore(String user_id);
 	
 	public void insertComplete(CompleteVO complete);
 	public void updateBuyerCheck(CompleteVO complete);

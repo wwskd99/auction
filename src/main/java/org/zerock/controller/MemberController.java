@@ -106,8 +106,11 @@ public class MemberController {
 		HttpSession session = request.getSession();
 		mv.setViewName("/member/join");
 
-		Pattern pattern = Pattern.compile("\\d{3}-\\d{4}-\\d{4}");
-		Matcher matcher = pattern.matcher(phone);
+		Pattern phone_pattern = Pattern.compile("\\d{3}-\\d{4}-\\d{4}");
+		Matcher phone_matcher = phone_pattern.matcher(phone);
+		
+		Pattern birth_pattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
+		Matcher birth_matcher = birth_pattern.matcher(birth);
 
 		if (user_id == null || user_id == "") {
 			session.setAttribute("join_message", "아이디 넣어주세요.");
@@ -121,8 +124,11 @@ public class MemberController {
 		} else if (mVo != null) {
 			session.setAttribute("join_message", "존재하는 회원입니다.");
 			return mv;
-		} else if (!matcher.matches()) {
+		} else if (!phone_matcher.matches()) {
 			session.setAttribute("join_message", "유효하지 않는 전화번호입니다. ex: XXX-XXXX-XXX");
+			return mv;
+		} else if (!birth_matcher.matches()) {
+			session.setAttribute("join_message", "유효하지 않는 날짜입니다. ex: XXXX-XX-XX");
 			return mv;
 		} else {
 			MemberVO mVo1 = new MemberVO();
@@ -184,8 +190,11 @@ public class MemberController {
 		String user_id = (String) session.getAttribute("sessionUser");
 		mv.setViewName("/member/update");
 
-		Pattern pattern = Pattern.compile("\\d{3}-\\d{4}-\\d{4}");
-		Matcher matcher = pattern.matcher(phone);
+		Pattern phone_pattern = Pattern.compile("\\d{3}-\\d{4}-\\d{4}");
+		Matcher phone_matcher = phone_pattern.matcher(phone);
+
+		Pattern birth_pattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
+		Matcher birth_matcher = birth_pattern.matcher(birth);
 
 		if (pw == null || pw == "") {
 			session.setAttribute("update_message", "비밀번호 넣어주세요.");
@@ -193,8 +202,11 @@ public class MemberController {
 		} else if (name == null || name == "") {
 			session.setAttribute("update_message", "이름 넣어주세요.");
 			return mv;
-		} else if (!matcher.matches()) {
+		} else if (!phone_matcher.matches()) {
 			session.setAttribute("update_message", "유효하지 않는 전화번호입니다. ex: XXX-XXXX-XXX");
+			return mv;
+		} else if (!birth_matcher.matches()) {
+			session.setAttribute("update_message", "유효하지 않는 날짜입니다. ex: XXXX-XX-XX");
 			return mv;
 		} else {
 			mVo.setUser_id(user_id);

@@ -198,6 +198,7 @@ p input:valid + label::after {
 			alert("${join_message}")
 		</script>
 	</c:if> 
+
 	
 </main>	
 </body>

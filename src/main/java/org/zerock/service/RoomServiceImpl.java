@@ -108,4 +108,9 @@ public class RoomServiceImpl implements RoomService{
 	public void insertFailTradeBuyer(String user_id) {
 		roomMapper.insertFailTradeBuyer(user_id);
 	}
+
+	@Override
+	public List<ScoreVO> selectScore(String user_id) {
+		return roomMapper.selectScore(user_id);
+	}
 }
