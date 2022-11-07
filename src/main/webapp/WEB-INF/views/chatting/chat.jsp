@@ -31,6 +31,7 @@ main {
 	background-color: #FFF2AB;
 	overflow: auto;
 	height: 100%;
+	position: relative;
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
 }
@@ -159,6 +160,8 @@ main {
 	width: 100%;
 	display: flex;
 	justify-content: center;
+	bottom: 15px;
+	position : absolute;
 }
 
 .input_msg div {
