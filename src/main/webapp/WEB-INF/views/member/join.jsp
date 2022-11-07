@@ -95,7 +95,7 @@ p input:valid + label::after {
 .join_top_wrap p{
 	margin : 0 auto;
 	text-align : center;
-	padding-top : 10%;
+	padding-top : 5%;
 }
 .join_center_wrap{
 	width : 100%;
@@ -187,17 +187,17 @@ p input:valid + label::after {
 					</p>
 				</div>
 				<div class="submit_box">
-					<button type="submit" class= "join_submit_button">제출</button>
+					<button type="submit" class= "join_submit_button">가입 완료</button>
 				</div>
 			</form>
 		</div>
 	</div>
-	<!-- 
+
 	<c:if test="${!empty join_message}">
 		<script>
 			alert("${join_message}")
 		</script>
-	</c:if> -->
+	</c:if> 
 	
 </main>	
 </body>
