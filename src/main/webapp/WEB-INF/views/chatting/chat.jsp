@@ -152,8 +152,21 @@ main{
 
 }
 
+.chatting_me_box_date{
+	
+}
+
+.chatting_me_box_date p{
+ margin-top : 37px;
+ font-size : 0.8rem;
+ margin-right : 10px;
+ margin-bottom : 0px;
+}
 
 
+.chatting_others_box_date{
+
+}
 
 
 /*2-2*/
@@ -192,7 +205,11 @@ main{
 }
 
 
-
+.chatting_others_box_date{
+	margin-bottom : 0px;
+	margin-top : 55px;
+	font-size : 0.8rem;
+}
 
 		
 		#modal.modal-overlay {
@@ -395,8 +412,8 @@ main{
 				<c:choose>
 					<c:when test="${chat.user_id == sessionScope.userid}">
 						<div class = "chatting_me_box_wrap">
-							<div class = "chatting_me_box"><p class='me'>${chat.chat}</p></div>
 							<div class = "chatting_me_box_date"><p>${chat_date[status.index]}</p></div>
+							<div class = "chatting_me_box"><p class='me'>${chat.chat}</p></div>
 						</div>
 					</c:when>
 					<c:otherwise>
@@ -406,6 +423,7 @@ main{
 							<div class = "others_chat">${chat.user_id}</div>
 							<div class = "others_chat_chat"><p class='others'>${chat.chat}</p></div>				
 						</div>
+						<div class = "chatting_others_box_date"><p>${chat_date[status.index]}</p></div>
 					</div>
 					</c:otherwise>
 				</c:choose>
