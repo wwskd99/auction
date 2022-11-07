@@ -29,8 +29,11 @@ import org.zerock.domain.GPSVO;
 import org.zerock.domain.MemberVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
+import org.zerock.domain.ScoreVO;
 import org.zerock.domain.TradeVO;
+import org.zerock.service.MemberService;
 import org.zerock.service.ProductService;
+import org.zerock.service.RoomService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -40,9 +43,15 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/product/*")
 @AllArgsConstructor
 public class ProductController {
-
+	
 	@Autowired
 	private ProductService pService;
+	
+	@Autowired
+	private MemberService mService;
+	
+	@Autowired
+	private RoomService rService;
 	
 	@GetMapping("/view")
 	public String productView(@RequestParam("product_id") int product_id, Model model) {
@@ -88,6 +97,22 @@ public class ProductController {
 					* 100;
 			model.addAttribute("rate", SuccessRate);
 		}
+		
+		// 평점과 유저정보
+		List<ScoreVO> scores = rService.selectScore(pVo.getUser_id());
+		log.info(scores);
+		float average=0.0f;
+		int count=0;
+		if (scores.isEmpty()) {
+			model.addAttribute("info_msg", "평가받은 적이 없는 사람입니다.");
+		} else {
+			for(int i=0; i<scores.size(); i++) {
+				average+=scores.get(i).getUser_score();
+				count++;
+			}
+			model.addAttribute("average", average / count);
+		}
+		model.addAttribute("member", mService.MemberRead(pVo.getUser_id()));	
 		
 		return "/product/view";
 	}

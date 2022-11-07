@@ -10,253 +10,291 @@
 <meta charset="UTF-8">
 <title>Chatting</title>
 <style>
-
-main{
-	min-width : 500px;
-	width : 70%;
+main {
+	min-width: 500px;
+	width: 70%;
 	margin: 0 auto;
-	height : 35vw;
-	min-height : 800px;
+	height: 35vw;
+	min-height: 800px;
 }
-
 
 /* 1-1 */
-.chatting_top_wrapper{
-	width : 100%;
-	height : 10%;
-	position : relative;
-	background : #FFBF2C;
+.chatting_top_wrapper {
+	width: 100%;
+	height: 10%;
+	position: relative;
+	background: #FFBF2C;
 }
 
-.chatting_center_wrapper{
-	width : 100%;
+.chatting_center_wrapper {
+	width: 100%;
 	background-color: #FFF2AB;
 	overflow: auto;
-	height : 100%;
-	
+	height: 100%;
 	-ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+	scrollbar-width: none; /* Firefox */
 }
 
 .chatting_center_wrapper::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
+	display: none; /* Chrome, Safari, Opera*/
 }
 
 /*1-1-1 */
-.roomName_wrap{
-	position : absolute;
-	left : 10%;
-	top : 25%;
-	color : #F6EEDC;
-	font-size : 1.8rem;
-	max-width : 70%;
-	
+.roomName_wrap {
+	position: absolute;
+	left: 10%;
+	top: 25%;
+	color: #F6EEDC;
+	font-size: 1.8rem;
+	max-width: 70%;
 }
 
-.complete_wrap{
-	position : absolute;
-	right : 5%;
-	top : 30%;
-	
+.complete_wrap {
+	position: absolute;
+	right: 5%;
+	top: 30%;
 }
 
 #btn-modal {
-	border : none;
-	background : #94918A;
-	width : 80px;
-	height : 40px;
-	color : white;
-	border-radius : 10px;
-	cursor : pointer;
+	border: none;
+	background: #94918A;
+	width: 80px;
+	height: 40px;
+	color: white;
+	border-radius: 10px;
+	cursor: pointer;
 }
 
-
 /* 2-1 */
-.chatting_me_box_wrap{
+.chatting_me_box_wrap {
 	display: flex;
-    justify-content: flex-end;
-	width : 100%;
-	margin-bottom : 20px;
-	margin-top : 20px;
-	
-} 
+	justify-content: flex-end;
+	width: 100%;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
 
-.chatting_others_box_wrap{
+.chatting_others_box_wrap {
 	display: flex;
-    justify-content: flex-front;
-	width : 100%;
-	margin-bottom : 20px;
-	margin-top : 20px;
-	
-} 
-
+	justify-content: flex-front;
+	width: 100%;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
 
 /*2-1-1 */
 .user_icon_div {
-	position : relative;
-	overflow : hidden;
-	width : 50px;
-	height : 50px;
-	border-radius : 50%;
-	margin : 5px;
-	margin-right : 20px;
-	margin-left : 20px;
-	
-
+	position: relative;
+	overflow: hidden;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	margin: 5px;
+	margin-right: 20px;
+	margin-left: 20px;
 }
 
-.others_chat{
-	width : 100px;
-	height : 30px;
-	
+.others_chat {
+	width: 100px;
+	height: 30px;
 }
 
-.user_icon_img{
-	width : 70px;
-	height : 70px;
-	position : absolute;
-	background : white;
-	left : 50%;
+.user_icon_img {
+	width: 70px;
+	height: 70px;
+	position: absolute;
+	background: white;
+	left: 50%;
 	top: -20%;
-	transform : translateX(-50%);
+	transform: translateX(-50%);
 }
 
-
-.chatting_me_box{
+.chatting_me_box {
 	max-width: 80%;
 	border-radius: 10px;
-	background : #F7DF66;
-	display : inline-block;
-	margin-right : 20px;
-	padding-left : 20px;
-	padding-right : 20px;
-	font-size : 1.1rem;	
-	
+	background: #F7DF66;
+	display: inline-block;
+	margin-right: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-size: 1.1rem;
 }
 
-.chatting_others_box{
-	display : flex;
-	flex-direction : column;
+.chatting_others_box {
+	display: flex;
+	flex-direction: column;
 }
 
-.others_chat_chat{
+.others_chat_chat {
 	max-width: 80%;
 	border-radius: 10px;
-	background : white;
-	display : inline-block;
-	margin-right : 20px;
-	padding-left : 20px;
-	padding-right : 20px;
-	font-size : 1.1rem;	
-
-
+	background: white;
+	display: inline-block;
+	margin-right: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-size: 1.1rem;
 }
-
-
-
-
 
 /*2-2*/
-.input_msg{
-	width : 100%;
-	display : flex;
+.input_msg {
+	width: 100%;
+	display: flex;
 	justify-content: center;
 }
 
-.input_msg div{
-	padding : 10px;
+.input_msg div {
+	padding: 10px;
 }
 
-.input_msg_center{
-	width : 70%;
-	height : 30px;
-	display : flex;
+.input_msg_center {
+	width: 70%;
+	height: 30px;
+	display: flex;
 	justify-content: center;
 }
-.input_msg_bottom{
-	width : 15%;
-	height : 30px;
-	display : flex;
+
+.input_msg_bottom {
+	width: 15%;
+	height: 30px;
+	display: flex;
 	justify-content: center;
-}	
+}
+
 .input_msg_center input {
-	
-	width : 100%;
-	height : 25px;
-	
+	width: 100%;
+	height: 25px;
 }
 
-.input_msg_bottom_button{
-	width : 100%;
-	height : 25px;
+.input_msg_bottom_button {
+	width: 100%;
+	height: 25px;
 }
 
+#modal.modal-overlay {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: rgba(255, 255, 255, 0.25);
+	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	backdrop-filter: blur(1.5px);
+	-webkit-backdrop-filter: blur(1.5px);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+}
 
+#modal .modal-window {
+	background: #FFBB00;
+	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	backdrop-filter: blur(13.5px);
+	-webkit-backdrop-filter: blur(13.5px);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	width: 400px;
+	height: 500px;
+	position: relative;
+	top: 0px;
+	padding: 10px;
+}
 
+#modal .title {
+	padding-left: 10px;
+	display: inline;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+}
 
-		
-		#modal.modal-overlay {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            left: 0;
-            top: 0;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            backdrop-filter: blur(1.5px);
-            -webkit-backdrop-filter: blur(1.5px);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-        #modal .modal-window {
-            background: #FFBB00;
-            box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-            backdrop-filter: blur( 13.5px );
-            -webkit-backdrop-filter: blur( 13.5px );
-            border-radius: 10px;
-            border: 1px solid rgba( 255, 255, 255, 0.18 );
-            width: 400px;
-            height: 500px;
-            position: relative;
-            top: 0px;
-            padding: 10px;
-        }
-        #modal .title {
-            padding-left: 10px;
-            display: inline;
-            text-shadow: 1px 1px 2px gray;
-            color: white;
-            
-        }
-        #modal .title h2 {
-            display: inline;
-        }
-        #modal .close-area {
-            display: inline;
-            float: right;
-            padding-right: 10px;
-            cursor: pointer;
-            text-shadow: 1px 1px 2px gray;
-            color: white;
-        }
-        
-        #modal .content {
-            margin-top: 20px;
-            padding: 0px 10px;
-            text-shadow: 1px 1px 2px gray;
-            color: white;
-        }
-        
+#modal .title h2 {
+	display: inline;
+}
 
-   
+#modal .close-area {
+	display: inline;
+	float: right;
+	padding-right: 10px;
+	cursor: pointer;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+}
 
+#modal .content {
+	margin-top: 20px;
+	padding: 0px 10px;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+}
 
-      
+#modal2.modal-overlay2 {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: rgba(255, 255, 255, 0.25);
+	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	backdrop-filter: blur(1.5px);
+	-webkit-backdrop-filter: blur(1.5px);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+}
 
+#modal2 .modal-window {
+	background: #FFBB00;
+	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	backdrop-filter: blur(13.5px);
+	-webkit-backdrop-filter: blur(13.5px);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	width: 400px;
+	height: 500px;
+	position: relative;
+	top: 0px;
+	padding: 10px;
+}
+
+#modal2 .title {
+	padding-left: 10px;
+	display: inline;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+}
+
+#modal2 .title h2 {
+	display: inline;
+}
+
+#modal2 .close-area {
+	display: inline;
+	float: right;
+	padding-right: 10px;
+	cursor: pointer;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+}
+
+#modal2 .content {
+	margin-top: 20px;
+	padding: 0px 10px;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+}
+
+.info_img {
+
+	width: 50%;
+	height: 50%;
+	
+}
 </style>
 </head>
 
@@ -460,6 +498,39 @@ main{
 			</div>
 		</div>
 	
+		<div id="modal2" class="modal-overlay2">
+			<div class="modal-window">
+				<div class="close-area">×</div>
+				<div>
+					<p>아이디 : <c:choose>
+							<c:when test="${seller == sessionScope.userid}">
+					${buyer}
+				</c:when>
+							<c:otherwise>
+					${seller}
+				</c:otherwise>
+						</c:choose></p>
+					<p>이름 : ${member.name}</p>
+					<p>
+						평점 :
+						<c:choose>
+							<c:when test="${not empty info_msg}">
+					${info_msg}
+				</c:when>
+							<c:otherwise>
+					${average}
+				</c:otherwise>
+						</c:choose>
+					</p>
+					<p>
+						사진 : <img class="info_img"
+							src="/productUpload/${picture.picture_name}">
+					</p>
+					<p>
+					</p>
+				</div>
+			</div>
+		</div>
 	
 	
 	</main>
@@ -507,6 +578,42 @@ var RangeSlider = function(){
 };
 	
 RangeSlider();
+
+$( function(){
+	
+	$(".user_icon_div").on("click", function(){
+		
+		var modal2 = document.querySelector(".modal-overlay2");
+		modal2.style.display = "flex";				
+	});
+});
+
+const modal2 = document.getElementById("modal2")
+function modalOn2() {
+    modal2.style.display = "flex"
+}
+function isModalOn2() {
+    return modal2.style.display === "flex"
+}
+function modalOff2() {
+    modal2.style.display = "none"
+}
+const closeBtn2 = modal2.querySelector(".close-area")
+closeBtn2.addEventListener("click", e => {
+	
+    modalOff2()
+})
+modal2.addEventListener("click", e => {
+    const evTarget = e.target
+    if(evTarget.classList.contains("modal-overlay")) {
+        modalOff2()	// 외부 클릭 시
+    }
+})
+window.addEventListener("keyup", e => {
+    if(isModalOn2() && e.key === "Escape") {
+        modalOff()
+    }
+})
 
 </script>
 </html>
