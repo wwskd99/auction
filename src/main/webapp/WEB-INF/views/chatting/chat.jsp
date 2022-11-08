@@ -558,8 +558,17 @@ main {
 					</p>
 					<p>전화번호 : ${member.phone}</p>
 					<p>
-						사진 : <img class="info_img"
+						제품 사진 : 
+						<c:choose>
+						<c:when test="${empty picture.picture_name}">
+							<img class="info_img"
+							src="../../resources/img/list/noImage.png">
+						</c:when>
+						<c:otherwise>
+							<img class="info_img"
 							src="/productUpload/${picture.picture_name}">
+						</c:otherwise>
+						</c:choose>
 					</p>
 					<p>
 					</p>
