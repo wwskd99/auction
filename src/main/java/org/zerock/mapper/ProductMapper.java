@@ -33,6 +33,12 @@ public interface ProductMapper {
 	public int readProductlistCount(String user_id);
 	public void deleteProduct(int product_id);
 	public Date readRegDate(int product_id);
+	public List<ProductVO> searchListSortStartPrice(@Param("cri")Criteria cri);
+	public List<ProductVO> listSortStartPrice();
+	public List<ProductVO> searchListSortDate(@Param("cri")Criteria cri);
+	public List<ProductVO> listSortDate();
+	
+	public ProductVO distanceYES(int product_id);
 	
 	// 아래 동길
 	public List<ProductVO> getList();
@@ -53,5 +59,6 @@ public interface ProductMapper {
 	public GPSVO selectGPS(int product_id);
 	public List<ProductVO> price_asc();
 	public List<ProductVO> pronew_asc();
+
 	
 }

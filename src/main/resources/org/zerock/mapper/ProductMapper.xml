@@ -78,6 +78,29 @@ select date from product where product_id = #{product_id};
 		where product_id = #{product_id} order by
 		current_price desc limit 1;
 	</select>
+	
+<select id="searchListSortStartPrice"
+	resultType="org.zerock.domain.ProductVO">
+	select * from product WHERE title like concat ('%',#{cri.keyword},'%') order by start_price;
+</select>
+<select id="listSortStartPrice"
+	resultType="org.zerock.domain.ProductVO">
+	select * from product order by start_price;
+</select>
+<select id="searchListSortDate"
+	resultType="org.zerock.domain.ProductVO">
+	select * from product WHERE title like concat ('%',#{cri.keyword},'%') order by date;
+</select>
+<select id="listSortDate"
+	resultType="org.zerock.domain.ProductVO">
+	select * from product order by date;
+</select>
+
+<select id="distanceYES"
+	resultType="org.zerock.domain.ProductVO">
+	select * from product where neighborhood = 'YES' and product_id = ${product_id};
+</select>
+
 
 	<!-- 아래 동길 -->
 
@@ -122,7 +145,7 @@ select * from product where product_id > 0 order by product_id desc
 	
 		<select id="searchList"
 			resultType="org.zerock.domain.ProductVO">
-			select * from product WHERE title like concat ('%',#{keyword},'%');
+			select * from product WHERE title like concat ('%',#{keyword},'%') order by current_price;
 		</select>
 		
 	<select id="price_desc" resultType="org.zerock.domain.ProductVO">

@@ -3,6 +3,7 @@ package org.zerock.controller;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -251,117 +252,50 @@ public class ProductController {
 		model.addAttribute("list", p);
 	}
 	
-	@GetMapping("/price")
-	public String price_desc(@RequestParam("count") int count, Model model){
-		
-		List<ProductVO> p_price = new ArrayList<ProductVO>();
-		
-		if (count == 1) {
-			p_price = pService.price_desc();
-			model.addAttribute("list", p_price);
-		} else {
-			p_price = pService.price_asc();
-			model.addAttribute("list", p_price);
-		}
-		
-		List<ProductPicVO> pPic = new ArrayList<ProductPicVO>();
-		for(int i = 0; i<p_price.size(); i++) {
-			
-			int product_id = p_price.get(i).getProduct_id();
-			ProductPicVO pPicVo = cService.readProductPicOne(product_id);
-			pPic.add(pPicVo);
-			
-		}
-		
-		model.addAttribute("picList",pPic);
-		
-		return "/product/price";
-	}
 	
-	@GetMapping("/new")
-	public String pronew(@RequestParam("count") int count, Model model) {
-		List<ProductVO> pnew = new ArrayList<ProductVO>();
-		
-		if (count == 0) {
-			 pnew = pService.pronew();
-			model.addAttribute("list", pnew);
-		} else {
-			pnew= pService.pronew_asc();
-			model.addAttribute("list", pnew);
-		}
-		
-		List<ProductPicVO> pPic = new ArrayList<ProductPicVO>();
-		for(int i = 0; i<pnew.size(); i++) {
-			
-			int product_id = pnew.get(i).getProduct_id();
-			ProductPicVO pPicVo = cService.readProductPicOne(product_id);
-			pPic.add(pPicVo);
-			
-		}
-		
-		model.addAttribute("picList",pPic);
-		
-		
-		
-		
-		
-		return "/product/new";	
-	}
+//	@GetMapping("/5km")
+//	public String distance(Model model, HttpServletRequest request) {
+//
+//		BigDecimal latitude = new BigDecimal(request.getParameter("latitude"));
+//		BigDecimal longitude = new BigDecimal(request.getParameter("longitude"));
+//		double lat = latitude.doubleValue();
+//		double lnt = longitude.doubleValue();
+//		List<ProductVO> pdist = pService.distance();
+//		List<ProductVO> innerList = new ArrayList<ProductVO>();
+// 		pdist.forEach(product -> {
+//			GPSVO gps = pService.selectGPS(product.getProduct_id());
+//			double distance = getDistance(lat, lnt, gps.getLatitude().doubleValue(), gps.getLongitude().doubleValue());
+//			log.info(distance);
+//			if(distance<5) {
+//				innerList.add(product);
+//			} else {
+//				return;
+//			}
+//		});
+// 		log.info(latitude);
+// 		log.info(longitude);
+//		model.addAttribute("list", innerList);
+//		
+//		List<ProductPicVO> pPic = new ArrayList<ProductPicVO>();
+//		for(int i = 0; i<innerList.size(); i++) {
+//			
+//			int product_id = innerList.get(i).getProduct_id();
+//			ProductPicVO pPicVo = cService.readProductPicOne(product_id);
+//			pPic.add(pPicVo);
+//			
+//		}
+//		
+//		model.addAttribute("picList",pPic);
+//		
+//		
+//		
+//		
+//		
+//		
+//		return "/product/5km";
+//	}
 	
-	@GetMapping("/5km")
-	public String distance(Model model, HttpServletRequest request) {
-
-		BigDecimal latitude = new BigDecimal(request.getParameter("latitude"));
-		BigDecimal longitude = new BigDecimal(request.getParameter("longitude"));
-		double lat = latitude.doubleValue();
-		double lnt = longitude.doubleValue();
-		List<ProductVO> pdist = pService.distance();
-		List<ProductVO> innerList = new ArrayList<ProductVO>();
- 		pdist.forEach(product -> {
-			GPSVO gps = pService.selectGPS(product.getProduct_id());
-			double distance = getDistance(lat, lnt, gps.getLatitude().doubleValue(), gps.getLongitude().doubleValue());
-			log.info(distance);
-			if(distance<5) {
-				innerList.add(product);
-			} else {
-				return;
-			}
-		});
- 		log.info(latitude);
- 		log.info(longitude);
-		model.addAttribute("list", innerList);
-		
-		List<ProductPicVO> pPic = new ArrayList<ProductPicVO>();
-		for(int i = 0; i<innerList.size(); i++) {
-			
-			int product_id = innerList.get(i).getProduct_id();
-			ProductPicVO pPicVo = cService.readProductPicOne(product_id);
-			pPic.add(pPicVo);
-			
-		}
-		
-		model.addAttribute("picList",pPic);
-		
-		
-		
-		
-		
-		
-		return "/product/5km";
-	}
 	
-	@GetMapping("/searchList")
-	public String searchList(Criteria cri, Model model) {
-		log.info("cri: " + cri);
-		List<ProductVO> list = pService.searchList(cri);
-		if (!list.isEmpty()) {
-			model.addAttribute("list", list);
-			log.info("list : " + list);
-		} else {
-			model.addAttribute("listcheck", "empty");
-		}
-		return "/product/list";
-	}
 	
 	private Double getDistance(Double lat, Double lnt, Double lat2, Double lnt2) {
 
@@ -381,6 +315,165 @@ public class ProductController {
 	//radian(라디안)을 10진수로 변환
 	private static double rad2deg(double rad){
 	    return (rad * 180 / Math.PI);
+	}
+	
+	
+	//임시
+	@GetMapping("/ajaxList")
+	public void ajaxList(Criteria cri, @RequestParam("sort")String sort, Model model, HttpServletRequest request) {
+		
+		List<ProductVO> list = new ArrayList<ProductVO>();
+				
+				
+		if(cri != null) {
+			
+			if(request.getParameter("latitude") != null) {
+				if(sort.equals("start_price")) {
+					list = pService.startPriceSortSearchList(cri);
+				}else {
+					list = pService.dateSortSearchList(cri);
+				}
+				
+				
+				
+				
+				List<ProductVO> pdist = new ArrayList<ProductVO>();
+				
+				for (int i = 0; i<list.size(); i++) {					
+					if(list.get(i).getNeighborhood().equals("YES")) {
+						pdist.add(list.get(i));
+					}
+				
+				}
+				
+				BigDecimal latitude = new BigDecimal(request.getParameter("latitude"));
+				BigDecimal longitude = new BigDecimal(request.getParameter("longitude"));
+				double lat = latitude.doubleValue();
+				double lnt = longitude.doubleValue();
+			
+				List<ProductVO> innerList = new ArrayList<ProductVO>();
+		 		pdist.forEach(product -> {
+					GPSVO gps = pService.selectGPS(product.getProduct_id());
+					double distance = getDistance(lat, lnt, gps.getLatitude().doubleValue(), gps.getLongitude().doubleValue());
+					log.info(distance);
+					if(distance<5) {
+						innerList.add(product);
+					} else {
+						return;
+					}
+				});
+		 		
+		 		
+		 		List<ProductPicVO> pPic = new ArrayList<ProductPicVO>();
+				
+				for(int i = 0; i<innerList.size(); i++) {
+					
+					int product_id = innerList.get(i).getProduct_id();
+					ProductPicVO pPicVo = cService.readProductPicOne(product_id);
+					pPic.add(pPicVo);
+					
+				}
+				
+				model.addAttribute("picList",pPic);
+		 		model.addAttribute("list", innerList);
+				
+			}else {
+				if(sort.equals("start_price")) {
+					list = pService.startPriceSortSearchList(cri);
+				}else {
+					list = pService.dateSortSearchList(cri);
+				}
+				
+				List<ProductPicVO> pPic = new ArrayList<ProductPicVO>();
+				
+				for(int i = 0; i<list.size(); i++) {
+					
+					int product_id = list.get(i).getProduct_id();
+					ProductPicVO pPicVo = cService.readProductPicOne(product_id);
+					pPic.add(pPicVo);
+					
+				}
+				
+				model.addAttribute("picList",pPic);
+				model.addAttribute("list",list);
+			}
+			
+		}else {
+			
+			if(request.getParameter("latitude") != null) {
+				if(sort.equals("start_price")) {
+					list = pService.startPriceSortList();
+				}else {
+					list = pService.dateSortList();
+				}
+				List<ProductVO> pdist = new ArrayList<ProductVO>();
+				
+				for (int i = 0; i<list.size(); i++) {					
+					if(list.get(i).getNeighborhood().equals("YES")) {
+						pdist.add(list.get(i));
+					}
+				
+				}
+				
+				BigDecimal latitude = new BigDecimal(request.getParameter("latitude"));
+				BigDecimal longitude = new BigDecimal(request.getParameter("longitude"));
+				double lat = latitude.doubleValue();
+				double lnt = longitude.doubleValue();
+			
+				List<ProductVO> innerList = new ArrayList<ProductVO>();
+		 		pdist.forEach(product -> {
+					GPSVO gps = pService.selectGPS(product.getProduct_id());
+					double distance = getDistance(lat, lnt, gps.getLatitude().doubleValue(), gps.getLongitude().doubleValue());
+					log.info(distance);
+					if(distance<5) {
+						innerList.add(product);
+					} else {
+						return;
+					}
+				});
+		 		
+		 		List<ProductPicVO> pPic = new ArrayList<ProductPicVO>();
+				
+				for(int i = 0; i<innerList.size(); i++) {
+					
+					int product_id = innerList.get(i).getProduct_id();
+					ProductPicVO pPicVo = cService.readProductPicOne(product_id);
+					pPic.add(pPicVo);
+					
+				}
+				
+				model.addAttribute("picList",pPic);
+		 		model.addAttribute("list", innerList);
+		 		
+		 		
+			}else {
+				
+				if(sort.equals("start_price")) {
+					list = pService.startPriceSortList();
+				}else {
+					list = pService.dateSortList();
+				}
+				
+				List<ProductPicVO> pPic = new ArrayList<ProductPicVO>();
+				
+				for(int i = 0; i<list.size(); i++) {
+					
+					int product_id = list.get(i).getProduct_id();
+					ProductPicVO pPicVo = cService.readProductPicOne(product_id);
+					pPic.add(pPicVo);
+					
+				}
+				
+				model.addAttribute("picList",pPic);
+				model.addAttribute("list",list);
+			}
+	
+		}
+		
+		
+		
+		
+		
 	}
 }
 

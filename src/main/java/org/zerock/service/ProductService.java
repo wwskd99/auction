@@ -27,7 +27,11 @@ public interface ProductService {
 	public String TitleRead(int product_id);
 	public void productDelete(int product_id);
 	public Date regDateRead(int product_id);
-	
+	public List<ProductVO> startPriceSortSearchList(Criteria cri);
+	public List<ProductVO> startPriceSortList();
+	public List<ProductVO> dateSortSearchList(Criteria cri);
+	public List<ProductVO> dateSortList();
+	public ProductVO yesDistance(int product_id);
 	
 	// 아래 동길
 

@@ -115,6 +115,27 @@ public class ProductServiceImpl implements ProductService {
 		return pMapper.readRegDate(product_id);
 	}
 	
+	@Override
+	public List<ProductVO> startPriceSortSearchList(Criteria cri) {
+		
+		return pMapper.searchListSortStartPrice(cri);
+	}
+	@Override
+	public List<ProductVO> startPriceSortList() {
+		
+		return pMapper.listSortStartPrice();
+	}
+	
+	@Override
+	public List<ProductVO> dateSortList() {
+		// TODO Auto-generated method stub
+		return pMapper.listSortDate();
+	}
+	@Override
+	public List<ProductVO> dateSortSearchList(Criteria cri) {
+		// TODO Auto-generated method stub
+		return pMapper.searchListSortDate(cri);
+	}
 	// 아래 동길
 
 	@Override
@@ -148,6 +169,11 @@ public class ProductServiceImpl implements ProductService {
 		return pMapper.distance();
 	}
 
+	@Override
+	public ProductVO yesDistance(int product_id) {
+		
+		return pMapper.distanceYES(product_id);
+	}
 	// 호준
 	@Override
 	public List<Bid_historyVO> readBidList(String user_id) {
