@@ -24,6 +24,7 @@
 	color: #FFBB00;
 	border-left: 3px solid #FFBB00;
 	margin-bottom: 30px;
+	margin-top : 30px;
 }
 
 
@@ -35,13 +36,14 @@
 }
 
 .chat-info{
-	width: 100%;
-	border-bottom: 4px solid #feff8c;
+	width: 30vw;
+	border-bottom: 4px solid #ffd700;
+   padding: 0px;
+
 }
 
 .chat-info:hover{
-	background: #ffa316;
-	color: 888579;
+	background: #ffe0c7;
 }
 
 .chats-img-info{
@@ -50,13 +52,14 @@
 }
 
 .chats-img {
-	width: 80px;
+	width: 70px;
 	height: auto;
 	border-radius: 93px;
 }
 
 .info{
     display: inline-block;
+    margin-left: 20px;
 }
 
 
@@ -71,6 +74,8 @@ ul {
 	font-size: large;
     font-weight: bold;
     color:black;
+    padding: 5px;
+    letter-spacing: 0.5px;
 }
 
 .chat-time{
@@ -122,7 +127,7 @@ ul {
 									<li class="chat-log"> 
 										${room_chat[status.index].chat}
 										</li>
-										<li><fmt:formatDate pattern="yyyy년 MM월 dd일 a  hh:mm" value="${room_chat[status.index].chat_date}"/> </li>
+										<li><fmt:formatDate pattern="yyyy년 MM월 dd일 a  h시 mm분" value="${room_chat[status.index].chat_date}"/> </li>
 									</c:otherwise>
 								</c:choose>
 							</ul>

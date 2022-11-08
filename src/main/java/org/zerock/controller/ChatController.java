@@ -2,6 +2,7 @@ package org.zerock.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +24,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.zerock.domain.ChatStorageVO;
 import org.zerock.domain.ChatVO;
 import org.zerock.domain.CompleteVO;
+import org.zerock.domain.MemberVO;
 import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.domain.Room;
 import org.zerock.domain.ScoreVO;
 import org.zerock.service.ChatService;
+import org.zerock.service.MemberService;
 import org.zerock.service.ProductService;
 import org.zerock.service.RoomService;
 import lombok.Setter;
@@ -37,7 +41,9 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/chatting/*")
 public class ChatController {
 	
-
+	@Setter(onMethod_ = @Autowired)
+	private MemberService mService;
+	
 	@Setter(onMethod_ = @Autowired)
 	private RoomService rService;
 	
@@ -150,9 +156,37 @@ public class ChatController {
 			if(user_id.equals(room.getBuyer())) {
 				mv.addObject("seller",room.getSeller());
 				mv.addObject("buyer", user_id);
+				mv.addObject("member", mService.MemberRead(room.getSeller()));
+				List<ScoreVO> scores = rService.selectScore(room.getSeller());
+				log.info(scores);
+				float average=0.0f;
+				int count=0;
+				if (scores.isEmpty()) {
+					mv.addObject("info_msg", "평가받은 적이 없는 사람입니다.");
+				} else {
+					for(int i=0; i<scores.size(); i++) {
+						average+=scores.get(i).getUser_score();
+						count++;
+					}
+					mv.addObject("average", average / count);
+				}
 			} else {
 				mv.addObject("seller", user_id);
 				mv.addObject("buyer",room.getBuyer());
+				mv.addObject("member", mService.MemberRead(room.getBuyer()));
+				List<ScoreVO> scores = rService.selectScore(room.getBuyer());
+				log.info(scores);
+				float average=0.0f;
+				int count=0;
+				if (scores.isEmpty()) {
+					mv.addObject("info_msg", "평가받은 적이 없는 사람입니다.");
+				} else {
+					for(int i=0; i<scores.size(); i++) {
+						average+=scores.get(i).getUser_score();
+						count++;
+					}
+					mv.addObject("average", average / count);
+				}
 			}
 			List<ChatVO> chat_log = cService.SelectChat(room_id);
 			mv.addObject("roomName", params.get("roomName"));
@@ -163,15 +197,41 @@ public class ChatController {
 			List<String> chat_date = new ArrayList<String>();
 			
 			for (int i = 0; i < chat_log.size(); i++) {
-
+				
 				Date chatting_date = chat_log.get(i).getChat_date();
+
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(" HH시 MM분 ");
 				String a = simpleDateFormat.format(chatting_date);
 				chat_date.add(a);
+
+				String chat_message;
+				
+				Date current_date = new Date();
+				long current_time = current_date.getTime();
+				long chat_time = chatting_date.getTime();
+				
+				if(current_time - chat_time > 0 && current_time - chat_time < 60000 ) {
+					chat_message = "몇초전";	
+					
+				}else if (current_date.getDate() == chatting_date.getDate()){
+					
+				    simpleDateFormat = new SimpleDateFormat("a h시 mm분");
+					chat_message = simpleDateFormat.format(chatting_date);	
+				} else {
+					 simpleDateFormat = new SimpleDateFormat("a MM월 dd일 h시 mm분");
+					chat_message = simpleDateFormat.format(chatting_date);
+					
+				}
+				
+				chat_date.add(chat_message);
 			}
 			
 			mv.addObject("chat_date",chat_date);
-			
+				
+			ProductPicVO pPicVo = new ProductPicVO();
+			pPicVo =cService.readProductPicOne(room.getProduct_id());
+						
+			mv.addObject("picture", pPicVo);
 			
 
 			mv.setViewName("chatting/chat");
@@ -281,6 +341,7 @@ public class ChatController {
 		model.addAttribute("room_pic", pic_data);
 	}
 	
+
 	@PostMapping("/ajaxChatting")
 	public void ajaxChatting(@RequestParam("room_id") int room_id, Model model) {
 		List<ChatVO> chat_log = cService.SelectChat(room_id);
@@ -290,6 +351,7 @@ public class ChatController {
 		
 		List<String> chat_date = new ArrayList<String>();
 		
+
 		for (int i = 0; i < chat_log.size(); i++) {
 
 			Date chatting_date = chat_log.get(i).getChat_date();
@@ -297,7 +359,32 @@ public class ChatController {
 			String a = simpleDateFormat.format(chatting_date);
 			chat_date.add(a);
 		}
+
 		
+		for (int i = 0; i < chat_log.size(); i++) {
+			
+			Date chatting_date = chat_log.get(i).getChat_date();
+			String chat_message;
+			
+			Date current_date = new Date();
+			long current_time = current_date.getTime();
+			long chat_time = chatting_date.getTime();
+			
+			if(current_time - chat_time > 0 && current_time - chat_time < 60000 ) {
+				chat_message = "몇초전";	
+				
+			}else if (current_date.getDate() == chatting_date.getDate()){
+				
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("a h시 mm분");
+				chat_message = simpleDateFormat.format(chatting_date);	
+			} else {
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("a MM월 dd일 h시 mm분");
+				chat_message = simpleDateFormat.format(chatting_date);
+				
+			}
+			
+			chat_date.add(chat_message);
+		}
 		model.addAttribute("chat_date",chat_date);
 	}
 

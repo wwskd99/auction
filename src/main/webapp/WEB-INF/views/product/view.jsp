@@ -8,262 +8,341 @@
 <head>
 <style>
 main {
-
+	
 }
+
 .viewpage_wrap {
-margin: 0 auto;
-position : relative;
-width : 70%;
-min-width : 1000px;
-height : 50vw;
-min-height : 700px;
-overflow : visible;
+	margin: 0 auto;
+	position: relative;
+	width: 70%;
+	min-width: 1000px;
+	height: 50vw;
+	min-height: 700px;
+	overflow: visible;
 }
 
-.info_wrap{
-position : relative;
-width : 50%;
-height : 100%;
-font-size : 1rem;
-float : left;
+.info_wrap {
+	position: relative;
+	width: 50%;
+	height: 100%;
+	font-size: 1rem;
+	float: left;
 }
 
 .info_wrap div {
-	left : 5%;
+	left: 5%;
 }
-
+.user_info {
+	font-size: 1.0em;
+	color: #6c757d;
+	width: auto;
+	height: 100%;
+	float: left;
+}
 .memberinfo {
-	font-size : 1.0em;
-	color : #6c757d;
-	width : 100%;
-	height : 5%;
+	font-size: 1.0em;
+	color: #6c757d;
+	width: 100%;
+	height: 5%;
 	padding-bottom: 1%;
-	position : absolute;
-	border-bottom : 1px solid #E4E4E4;
+	position: absolute;
+	border-bottom: 1px solid #E4E4E4;
 }
 .memberinfoinner1 {
-	font-size : 1.0em;
-	color : #6c757d;
-	width : 40%;
-	height : 100%;
-	float : left;
-
+	font-size: 1.0em;
+	color: #6c757d;
+	width: 50%;
+	height: 100%;
+	float: left;
+}
+.memberinfoinner1 div{
+	cursor : pointer;
+	background : #FF8222;
+	border-radius : 10px;
+	color : black;
 }
 
-.memberinfoinner2{
-		font-size : 1.0em;
-	color : #6c757d;
-	width :40%;
-	height : 100%;
-	float : left;
-
+.memberinfoinner2 {
+	font-size: 1.0em;
+	color: #6c757d;
+	width: 35%;
+	height: 100%;
+	float: left;
 }
+
 .title {
-	text-align : left;
-	font-weight : 600;
-	font-size : 1.4em;
-	height : 10%;
-	top : 9%;	
-	position : absolute;
-	width : 95%;
-	padding-top : 1%;
-	padding-bottom : 1%;
-	border-bottom : 1px solid #E4E4E4;
+	text-align: left;
+	font-weight: 600;
+	font-size: 1.4em;
+	height: 10%;
+	top: 9%;
+	position: absolute;
+	width: 95%;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	border-bottom: 1px solid #E4E4E4;
 }
+
 .startPrice {
-	padding-top : 1%;
-	height : 8%;
-	top : 25%;
-	position : absolute;
-	width : 95%;
-	color : #343a40;
-	font-size : 1.1em;
-	font-weight : 500;
+	padding-top: 1%;
+	height: 8%;
+	top: 25%;
+	position: absolute;
+	width: 95%;
+	color: #343a40;
+	font-size: 1.1em;
+	font-weight: 500;
 }
+
 .currentPrice {
-	height : 8%;
-	top : 33%;
-	position : absolute;
-	width : 95%;
-	color : #343a40;
-	font-size : 1.1em;
-	font-weight : 500;
+	height: 8%;
+	top: 33%;
+	position: absolute;
+	width: 95%;
+	color: #343a40;
+	font-size: 1.1em;
+	font-weight: 500;
 }
 
-.bid_unit{
-height : 8%;
-top : 40%;
-position : absolute;
-width : 95%;
-color : #343a40;
-color : #343a40;
-	font-size : 1.1em;
-	font-weight : 500;
-	padding-bottom : 1%;
-	border-bottom : 1px solid #E4E4E4;
-
+.bid_unit {
+	height: 8%;
+	top: 40%;
+	position: absolute;
+	width: 95%;
+	color: #343a40;
+	color: #343a40;
+	font-size: 1.1em;
+	font-weight: 500;
+	padding-bottom: 1%;
+	border-bottom: 1px solid #E4E4E4;
 }
 
-.remainDate{
-	height : 10%;
-	top : 54%;
-	position : absolute;
-	width : 95%;
-	font-size : 1.4em;
-	font-weight : 700;
-	padding-bottom : 1%;
-	border-bottom : 1px solid #E4E4E4;
-}
-.bidTotal{
-	top : 70%;
-	height : 30%;
-	position : absolute;
-	width : 95%;
+.remainDate {
+	height: 10%;
+	top: 54%;
+	position: absolute;
+	width: 95%;
+	font-size: 1.4em;
+	font-weight: 700;
+	padding-bottom: 1%;
+	border-bottom: 1px solid #E4E4E4;
 }
 
-#bidCheck{
-	font-size : 1.3em;
-	text-align : center;
-	width : 100%;
-	border-top : none;
-	border-left : none;
-	border-right : none;
-	border-bottom : 3px solid;
-
-}
-.bidTextBoxWrap{
-	position : absolute;
-	width : 95%;
-	height : 50%;
-	top : 12%;
+.bidTotal {
+	top: 70%;
+	height: 30%;
+	position: absolute;
+	width: 95%;
 }
 
-.bidTextBoxUp{
-	font-size : 1.5em;
-	margin-left : 2%;
-	width : 5%;
-	height : 100%;
-	float : left;
-	cursor : pointer;
+#bidCheck {
+	font-size: 1.3em;
+	text-align: center;
+	width: 100%;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 3px solid;
 }
-.bidTextBoxDown{
-	font-size : 1.5em;
-	width : 5%;
-	height : 100%;
-	left : 75%;
-	float : left;	
-	cursor : pointer;
-}
-.bidTextBox{
 
-	width : 50%;
-	height : 100%;
-	left : 50%;
-	float : left;
+.bidTextBoxWrap {
+	position: absolute;
+	width: 95%;
+	height: 50%;
+	top: 12%;
+}
+
+.bidTextBoxUp {
+	font-size: 1.5em;
+	margin-left: 2%;
+	width: 5%;
+	height: 100%;
+	float: left;
+	cursor: pointer;
+}
+
+.bidTextBoxDown {
+	font-size: 1.5em;
+	width: 5%;
+	height: 100%;
+	left: 75%;
+	float: left;
+	cursor: pointer;
+}
+
+.bidTextBox {
+	width: 50%;
+	height: 100%;
+	left: 50%;
+	float: left;
 }
 
 .bidButton {
 	border-radius: 10px;
-	text-align : center;
-	line-height : 230%;
-	background-color : black;
-	color : white;
-	font-size : 1.3em;
-	font-weight : 600;
-	position : absolute;
-	width : 60%;
-	height : 35%;
-	top : 55%;
-	cursor : pointer;
+	text-align: center;
+	line-height: 230%;
+	background-color: black;
+	color: white;
+	font-size: 1.3em;
+	font-weight: 600;
+	position: absolute;
+	width: 60%;
+	height: 35%;
+	top: 55%;
+	cursor: pointer;
 }
 
 .piclist_img {
 	position: absolute;
 	width: 100%;
-	height : 100%;
+	height: 100%;
 	-webkit-transition: opacity 1s ease-in-out;
-    -moz-transition: opacity 1s ease-in-out;
-    -o-transition: opacity 1s ease-in-out;
-    transition: opacity 1s ease-in-out;
-    opacity: 0;
-   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-   filter: alpha(opacity=0);
-   border-radius: 20px;
+	-moz-transition: opacity 1s ease-in-out;
+	-o-transition: opacity 1s ease-in-out;
+	transition: opacity 1s ease-in-out;
+	opacity: 0;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity = 0);
+	border-radius: 20px;
 }
 
 .piclist_wrap {
-width : 100%;
-height : 100%;
+	width: 100%;
+	height: 100%;
 }
 
 .viewpage_wrap_top {
-width : 100%;
-height : 60%;
-position : absolute;
-top : 3%;
-padding-top : 1%;
-padding-bottom : 1%;
-border-top: solid	 1px #E4E4E4;
-border-bottom: solid	 1px #E4E4E4;
+	width: 100%;
+	height: 60%;
+	position: absolute;
+	top: 3%;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	border-top: solid 1px #E4E4E4;
+	border-bottom: solid 1px #E4E4E4;
 }
-.viewpage_wrap_bottom {
-width : 100%;
-height : 40%;
-position : absolute;
-top :65%;
 
+.viewpage_wrap_bottom {
+	width: 100%;
+	height: 40%;
+	position: absolute;
+	top: 65%;
 }
+
 .piclist_hidden {
-	float : left;
+	float: left;
 	width: 50%;
 	height: 100%;
 	overflow: hidden;
-	position : relative;
+	position: relative;
 }
 
 .page-nav {
-  width: 100%;
-  color: white;
-  top: 40%;
-  position: absolute;
-  z-index: 2;
-  font-size: 60px;
+	width: 100%;
+	color: white;
+	top: 40%;
+	position: absolute;
+	z-index: 2;
+	font-size: 60px;
 }
 
 .page-nav .prev {
-  float: left;
-  cursor : pointer;
-  color : white;
+	float: left;
+	cursor: pointer;
+	color: white;
 }
 
 .page-nav .next {
-  float: right;
-  cursor : pointer;
-  color : white;
+	float: right;
+	cursor: pointer;
+	color: white;
 }
 
 .desc_wrap {
-  height : 100%;
-  clear:both;
-  padding-top : 2%;
+	height: 100%;
+	clear: both;
+	padding-top: 2%;
 }
+
 .desc_title {
- font-size : 1.3em;
- 
- 
-	font-weight : 600;
-	padding-bottom : 2%;
-	border-bottom : 1px solid #E4E4E4;
-	
+	font-size: 1.3em;
+	font-weight: 600;
+	padding-bottom: 2%;
+	border-bottom: 1px solid #E4E4E4;
 }
 
 .desc {
-	margin-top : 2%;
-	padding-bottom : 2%;
-	border-bottom : 1px solid #E4E4E4;
-	
+	margin-top: 2%;
+	padding-bottom: 2%;
+	border-bottom: 1px solid #E4E4E4;
 }
 
+#modal.modal-overlay {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: rgba(255, 255, 255, 0.25);
+	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	backdrop-filter: blur(1.5px);
+	-webkit-backdrop-filter: blur(1.5px);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	z-index: 3;
+}
+
+#modal .modal-window {
+	background: #FFBB00;
+	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	backdrop-filter: blur(13.5px);
+	-webkit-backdrop-filter: blur(13.5px);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	width: 400px;
+	height: 500px;
+	position: relative;
+	top: 0px;
+	padding: 10px;
+}
+
+#modal .title {
+	padding-left: 10px;
+	display: inline;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+}
+
+#modal .title h2 {
+	display: inline;
+}
+
+#modal .close-area {
+	display: inline;
+	float: right;
+	padding-right: 10px;
+	cursor: pointer;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+}
+
+#modal .content {
+	margin-top: 20px;
+	padding: 0px 10px;
+	text-shadow: 1px 1px 2px gray;
+	color: white;
+}
+
+.info_img {
+
+	width: 50%;
+	height: 50%;
+	
+}
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
@@ -707,14 +786,14 @@ $(document).ready( function bidUnit(){
 		</div>
 
 		<div class="page-nav">
-			<a onclick ="prev()" class ="prev">  </a>
-			<a onclick ="next()" class="next">  </a>
+			<a onclick ="prev()" class ="prev"> < </a>
+			<a onclick ="next()" class="next"> > </a>
 		</div>
 	</div>
 	
 	<div class = "info_wrap">
 		<div class ="memberinfo">
-			<div class = "memberinfoinner1">${productView.user_id}님의 경매 횟수 : ${trade.total_count_s}<c:if test="${not empty msg}">0</c:if>회</div>
+			<div class = "memberinfoinner1"><div class="user_info">${productView.user_id}</div>님의 경매 횟수 : ${trade.total_count_s}<c:if test="${not empty msg}">0</c:if>회</div>
 			<div class = "memberinfoinner2">
 				<c:choose>
 					<c:when test="${empty msg}">거래 성사율 : ${rate}%</c:when>
@@ -749,6 +828,70 @@ $(document).ready( function bidUnit(){
 	</div>
 	</div>
 	</div>
+		<div id="modal" class="modal-overlay">
+			<div class="modal-window">
+				<div class="close-area">×</div>
+				<div>
+					<p>아이디 : ${productView.user_id}</p>
+					<p>이름 : ${member.name}</p>
+					<p>
+						평점 :
+						<c:choose>
+							<c:when test="${not empty info_msg}">
+					${info_msg}
+				</c:when>
+							<c:otherwise>
+					${average}
+				</c:otherwise>
+						</c:choose>
+					</p>
+					<p>
+						사진 : <img class="info_img"
+							src="/productUpload/${piclist[0].picture_name}">
+					</p>
+				</div>
+			</div>
+		</div>
 	</main>
+	
+<script type="text/javascript">
+//유저 정보 모달창
+
+$( function(){
+	
+	$(".user_info").on("click", function(){
+		
+		var modal = document.querySelector(".modal-overlay");
+		modal.style.display = "flex";				
+	});
+});
+
+const modal = document.getElementById("modal")
+function modalOn() {
+    modal.style.display = "flex"
+}
+function isModalOn() {
+    return modal.style.display === "flex"
+}
+function modalOff() {
+    modal.style.display = "none"
+}
+const closeBtn = modal.querySelector(".close-area")
+closeBtn.addEventListener("click", e => {
+	
+    modalOff()
+})
+modal.addEventListener("click", e => {
+    const evTarget = e.target
+    if(evTarget.classList.contains("modal-overlay")) {
+        modalOff()	// 외부 클릭 시
+    }
+})
+window.addEventListener("keyup", e => {
+    if(isModalOn() && e.key === "Escape") {
+        modalOff()
+    }
+})
+</script>
 </body>
 </html>

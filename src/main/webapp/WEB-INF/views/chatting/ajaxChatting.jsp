@@ -8,12 +8,13 @@
 		<c:choose>
 			<c:when test="${chat.user_id == sessionScope.userid}">
 				<div class="chatting_me_box_wrap">
-					<div class="chatting_me_box">
-						<p class='me'>${chat.chat}</p>
-					</div>
 					<div class="chatting_me_box_date">
 						<p>${chat_date[status.index]}</p>
 					</div>
+					<div class="chatting_me_box">
+						<p class='me'>${chat.chat}</p>
+					</div>
+					
 				</div>
 			</c:when>
 			<c:otherwise>
