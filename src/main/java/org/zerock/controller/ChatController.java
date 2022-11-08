@@ -70,7 +70,7 @@ public class ChatController {
 	@RequestMapping("/room")
 	public ModelAndView room() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("chatting/room");
+		mv.setViewName("chatting/room2");
 		return mv;
 	}
 	
@@ -151,8 +151,6 @@ public class ChatController {
 		Room room = new Room();
 		room = rService.selectOneRoom(room_id);
 		
-		List<Room> new_list = roomList.stream().filter(o->o.getRoom_id()==room_id).collect(Collectors.toList());
-		if(new_list != null && new_list.size() > 0) {
 			if(user_id.equals(room.getBuyer())) {
 				mv.addObject("seller",room.getSeller());
 				mv.addObject("buyer", user_id);
@@ -235,9 +233,8 @@ public class ChatController {
 			
 
 			mv.setViewName("chatting/chat");
-		}else {
-			mv.setViewName("chatting/room");
-		}
+			log.warn("test1--------------------------------------------------------");
+		
 		return mv;
 	}
 	
@@ -289,7 +286,7 @@ public class ChatController {
 		
 		rService.insertScore(score);
 		
-		mv.setViewName("chatting/room");
+		mv.setViewName("chatting/room2");
 		return mv;
 	}
 	
@@ -331,7 +328,7 @@ public class ChatController {
 		
 		for (int i = 0; i < roomList.size(); i++) {
 			ProductPicVO pPicVo = new ProductPicVO();
-			pPicVo =cService.readProductPicOne(room.get(i).getProduct_id());
+			pPicVo = cService.readProductPicOne(room.get(i).getProduct_id());
 			pic_data.add(pPicVo);
 			
 			
