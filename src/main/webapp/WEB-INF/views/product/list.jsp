@@ -300,7 +300,7 @@ $(".gps_icon_img").hover(function(){
 				<div class="search-box">
 					
 						<input type="text" placeholder="Search" name="keyword" value="${keyword}"/>
-						<button onClick ="pronew()" class="btn-square">검색</button>
+						<button onClick ="pronew()" id = "search_product" class="btn-square">검색</button>
 					
 				</div>
 				<!-- search box -->
@@ -379,11 +379,13 @@ $('input[name="nei"]').change(function() {
  
 	 if(checked){
     	$('input[name="nei"]').attr('value','YES');
-    	$('input[name="nei"]').css('background','#FF6666');
+    	var check_box = document.querySelector(".sort_dis");
+    	check_box.style.background = "#FF6666";	
 	 }
    	 else{
     	$('input[name="nei"]').attr('value','NO');
-    	$('#nei').css('background','#ff8c00');
+    	var check_box = document.querySelector(".sort_dis");
+    	check_box.style.background = "#ff8c00";	
     }
 });
 
@@ -398,6 +400,14 @@ $( function(){
 	});
 	
 	$("#new_desc").on("click", function(){
+		
+		var color_price = document.querySelector("#price_desc");
+		var color_new = document.querySelector("#new_desc");
+		color_price.style.background = "#ff8c00";	
+		color_new.style.background = "#FF6666";	
+	});
+	
+	$("#search_product").on("click", function(){
 		
 		var color_price = document.querySelector("#price_desc");
 		var color_new = document.querySelector("#new_desc");
