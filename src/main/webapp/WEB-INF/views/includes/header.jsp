@@ -118,7 +118,7 @@ $( function(){
 	});
 	
 	$( '.chat_list_click' ).on("click", function() {
-		window.location.href='../chatting/room';
+		window.location.href='../chatting/room2';
 	});
 	$( '.chat_log_click' ).on("click", function() {
 		var product_id_input = prompt("찾으려는 채팅방의 product_id를 입력하세요."+"");
