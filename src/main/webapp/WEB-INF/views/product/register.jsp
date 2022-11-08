@@ -294,11 +294,17 @@ function checkForm(){
 		return true;
 	}
 	
+
 	
 }
 
 		
 </script>
+<script type="text/javascript">
+		<c:if test="${not empty message}">
+			alert("${message}");
+		</c:if>
+	</script>
 <meta charset="EUC-KR">
 <title>경매 등록</title>
 </head>

@@ -11,6 +11,7 @@ main {
 	width: 80vw;
 	margin-left: auto;
 	margin-right: auto;
+	
 }
 
 body {
@@ -22,12 +23,12 @@ body {
 	background-color: #fff;
 	font-weight: 400;
 	color: #6c757d;
+
 }
 
 .list_container {
 	width: 100%;
-	padding-left: 15px;
-	padding-left: 15px;
+	height : 100%;
 	margin-right: auto;
 	margin-left: auto;
 }
@@ -97,18 +98,30 @@ input {
 }
 
 .pro_wrap {
-	justify-content: center !important;
+
+	padding-top : 50px;
+	padding-right : 20px;
+	padding-left : 20px;
+	width : 100%;
+	overflow : auto;
+
+}
+
+.pro_wrap::-webkit-scrollbar{
+	display : none;
+	width : 0;
 }
 
 .pro_list_wrap {
 	position : relative;
-	width: 19vw;
-	height: auto;
-	margin: 3px;
+	width: 270px;
+	height: 420px;
+	margin: 2px;
 	float: left;
 	border: 1px solid #eee;
 	transition: all 300ms ease-in-out;
 	background: #FFFFFF;
+
 
 }
 
@@ -120,15 +133,12 @@ input {
 
 
 .pro_img {
-	width: 100%;
-	height: auto;
-	border-radius: 5px;
-	vertical-align: middle;
-	border-style: none;
+	width: 250px;
+	height: 250px;
 }
 
 .pic_list {
-	flex: 0 0 50%;
+	text-align : center;
 
 }
 
@@ -219,8 +229,8 @@ ul {
 	font-size : 11px;
 	font-weight : 800;
 	position : absolute;
-	left : 80%;
-	top : 5%;
+	left : 6%;
+	top : 7%;
 	width : 237px;
 	height : 20px;
 	z-index : 3;
@@ -234,7 +244,7 @@ ul {
 .gps_icon{
 	position : absolute;
 	left : 87%;
-	top : -5%;
+	top : -7%;
 	width : 30%;
 	height : 15%;
 	
@@ -242,7 +252,7 @@ ul {
 }
 
 .gps_icon_img {
-	width : 80%; height : 65%;
+	width : 75%; height : 85%;
 	z-index : 5;
 	cursor : pointer;
 	position : absolute;
@@ -290,7 +300,7 @@ $(".gps_icon_img").hover(function(){
 			<!-- row -->
 			
 			<div class="pro_wrap" id="item">
-				<c:forEach items="${list}" var="product">
+				<c:forEach items="${list}" var="product" varStatus = "status">
 					<div class="pro_list_wrap">
 						<c:if test="${product.neighborhood eq 'YES'}">
 							<div class = "gps_icon">
@@ -303,7 +313,7 @@ $(".gps_icon_img").hover(function(){
 							
 							<c:choose>
 							
-							 <c:when test="${not empty pic.picture_name}"><img class="pro_img" src="/productUpload/${pic.picture_name}"></c:when>
+							 <c:when test="${not empty picList[status.index].picture_name}"><img class="pro_img" src="/productUpload/${picList[status.index].picture_name}"></c:when>
 							 <c:otherwise><img class="pro_img" src="../../resources/img/list/noImage.png"></c:otherwise>
 							 							 
 								

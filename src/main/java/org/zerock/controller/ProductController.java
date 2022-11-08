@@ -31,6 +31,7 @@ import org.zerock.domain.ProductPicVO;
 import org.zerock.domain.ProductVO;
 import org.zerock.domain.ScoreVO;
 import org.zerock.domain.TradeVO;
+import org.zerock.service.ChatService;
 import org.zerock.service.MemberService;
 import org.zerock.service.ProductService;
 import org.zerock.service.RoomService;
@@ -52,6 +53,8 @@ public class ProductController {
 	
 	@Autowired
 	private RoomService rService;
+	
+	private ChatService cService;
 	
 	@GetMapping("/view")
 	public String productView(@RequestParam("product_id") int product_id, Model model) {
@@ -146,25 +149,28 @@ public class ProductController {
 		System.out.println(gpsVo.getLatitude());
 		System.out.println(gpsVo.getLongitude());
 		// 게시글 등록
-		pService.productRegist(product);
 		// 셀렉트키 리턴
 		
 		log.info(product);
 		
-		gpsVo.setProduct_id(product.getProduct_id());
 		
-		if(product.getNeighborhood() == null) {
+		
+		if(product.getNeighborhood().equals("YES")) {
 			
-			product.setNeighborhood("NO");
-			
-		}
-			if(product.getNeighborhood().equals("YES")) {
-			
-				if(gpsVo.getLatitude() != null) {
-					pService.productGPSRegist(gpsVo);
-				}
-
+			if(gpsVo.getLatitude() != null) {
+				pService.productRegist(product);
+				gpsVo.setProduct_id(product.getProduct_id());
+				pService.productGPSRegist(gpsVo);
+			}else {
+				rttr.addFlashAttribute("message", "위치 액세스를 허용해주세요.");
+				return "redirect:/product/register";
 			}
+			
+			
+			
+		} else {
+			pService.productRegist(product);			
+		}
 
 		rttr.addFlashAttribute("result", product.getProduct_id());
 
@@ -231,32 +237,75 @@ public class ProductController {
 	@GetMapping("/list")
 	public void list(Model model) {
 		List<ProductVO> p = pService.getList();
-		log.info("list---------------------");
+		List<ProductPicVO> pPic = new ArrayList<ProductPicVO>();
+		
+		for(int i = 0; i<p.size(); i++) {
+			
+			int product_id = p.get(i).getProduct_id();
+			ProductPicVO pPicVo = cService.readProductPicOne(product_id);
+			pPic.add(pPicVo);
+			
+		}
+		
+		model.addAttribute("picList",pPic);
 		model.addAttribute("list", p);
 	}
 	
 	@GetMapping("/price")
 	public String price_desc(@RequestParam("count") int count, Model model){
+		
+		List<ProductVO> p_price = new ArrayList<ProductVO>();
+		
 		if (count == 1) {
-			List<ProductVO> p_price = pService.price_desc();
+			p_price = pService.price_desc();
 			model.addAttribute("list", p_price);
 		} else {
-			List<ProductVO> p_price = pService.price_asc();
+			p_price = pService.price_asc();
 			model.addAttribute("list", p_price);
 		}
+		
+		List<ProductPicVO> pPic = new ArrayList<ProductPicVO>();
+		for(int i = 0; i<p_price.size(); i++) {
+			
+			int product_id = p_price.get(i).getProduct_id();
+			ProductPicVO pPicVo = cService.readProductPicOne(product_id);
+			pPic.add(pPicVo);
+			
+		}
+		
+		model.addAttribute("picList",pPic);
+		
 		return "/product/price";
 	}
 	
 	@GetMapping("/new")
 	public String pronew(@RequestParam("count") int count, Model model) {
+		List<ProductVO> pnew = new ArrayList<ProductVO>();
+		
 		if (count == 0) {
-			List<ProductVO> pnew = pService.pronew();
+			 pnew = pService.pronew();
 			model.addAttribute("list", pnew);
 		} else {
-			List<ProductVO> pnew= pService.pronew_asc();
+			pnew= pService.pronew_asc();
 			model.addAttribute("list", pnew);
 		}
-		return "/product/new";
+		
+		List<ProductPicVO> pPic = new ArrayList<ProductPicVO>();
+		for(int i = 0; i<pnew.size(); i++) {
+			
+			int product_id = pnew.get(i).getProduct_id();
+			ProductPicVO pPicVo = cService.readProductPicOne(product_id);
+			pPic.add(pPicVo);
+			
+		}
+		
+		model.addAttribute("picList",pPic);
+		
+		
+		
+		
+		
+		return "/product/new";	
 	}
 	
 	@GetMapping("/5km")
@@ -281,6 +330,23 @@ public class ProductController {
  		log.info(latitude);
  		log.info(longitude);
 		model.addAttribute("list", innerList);
+		
+		List<ProductPicVO> pPic = new ArrayList<ProductPicVO>();
+		for(int i = 0; i<innerList.size(); i++) {
+			
+			int product_id = innerList.get(i).getProduct_id();
+			ProductPicVO pPicVo = cService.readProductPicOne(product_id);
+			pPic.add(pPicVo);
+			
+		}
+		
+		model.addAttribute("picList",pPic);
+		
+		
+		
+		
+		
+		
 		return "/product/5km";
 	}
 	
