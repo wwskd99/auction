@@ -435,9 +435,7 @@ function distance(){
     		}
     	});
 	}
-    
     navigator.geolocation.getCurrentPosition(success);
-
 };
 
 </script>

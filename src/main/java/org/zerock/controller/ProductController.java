@@ -313,6 +313,7 @@ public class ProductController {
 
 		BigDecimal latitude = new BigDecimal(request.getParameter("latitude"));
 		BigDecimal longitude = new BigDecimal(request.getParameter("longitude"));
+		log.info(latitude);
 		double lat = latitude.doubleValue();
 		double lnt = longitude.doubleValue();
 		List<ProductVO> pdist = pService.distance();
