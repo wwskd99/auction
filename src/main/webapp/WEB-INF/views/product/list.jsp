@@ -445,6 +445,7 @@ if(nei == "YES"){
     	});
 	}
 
+
     navigator.geolocation.getCurrentPosition(success);
 	
 	
@@ -464,7 +465,7 @@ if(nei == "YES"){
 	});
 	
 }
-//ajax 보내기
+
 };
 
 function pronew(){

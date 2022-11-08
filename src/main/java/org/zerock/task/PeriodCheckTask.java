@@ -52,13 +52,6 @@ public class PeriodCheckTask {
 				// 채팅방 개설
 				
 				if (Buyer_id == null) { // 구매자가 없으면
-					if(diffTime/oneday==1) {	// deadline 입력
-						product.setDeadline(1);
-						pMapper.updateDeadline(product);
-					} else if(diffTime/oneday==2) {
-						product.setDeadline(2);
-						pMapper.updateDeadline(product);
-					}
 					return;
 				} else if (room != null) { // 방이 존재하는지
 					complete = rMapper.selectComplete(product_id);
@@ -126,6 +119,16 @@ public class PeriodCheckTask {
 					cMapper.deleteLog(room.getRoom_id()); // 채팅방 기록 삭제
 					rMapper.deleteRoom(room.getRoom_id());
 					rMapper.deleteComplete(product_id);
+				}
+			} else {	// 3일 이전
+				if (Buyer_id == null) { // 구매자가 없으면
+					if(diffTime/oneday >= 1 && diffTime/oneday < 2) {	// deadline 입력
+						product.setDeadline(1);
+						pMapper.updateDeadline(product);
+					} else if(diffTime/oneday >= 2) {
+						product.setDeadline(2);
+						pMapper.updateDeadline(product);
+					}
 				}
 			}
 		});

@@ -661,7 +661,7 @@ $(document).ready( function() {
 $( function(){
 	$(".joinChat").on("click", function(){
 		
-		window.location.href='../chatting/room';
+		window.location.href='../chatting/room2';
 		
 	});
 });
