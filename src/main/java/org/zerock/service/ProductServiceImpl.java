@@ -182,4 +182,13 @@ public class ProductServiceImpl implements ProductService {
 	public GPSVO selectGPS(int product_id) {
 		return pMapper.selectGPS(product_id);
 	}
+	@Override
+	public List<ProductVO> price_asc() {
+	
+		return pMapper.price_asc();
+	}
+	@Override
+	public List<ProductVO> pronew_asc() {
+		return pMapper.pronew_asc();
+	}
 }
