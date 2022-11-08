@@ -14,7 +14,7 @@ public class ProductVO {
 	private int start_price;
 	private int current_price;
 	private Date date;
-	private String neighborhood;
+	private String neighborhood = "NO";
 	private int deadline;
 	
 
