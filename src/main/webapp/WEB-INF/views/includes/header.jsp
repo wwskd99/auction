@@ -18,7 +18,7 @@ main {
 
 header {
    position: fixed;
-   z-index: 3;
+   z-index: 15;
    width: 100vw;
    height: 70px;
    min-width: 900px;
