@@ -32,13 +32,7 @@ main {
 .info_wrap div {
 	left: 5%;
 }
-.user_info {
-	font-size: 1.0em;
-	color: #6c757d;
-	width: auto;
-	height: 100%;
-	float: left;
-}
+
 .memberinfo {
 	font-size: 1.0em;
 	color: #6c757d;
@@ -55,13 +49,16 @@ main {
 	height: 100%;
 	float: left;
 }
-.memberinfoinner1 div{
-	cursor : pointer;
-	background : #FF8222;
-	border-radius : 10px;
-	color : black;
-}
 
+.user_info {
+cursor : pointer;
+	font-size: 1.0em;
+	color: #FF8222;
+	width: auto;
+	height: 100%;
+	float: left;
+	background : white;
+}
 .memberinfoinner2 {
 	font-size: 1.0em;
 	color: #6c757d;
@@ -277,6 +274,8 @@ main {
 	border-bottom: 1px solid #E4E4E4;
 }
 
+
+/* 모달 */
 #modal.modal-overlay {
 	width: 100%;
 	height: 100%;
@@ -287,7 +286,6 @@ main {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background: rgba(255, 255, 255, 0.25);
 	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 	backdrop-filter: blur(1.5px);
 	-webkit-backdrop-filter: blur(1.5px);
@@ -297,29 +295,20 @@ main {
 }
 
 #modal .modal-window {
-	background: #FFBB00;
+	background : #FFFAE6;
 	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 	backdrop-filter: blur(13.5px);
 	-webkit-backdrop-filter: blur(13.5px);
 	border-radius: 10px;
 	border: 1px solid rgba(255, 255, 255, 0.18);
-	width: 400px;
-	height: 500px;
+	width: 500px;
+	height: 700px;
 	position: relative;
 	top: 0px;
 	padding: 10px;
 }
 
-#modal .title {
-	padding-left: 10px;
-	display: inline;
-	text-shadow: 1px 1px 2px gray;
-	color: white;
-}
 
-#modal .title h2 {
-	display: inline;
-}
 
 #modal .close-area {
 	display: inline;
@@ -330,19 +319,89 @@ main {
 	color: white;
 }
 
-#modal .content {
-	margin-top: 20px;
-	padding: 0px 10px;
-	text-shadow: 1px 1px 2px gray;
-	color: white;
-}
-
 .info_img {
 
 	width: 50%;
 	height: 50%;
 	
 }
+
+.user_icon_div{
+	position: relative;
+	overflow: hidden;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	margin: 5px;
+	margin-right: 20px;
+	margin-left: 20px;
+	
+}
+.user_icon_img{
+	width: 70px;
+	height: 70px;
+	position: absolute;
+	background: white;
+	left: 50%;
+	top: -20%;
+	transform: translateX(-50%);
+}
+.modal_info_wrap{
+	width : 100%;
+	height : 80%;
+	margin : 0 auto;
+	color : #464646;
+}
+
+.modal_info_id{
+	display : flex;
+	margin-top : 10%;
+	margin-left : 20%;
+
+}
+
+.modal_info_point{
+	width : 100%;
+	height :20%;	
+}
+
+.modal_info_point div{
+	margin-top : 5%;
+	text-align : center;
+}
+
+.modal_info_point span{
+	font-size : 20px;
+	font-weight : 700;
+	color : #FF8900;
+}
+
+.grade_icon{
+	width : 100px;
+	height : 100px;
+}
+
+.grade_icon2{
+	width : 30px;
+	height : 30px;
+}
+
+.modal_info_des{
+	margin : 0 auto;
+	margin-top : 5%;
+	display : flex;
+	flex-direction : column;
+	width : 70%;
+	height : 70%;
+	justify-content : space-around;
+	
+}
+.modal_info_des div{
+	margin-left : 10%;
+	
+}
+
+
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
@@ -598,7 +657,7 @@ $(document).ready( function() {
 $( function(){
 	$(".joinChat").on("click", function(){
 		
-		window.location.href='../chatting/room';
+		window.location.href='../chatting/room2';
 		
 	});
 });
@@ -828,32 +887,48 @@ $(document).ready( function bidUnit(){
 	</div>
 	</div>
 	</div>
-		<div id="modal" class="modal-overlay">
-			<div class="modal-window">
-				<div class="close-area">×</div>
-				<div>
-					<p>아이디 : ${productView.user_id}</p>
-					<p>이름 : ${member.name}</p>
-					<p>
-						평점 :
-						<c:choose>
-							<c:when test="${not empty info_msg}">
-					${info_msg}
-				</c:when>
-							<c:otherwise>
-					${average}
-				</c:otherwise>
-						</c:choose>
-					</p>
-					<p>
-						사진 : <img class="info_img"
-							src="/productUpload/${piclist[0].picture_name}">
-					</p>
-				</div>
-			</div>
-		</div>
-	</main>
 	
+	
+	
+	
+	
+<!--  모달  -->	
+<div id="modal" class="modal-overlay">
+	<div class="modal-window">
+		<div class="close-area">×</div>
+		<div class = "modal_info_wrap">
+			<div class = "modal_info_id">
+				<div class = "user_icon_div"><img class = "user_icon_img" src = "../../resources/img/chatting/user_icon.jpg"></div>
+				<p>${productView.user_id} 님의 등급</p>
+			</div>
+			<div class = "modal_info_point">
+				<c:choose> 
+			
+						<c:when test="${not empty info_msg}"><div><img class = "grade_icon"src = "../../resources/img/icon/g.png"><span>등급 회원</span></div></c:when>
+						<c:when test="${average == 0}"><div><img class = "grade_icon"src = "../../resources/img/icon/f.png"><span>등급 회원</span></div></c:when>
+						<c:when test="${average > 0 && average <= 1}"><div><img class = "grade_icon"src = "../../resources/img/icon/e.png"><span>등급 회원</span></div></c:when>
+						<c:when test="${average > 1 && average <= 2}"><div><img class = "grade_icon"src = "../../resources/img/icon/d.png"><span>등급 회원</span></div></c:when>
+						<c:when test="${average > 2 && average <= 3}"><div><img class = "grade_icon"src = "../../resources/img/icon/c.png"><span>등급 회원</span></div></c:when>
+						<c:when test="${average > 3 && average <= 4}"><div><img class = "grade_icon"src = "../../resources/img/icon/b.png"><span>등급 회원</span></div></c:when>
+						<c:when test="${average > 4 && average <= 5}"><div><img class = "grade_icon"src = "../../resources/img/icon/a.png"><span>등급 회원</span></div></c:when>	
+			
+				</c:choose>
+				
+			</div>
+			<div class = "modal_info_des">
+				<div><img class = "grade_icon2"src = "../../resources/img/icon/a.png"><span> 등급 : 평균 평점 4~5점 사이인 회원</span></div>
+				<div><img class = "grade_icon2"src = "../../resources/img/icon/b.png"><span> 등급 : 평균 평점 3~4점 사이인 회원</span></div>
+				<div><img class = "grade_icon2"src = "../../resources/img/icon/c.png"><span> 등급 : 평균 평점 2~3점 사이인 회원</span></div>
+				<div><img class = "grade_icon2"src = "../../resources/img/icon/d.png"><span> 등급 : 평균 평점 1~2점 사이인 회원</span></div>
+				<div><img class = "grade_icon2"src = "../../resources/img/icon/e.png"><span> 등급 : 평균 평점 1~0점 사이인 회원</span></div>
+				<div><img class = "grade_icon2"src = "../../resources/img/icon/f.png"><span> 등급 : 평균 평점 0점인 회원</span></div>
+				<div><img class = "grade_icon2"src = "../../resources/img/icon/g.png"><span> 등급 : 한번도 거래를 하지 않은 회원</span></div>		
+			</div>
+			
+		</div>
+	</div>
+</div>
+</main>	
 <script type="text/javascript">
 //유저 정보 모달창
 
@@ -862,7 +937,8 @@ $( function(){
 	$(".user_info").on("click", function(){
 		
 		var modal = document.querySelector(".modal-overlay");
-		modal.style.display = "flex";				
+		modal.style.display = "flex";	
+		
 	});
 });
 

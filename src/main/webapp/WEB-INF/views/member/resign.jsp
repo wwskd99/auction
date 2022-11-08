@@ -101,6 +101,7 @@ min-height : 900px;
 	border : 1px solid #EEE;
 	text-align: center;
 	line-height : 80px;
+	cursor : pointer;
 }
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -112,7 +113,7 @@ $( function(){
 			window.location.href='../member/resignb';
 		}
 	});
-}
+});
 </script>
 <meta charset="EUC-KR">
 <title>회원 탈퇴</title>

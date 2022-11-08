@@ -11,6 +11,7 @@ main {
 	width: 80vw;
 	margin-left: auto;
 	margin-right: auto;
+	
 }
 
 body {
@@ -22,12 +23,12 @@ body {
 	background-color: #fff;
 	font-weight: 400;
 	color: #6c757d;
+
 }
 
 .list_container {
 	width: 100%;
-	padding-left: 15px;
-	padding-left: 15px;
+	height : 100%;
 	margin-right: auto;
 	margin-left: auto;
 }
@@ -97,17 +98,31 @@ input {
 }
 
 .pro_wrap {
-	justify-content: center !important;
+
+	padding-top : 50px;
+	padding-right : 20px;
+	padding-left : 20px;
+	width : 100%;
+	overflow : auto;
+
+}
+
+.pro_wrap::-webkit-scrollbar{
+	display : none;
+	width : 0;
 }
 
 .pro_list_wrap {
-	width: 19vw;
-	height: auto;
-	margin: 3px;
+	position : relative;
+	width: 270px;
+	height: 420px;
+	margin: 2px;
 	float: left;
 	border: 1px solid #eee;
 	transition: all 300ms ease-in-out;
 	background: #FFFFFF;
+
+
 }
 
 .pro_list_wrap:hover {
@@ -115,16 +130,16 @@ input {
 	color: #ff8c00;
 }
 
+
+
 .pro_img {
-	width: 100%;
-	height: auto;
-	border-radius: 5px;
-	vertical-align: middle;
-	border-style: none;
+	width: 250px;
+	height: 250px;
 }
 
 .pic_list {
-	flex: 0 0 50%;
+	text-align : center;
+
 }
 
 ul {
@@ -208,9 +223,60 @@ ul {
 	background: #fff;
 	color: black;
 }
+.gps_icon_des{
+	display : none;
+	padding-left : 5px;
+	font-size : 11px;
+	font-weight : 800;
+	position : absolute;
+	left : 6%;
+	top : 7%;
+	width : 237px;
+	height : 20px;
+	z-index : 3;
+	background : #FFBD25;
+	border-radius : 20px;
+	
+	
+}
+
+
+.gps_icon{
+	position : absolute;
+	left : 87%;
+	top : -7%;
+	width : 30%;
+	height : 15%;
+	
+	
+}
+
+.gps_icon_img {
+	width : 75%; height : 85%;
+	z-index : 5;
+	cursor : pointer;
+	position : absolute;
+	
+	
+}
+
+.gps_icon:hover + .gps_icon_des{
+	display :flex;
+	color : #656565;
+	
+	
+}
+
+
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
+$(".gps_icon_img").hover(function(){
+	$(".gps_icon_des").css("display","flex");
+}, function(){
+	$(".gps_icon_des").css("display","none");
+});
+
 </script>
 </head>
 <body>
@@ -232,12 +298,27 @@ ul {
 				<!-- sort -->
 			</div>
 			<!-- row -->
+			
 			<div class="pro_wrap" id="item">
-				<c:forEach items="${list}" var="product">
+				<c:forEach items="${list}" var="product" varStatus = "status">
 					<div class="pro_list_wrap">
+						<c:if test="${product.neighborhood eq 'YES'}">
+							<div class = "gps_icon">
+								<img class = "gps_icon_img" src = "../../resources/img/list/check.png">
+							</div>
+							<div class = "gps_icon_des">5KM 이내 동네거래를 선호하는 판매자입니다.</div>
+						</c:if>
 						<div class="pic_list">
-							<a href="view?product_id=${product.product_id}"> <img
-								class="pro_img" src="../../resources/img/iphone13pink.png">
+							<a class = "pro_img_a" href="view?product_id=${product.product_id}">
+							
+							<c:choose>
+							
+							 <c:when test="${not empty picList[status.index].picture_name}"><img class="pro_img" src="/productUpload/${picList[status.index].picture_name}"></c:when>
+							 <c:otherwise><img class="pro_img" src="../../resources/img/list/noImage.png"></c:otherwise>
+							 							 
+								
+							</c:choose>
+							
 							</a>
 						</div>
 						<!-- pic -->
@@ -274,6 +355,8 @@ ul {
 			<div class="table_empty">검색결과가 없습니다.</div>
 		</c:if>
 	</main>
+	<input type="hidden" id="price_count" value="0">
+	<input type="hidden" id="new_count" value="1">
 </body>
 <script type="text/javascript">
 var searchForm = $("#searchForm");
@@ -290,28 +373,38 @@ var searchForm = $("#searchForm");
 });	
 	
 function price_desc(){
-
+	var data = $("#price_count").val();
 		$.ajax({
 			type: 'get',
 			url: '/product/price',
-			data: "",
+			data: {'count':data},
 			success: function(data) {
 				$('#item').html(data);
-		},
-		error: function(request, status, error) {
-			alert(error);
-		}
-	});
-};
+				if($("#price_count").val()==1){
+					$("#price_count").val("0");
+				} else {
+					$("#price_count").val("1");
+				}
+			},
+			error: function(request, status, error) {
+				alert(error);
+			}
+		});
+	};
 
 function pronew(){
-
+	var data = $("#new_count").val();
 	$.ajax({
 		url : "/product/new",
 		type : "get",
-		data : "",		
+		data : {'count':data},	
 		success : function(data) {
-			$("#item").html(data);			
+			$("#item").html(data);	
+			if($("#new_count").val()==0){
+				$("#new_count").val("1");
+			} else {
+				$("#new_count").val("0");
+			}
 		},
 		error : function(request, status, error) {
 			alert(error);

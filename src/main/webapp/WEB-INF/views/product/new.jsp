@@ -2,13 +2,26 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<body>
 <div class="pro_wrap" id="item">
-				<c:forEach items="${list}" var="product">
+				<c:forEach items="${list}" var="product" varStatus = "status">
 					<div class="pro_list_wrap">
+						<c:if test="${product.neighborhood eq 'YES'}">
+							<div class = "gps_icon">
+								<img class = "gps_icon_img" src = "../../resources/img/list/check.png">
+							</div>
+							<div class = "gps_icon_des">5KM 이내 동네거래를 선호하는 판매자입니다.</div>
+						</c:if>
 						<div class="pic_list">
-							<a href="view?product_id=${product.product_id}"> <img
-								class="pro_img" src="../../resources/img/iphone13pink.png">
+							<a class = "pro_img_a" href="view?product_id=${product.product_id}">
+							
+							<c:choose>
+							
+							 <c:when test="${not empty picList[status.index].picture_name}"><img class="pro_img" src="/productUpload/${picList[status.index].picture_name}"></c:when>
+							 <c:otherwise><img class="pro_img" src="../../resources/img/list/noImage.png"></c:otherwise>
+							 							 
+								
+							</c:choose>
+							
 							</a>
 						</div>
 						<!-- pic -->
@@ -35,4 +48,3 @@
 					<!-- list wrap -->
 				</c:forEach>
 			</div>
-</body>

@@ -267,7 +267,7 @@ function imgs_submit(){
 			
 			for(var i=0; i < result.length; i++){
 				var obj = result[i];
-				var a = "<input type='hidden' value='"+obj.picture_name + "' name = 'productPic[" + i + "].picture_name'>";
+				var a = "<input id = 'img_upload' type='hidden' value='"+obj.picture_name + "' name = 'productPic[" + i + "].picture_name'>";
 				var b = "<input type='hidden' value='"+obj.picture_path + "' name = 'productPic[" + i + "].picture_path'>";
 				$(".product_regist_form").append(a);
 				$(".product_regist_form").append(b);
@@ -293,10 +293,18 @@ function checkForm(){
 		
 		return true;
 	}
+	
+
+	
 }
 
 		
 </script>
+<script type="text/javascript">
+		<c:if test="${not empty message}">
+			alert("${message}");
+		</c:if>
+	</script>
 <meta charset="EUC-KR">
 <title>경매 등록</title>
 </head>

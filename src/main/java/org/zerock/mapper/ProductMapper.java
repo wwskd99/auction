@@ -51,5 +51,7 @@ public interface ProductMapper {
 	public void priceSale(ProductVO pVo);
 	public List<Bid_historyVO> readBidList(String user_id);
 	public GPSVO selectGPS(int product_id);
+	public List<ProductVO> price_asc();
+	public List<ProductVO> pronew_asc();
 	
 }

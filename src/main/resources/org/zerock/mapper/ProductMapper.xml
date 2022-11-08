@@ -164,6 +164,11 @@ select * from product where product_id > 0 order by product_id desc
 <select id="selectGPS" resultType="org.zerock.domain.GPSVO">
    select * from product_gps where product_id = #{product_id}
 </select>
-
+<select id="price_asc" resultType="org.zerock.domain.ProductVO">
+		select * from product order by start_price asc
+</select>
+<select id="pronew_asc" resultType="org.zerock.domain.ProductVO">
+		select * from product order by date asc
+	</select>
 </mapper>
 
