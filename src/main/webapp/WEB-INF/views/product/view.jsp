@@ -401,6 +401,10 @@ cursor : pointer;
 	
 }
 
+.page-nav img{
+	width : 50px;
+	height : 50px;
+}
 
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -845,8 +849,8 @@ $(document).ready( function bidUnit(){
 		</div>
 
 		<div class="page-nav">
-			<a onclick ="prev()" class ="prev"> < </a>
-			<a onclick ="next()" class="next"> > </a>
+			<a onclick ="prev()" class ="prev"><img src = "../../resources/img/view/arrow-left.png"> </a>
+			<a onclick ="next()" class="next"><img src = "../../resources/img/view/arrow-right.png"> </a>
 		</div>
 	</div>
 	

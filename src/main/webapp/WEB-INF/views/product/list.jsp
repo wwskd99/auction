@@ -67,32 +67,46 @@ input {
 }
 
 .btn-sort {
+	width : 40%;
 	float: right;
+	display : flex;
+	justify-content : flex-end;
 }
 
+.btn-sort input {
+	width : 7%;
+	height : 35%;
+	text-align : center;
+}
 .sort_dis {
-	width: auto;
+	width: 40%;
 	height: 42px;
 	border: 0px;
 	background: #ff8c00;
 	outline: none;
 	color: #ffffff;
+	margin-left : 5px;
+	margin-right : 40px;
+	text-align : center;
+	line-height : 42px;
+	
 }
 
 .sort_price {
-	width: auto;
+	width: 30%;
 	height: 42px;
 	border: 0px;
 	background: #ff8c00;
 	outline: none;
 	color: #ffffff;
+	margin-right : 20px;
 }
 
 .sort_new {
-	width: auto;
+	width: 30%;
 	height: 42px;
 	border: 0px;
-	background: #ff8c00;
+	background: #FF6666;
 	outline: none;
 	color: #ffffff;
 }
@@ -284,16 +298,16 @@ $(".gps_icon_img").hover(function(){
 		<div class="list_container">
 			<div class="list_row">
 				<div class="search-box">
-					<form action="/product/searchList" id="searchForm" method="get">
-						<input type="text" placeholder="Search" name="keyword" />
-						<button type="submit" class="btn-square">검색</button>
-					</form>
+					
+						<input type="text" placeholder="Search" name="keyword" value="${keyword}"/>
+						<button onClick ="pronew()" class="btn-square">검색</button>
+					
 				</div>
 				<!-- search box -->
 				<div class="btn-sort">
-					<button class="sort_dis" type="button" onClick="distance()">5km이내</button>
+					<input id = "nei" name = "nei" type = "checkbox" value ="NO"> <div class="sort_dis">5km 이내 동네거래</div>
 					<button class="sort_price" id="price_desc" onClick="price_desc()">가격순</button>
-					<button class="sort_new" type="button" onClick="pronew()">최신순</button>
+					<button class="sort_new" id="new_desc" onClick="pronew()">최신순</button>
 				</div>
 				<!-- sort -->
 			</div>
@@ -359,60 +373,53 @@ $(".gps_icon_img").hover(function(){
 	<input type="hidden" id="new_count" value="1">
 </body>
 <script type="text/javascript">
-var searchForm = $("#searchForm");
-	// 검색버튼에  이벤트를 추가
-	$("#searchForm button").on("click", function(e) {
-		// 유효성 검사
-		if (!searchForm.find("input[name='keyword']").val()) { // 키워드를 입력하지 않은 경우
-			alert("키워드를 입력하세요.");
-			return false; // 서버로 전송이 되지 않는다.
-		}
-		// 검색을 요청했으면 pageNum = 1로 변경한다.
-	searchForm.find("input[name='pageNum']").val("1");
-	searchForm.submit(); // 검색 요청을 한다.
-});	
+$('input[name="nei"]').change(function() {
+    var value = $(this).val();              
+    var checked = $(this).prop('checked');  
+ 
+	 if(checked){
+    	$('input[name="nei"]').attr('value','YES');
+    	$('input[name="nei"]').css('background','#FF6666');
+	 }
+   	 else{
+    	$('input[name="nei"]').attr('value','NO');
+    	$('#nei').css('background','#ff8c00');
+    }
+});
+
+$( function(){
+	
+	$("#price_desc").on("click", function(){
+		
+		var color_price = document.querySelector("#price_desc");
+		var color_new = document.querySelector("#new_desc");
+		color_price.style.background = "#FF6666";	
+		color_new.style.background = "#ff8c00";	
+	});
+	
+	$("#new_desc").on("click", function(){
+		
+		var color_price = document.querySelector("#price_desc");
+		var color_new = document.querySelector("#new_desc");
+		color_price.style.background = "#ff8c00";	
+		color_new.style.background = "#FF6666";	
+	});
+	
+	
+	
+	
+});
+
+
 	
 function price_desc(){
-	var data = $("#price_count").val();
-		$.ajax({
-			type: 'get',
-			url: '/product/price',
-			data: {'count':data},
-			success: function(data) {
-				$('#item').html(data);
-				if($("#price_count").val()==1){
-					$("#price_count").val("0");
-				} else {
-					$("#price_count").val("1");
-				}
-			},
-			error: function(request, status, error) {
-				alert(error);
-			}
-		});
-	};
+var keyword = $("input[name=keyword]").val();
+var nei = $("#nei").val();
+var sort = "start_price";
 
-function pronew(){
-	var data = $("#new_count").val();
-	$.ajax({
-		url : "/product/new",
-		type : "get",
-		data : {'count':data},	
-		success : function(data) {
-			$("#item").html(data);	
-			if($("#new_count").val()==0){
-				$("#new_count").val("1");
-			} else {
-				$("#new_count").val("0");
-			}
-		},
-		error : function(request, status, error) {
-			alert(error);
-		}
-	});
-};
 
-function distance(){
+if(nei == "YES"){
+	
 	var latitude;
 	var longitude;
 	if (!navigator.geolocation) {
@@ -423,19 +430,100 @@ function distance(){
     	longitude = coords.longitude;
     	
     	$.ajax({
-    		url : "/product/5km",
+    		url : "/product/ajaxList",
     		type : "get",
     		data : {"latitude": latitude,
-    				"longitude": longitude},
+    				"longitude": longitude,
+    				'keyword': keyword,
+    				'sort': sort},
     		success : function(data){
-    			$("#item").html(data);			
+    			$('#item').html(data);
     		},
     		error : function(reqeust, status, error){
     			alert("error");
     		}
     	});
 	}
+
+
     navigator.geolocation.getCurrentPosition(success);
+	
+	
+}else{
+	
+	$.ajax({
+		url : "/product/ajaxList",
+		type : "get",
+		data : {'keyword': keyword,
+				'sort': sort},
+		success : function(data){
+			$('#item').html(data);		
+		},
+		error : function(reqeust, status, error){
+			alert("error");
+		}
+	});
+	
+}
+
 };
+
+function pronew(){
+	var keyword = $("input[name=keyword]").val();
+	var nei = $("#nei").val();
+	var sort = "date";
+	
+	
+	if(nei == "YES"){
+		
+		var latitude;
+		var longitude;
+		if (!navigator.geolocation) {
+	        throw "위치 정보가 지원되지 않습니다.";
+	    }
+	    function success({coords}) {
+	    	latitude = coords.latitude;
+	    	longitude = coords.longitude;
+	    	
+	    	$.ajax({
+	    		url : "/product/ajaxList",
+	    		type : "get",
+	    		data : {"latitude": latitude,
+	    				"longitude": longitude,
+	    				'keyword': keyword,
+	    				'sort': sort},
+	    		success : function(data){
+	    			$('#item').html(data);
+	    		},
+	    		error : function(reqeust, status, error){
+	    			alert("error");
+	    		}
+	    	});
+		}
+
+	    navigator.geolocation.getCurrentPosition(success);
+		
+		
+	}else{
+		
+		$.ajax({
+    		url : "/product/ajaxList",
+    		type : "get",
+    		data : {'keyword': keyword,
+    				'sort': sort},
+    		success : function(data){
+    			$('#item').html(data);		
+    		},
+    		error : function(reqeust, status, error){
+    			alert("error");
+    		}
+    	});
+		
+	}
+	//ajax 보내기
+};
+
+
+
 
 </script>
