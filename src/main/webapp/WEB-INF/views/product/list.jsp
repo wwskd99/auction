@@ -101,6 +101,7 @@ input {
 }
 
 .pro_list_wrap {
+	position : relative;
 	width: 19vw;
 	height: auto;
 	margin: 3px;
@@ -108,12 +109,15 @@ input {
 	border: 1px solid #eee;
 	transition: all 300ms ease-in-out;
 	background: #FFFFFF;
+
 }
 
 .pro_list_wrap:hover {
 	background: #ffff49;
 	color: #ff8c00;
 }
+
+
 
 .pro_img {
 	width: 100%;
@@ -125,6 +129,7 @@ input {
 
 .pic_list {
 	flex: 0 0 50%;
+
 }
 
 ul {
@@ -208,9 +213,60 @@ ul {
 	background: #fff;
 	color: black;
 }
+.gps_icon_des{
+	display : none;
+	padding-left : 5px;
+	font-size : 11px;
+	font-weight : 800;
+	position : absolute;
+	left : 80%;
+	top : 5%;
+	width : 237px;
+	height : 20px;
+	z-index : 3;
+	background : #FFBD25;
+	border-radius : 20px;
+	
+	
+}
+
+
+.gps_icon{
+	position : absolute;
+	left : 87%;
+	top : -5%;
+	width : 30%;
+	height : 15%;
+	
+	
+}
+
+.gps_icon_img {
+	width : 80%; height : 65%;
+	z-index : 5;
+	cursor : pointer;
+	position : absolute;
+	
+	
+}
+
+.gps_icon:hover + .gps_icon_des{
+	display :flex;
+	color : #656565;
+	
+	
+}
+
+
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
+$(".gps_icon_img").hover(function(){
+	$(".gps_icon_des").css("display","flex");
+}, function(){
+	$(".gps_icon_des").css("display","none");
+});
+
 </script>
 </head>
 <body>
@@ -232,12 +288,27 @@ ul {
 				<!-- sort -->
 			</div>
 			<!-- row -->
+			
 			<div class="pro_wrap" id="item">
 				<c:forEach items="${list}" var="product">
 					<div class="pro_list_wrap">
+						<c:if test="${product.neighborhood eq 'YES'}">
+							<div class = "gps_icon">
+								<img class = "gps_icon_img" src = "../../resources/img/list/check.png">
+							</div>
+							<div class = "gps_icon_des">5KM 이내 동네거래를 선호하는 판매자입니다.</div>
+						</c:if>
 						<div class="pic_list">
-							<a href="view?product_id=${product.product_id}"> <img
-								class="pro_img" src="../../resources/img/iphone13pink.png">
+							<a class = "pro_img_a" href="view?product_id=${product.product_id}">
+							
+							<c:choose>
+							
+							 <c:when test="${not empty pic.picture_name}"><img class="pro_img" src="/productUpload/${pic.picture_name}"></c:when>
+							 <c:otherwise><img class="pro_img" src="../../resources/img/list/noImage.png"></c:otherwise>
+							 							 
+								
+							</c:choose>
+							
 							</a>
 						</div>
 						<!-- pic -->

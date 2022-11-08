@@ -161,7 +161,7 @@ main {
 	display: flex;
 	justify-content: center;
 	bottom: 15px;
-	position : absolute;
+	background : #FFF2AB;
 }
 
 .input_msg div {
@@ -482,13 +482,14 @@ main {
 				</c:choose>
 		 	</c:forEach>
 		</div>
-		<div class="input_msg">
+		
+	</div>
+	<div class="input_msg">
 	
 				
 					<div class = "input_msg_center"><input id="chatting" placeholder="보내실 메시지를 입력하세요."></div>
 					<div class = "input_msg_bottom"><button class = "input_msg_bottom_button" onclick="send()" id="sendBtn">보내기</button></div>
 		</div>
-	</div>
 	<!-- 모달창 -->
 		
 		<div id="modal" class="modal-overlay">
