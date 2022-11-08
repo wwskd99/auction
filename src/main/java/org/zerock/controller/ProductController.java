@@ -236,16 +236,26 @@ public class ProductController {
 	}
 	
 	@GetMapping("/price")
-	public String price_desc(Model model){
-		List<ProductVO> pdesc = pService.price_desc();
-		model.addAttribute("list", pdesc);
+	public String price_desc(@RequestParam("count") int count, Model model){
+		if (count == 1) {
+			List<ProductVO> p_price = pService.price_desc();
+			model.addAttribute("list", p_price);
+		} else {
+			List<ProductVO> p_price = pService.price_asc();
+			model.addAttribute("list", p_price);
+		}
 		return "/product/price";
 	}
 	
 	@GetMapping("/new")
-	public String pronew(Model model) {
-		List<ProductVO> pnew = pService.pronew();
-		model.addAttribute("list", pnew);
+	public String pronew(@RequestParam("count") int count, Model model) {
+		if (count == 0) {
+			List<ProductVO> pnew = pService.pronew();
+			model.addAttribute("list", pnew);
+		} else {
+			List<ProductVO> pnew= pService.pronew_asc();
+			model.addAttribute("list", pnew);
+		}
 		return "/product/new";
 	}
 	
