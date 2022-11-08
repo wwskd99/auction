@@ -345,6 +345,8 @@ $(".gps_icon_img").hover(function(){
 			<div class="table_empty">검색결과가 없습니다.</div>
 		</c:if>
 	</main>
+	<input type="hidden" id="price_count" value="0">
+	<input type="hidden" id="new_count" value="1">
 </body>
 <script type="text/javascript">
 var searchForm = $("#searchForm");
@@ -361,28 +363,38 @@ var searchForm = $("#searchForm");
 });	
 	
 function price_desc(){
-
+	var data = $("#price_count").val();
 		$.ajax({
 			type: 'get',
 			url: '/product/price',
-			data: "",
+			data: {'count':data},
 			success: function(data) {
 				$('#item').html(data);
-		},
-		error: function(request, status, error) {
-			alert(error);
-		}
-	});
-};
+				if($("#price_count").val()==1){
+					$("#price_count").val("0");
+				} else {
+					$("#price_count").val("1");
+				}
+			},
+			error: function(request, status, error) {
+				alert(error);
+			}
+		});
+	};
 
 function pronew(){
-
+	var data = $("#new_count").val();
 	$.ajax({
 		url : "/product/new",
 		type : "get",
-		data : "",		
+		data : {'count':data},	
 		success : function(data) {
-			$("#item").html(data);			
+			$("#item").html(data);	
+			if($("#new_count").val()==0){
+				$("#new_count").val("1");
+			} else {
+				$("#new_count").val("0");
+			}
 		},
 		error : function(request, status, error) {
 			alert(error);

@@ -415,15 +415,26 @@ main {
 
 
 	function send() {
-		var option ={
-			type: "message",
-			room_id: $("#room_id").val(),
-			sessionId : $("#sessionId").val(),
-			userName : "${sessionScope.userid}",
-			msg : $("#chatting").val()
+		var msg = $("#chatting").val();
+		
+		if(msg==null||msg==""){
+
+		} else {
+			if(msg.length>100){
+				alert("메시지가 너무 깁니다.")
+			}
+			else {
+				var option ={
+					type: "message",
+					room_id: $("#room_id").val(),
+					sessionId : $("#sessionId").val(),
+					userName : "${sessionScope.userid}",
+					msg : $("#chatting").val()
+				}
+				ws.send(JSON.stringify(option))
+				$('#chatting').val("");
+			}
 		}
-		ws.send(JSON.stringify(option))
-		$('#chatting').val("");
 	}
 
 	
@@ -469,7 +480,7 @@ main {
 					</div>
 					</c:otherwise>
 				</c:choose>
-			</c:forEach>
+		 	</c:forEach>
 		</div>
 		
 	</div>
@@ -545,6 +556,7 @@ main {
 				</c:otherwise>
 						</c:choose>
 					</p>
+					<p>전화번호 : ${member.phone}</p>
 					<p>
 						사진 : <img class="info_img"
 							src="/productUpload/${picture.picture_name}">
