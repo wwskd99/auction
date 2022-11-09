@@ -217,4 +217,25 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductVO> pronew_asc() {
 		return pMapper.pronew_asc();
 	}
+	@Override
+	public List<ProductVO> startPriceSortSearchList_desc(Criteria cri) {
+		
+		return pMapper.searchListSortStartPrice_desc(cri);
+	}
+	@Override
+	public List<ProductVO> startPriceSortList_desc() {
+		
+		return pMapper.listSortStartPrice_desc();
+	}
+	
+	@Override
+	public List<ProductVO> dateSortList_desc() {
+		// TODO Auto-generated method stub
+		return pMapper.listSortDate_desc();
+	}
+	@Override
+	public List<ProductVO> dateSortSearchList_desc(Criteria cri) {
+		// TODO Auto-generated method stub
+		return pMapper.searchListSortDate_desc(cri);
+	}
 }

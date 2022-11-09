@@ -426,6 +426,7 @@ function price_desc(){
 var keyword = $("input[name=keyword]").val();
 var nei = $("#nei").val();
 var sort = "start_price";
+var count = $("#price_count").val();
 
 
 if(nei == "YES"){
@@ -445,9 +446,15 @@ if(nei == "YES"){
     		data : {"latitude": latitude,
     				"longitude": longitude,
     				'keyword': keyword,
-    				'sort': sort},
+    				'sort': sort,
+    				'count': count},
     		success : function(data){
     			$('#item').html(data);
+    			if(count==0){
+    				$("#price_count").val("1");
+    			} else {
+    				$("#price_count").val("0");
+    			};
     		},
     		error : function(reqeust, status, error){
     			alert("error");
@@ -465,9 +472,15 @@ if(nei == "YES"){
 		url : "/product/ajaxList",
 		type : "get",
 		data : {'keyword': keyword,
-				'sort': sort},
+				'sort': sort,
+				'count': count},
 		success : function(data){
-			$('#item').html(data);		
+			$('#item').html(data);	
+			if(count==0){
+				$("#price_count").val("1");
+			} else {
+				$("#price_count").val("0");
+			};
 		},
 		error : function(reqeust, status, error){
 			alert("error");
@@ -482,6 +495,8 @@ function pronew(){
 	var keyword = $("input[name=keyword]").val();
 	var nei = $("#nei").val();
 	var sort = "date";
+	var count = $("#new_count").val();
+
 	
 	
 	if(nei == "YES"){
@@ -501,9 +516,15 @@ function pronew(){
 	    		data : {"latitude": latitude,
 	    				"longitude": longitude,
 	    				'keyword': keyword,
-	    				'sort': sort},
+	    				'sort': sort,
+	    				'count': count},
 	    		success : function(data){
 	    			$('#item').html(data);
+	    			if(count==1){
+	    				$("#new_count").val("0");
+	    			} else {
+	    				$("#new_count").val("1");
+	    			};
 	    		},
 	    		error : function(reqeust, status, error){
 	    			alert("error");
@@ -520,9 +541,15 @@ function pronew(){
     		url : "/product/ajaxList",
     		type : "get",
     		data : {'keyword': keyword,
-    				'sort': sort},
+    				'sort': sort,
+    				'count': count},
     		success : function(data){
-    			$('#item').html(data);		
+    			$('#item').html(data);
+    			if(count==1){
+    				$("#new_count").val("0");
+    			} else {
+    				$("#new_count").val("1");
+    			};
     		},
     		error : function(reqeust, status, error){
     			alert("error");
