@@ -6,10 +6,11 @@
 <head>
 <style>
 main {
-background-color : #FFF1CD;
+background-color : white;
 width : 100vw;
-min-width : 900px;
+min-width : 1000px;
 height : 40vw;
+min-height :500px;
 }
 
 .main_wrap {
@@ -20,10 +21,10 @@ margin:0 auto;
 }
 
 .main_img_wrap {
-width : 50%;
-height : 80%;
+width : 100%;
+height : 100%;
 position : relative;
-top : 10%;
+top : 0%;
 margin:0 auto;
 float : left;
 
@@ -71,13 +72,10 @@ text-align: center;
 	<main>
 		<div class = "main_wrap">
 			<div class = "main_img_wrap">
-			<img src = "../resources/img/main/bid_icon.png">
+				<img src = "../resources/img/main/auction2.jpg">
 			</div>
-			<div class = "main_text_wrap">
-			<div class = "main_text_big_div"><a class = "main_text_big">3rd Market</a></div>
-			<div class = "main_text_small_div"><a class = "main_text_small">중고 경매 사이트</a></div>
 			</div>
-		</div>
+		
 	</main>
 	<script type="text/javascript">
 		<c:if test="${not empty message}">
