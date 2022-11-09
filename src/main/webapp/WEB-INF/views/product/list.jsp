@@ -11,8 +11,13 @@ main {
 	width: 80vw;
 	margin-left: auto;
 	margin-right: auto;
+<<<<<<< HEAD
 	min-width : 1000px;
 	min-height : 600px;
+=======
+	min-width : 1200px;
+	min-height : 500px;
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 	
 }
 
@@ -91,9 +96,12 @@ input {
 	margin-right : 40px;
 	text-align : center;
 	line-height : 42px;
+	border-radius:10px;
 	
 }
-
+#search_product{
+	cursor : pointer;
+}
 .sort_price {
 	width: 30%;
 	height: 42px;
@@ -102,6 +110,8 @@ input {
 	outline: none;
 	color: #ffffff;
 	margin-right : 20px;
+	cursor : pointer;
+	border-radius:10px;
 }
 
 .sort_new {
@@ -111,6 +121,8 @@ input {
 	background: #FF6666;
 	outline: none;
 	color: #ffffff;
+	cursor : pointer;
+	border-radius:10px;
 }
 
 .pro_wrap {
