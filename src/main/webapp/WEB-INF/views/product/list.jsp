@@ -91,6 +91,7 @@ input {
 	margin-right : 40px;
 	text-align : center;
 	line-height : 42px;
+	border-radius:10px;
 	
 }
 #search_product{
@@ -105,6 +106,7 @@ input {
 	color: #ffffff;
 	margin-right : 20px;
 	cursor : pointer;
+	border-radius:10px;
 }
 
 .sort_new {
@@ -115,6 +117,7 @@ input {
 	outline: none;
 	color: #ffffff;
 	cursor : pointer;
+	border-radius:10px;
 }
 
 .pro_wrap {
