@@ -64,17 +64,6 @@ public class ChatController {
 	}
 	
 	/**
-	 * 방 페이지
-	 * @return
-	 */
-	@RequestMapping("/room")
-	public ModelAndView room() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("chatting/room2");
-		return mv;
-	}
-	
-	/**
 	 * 방 생성하기
 	 * @param params
 	 * @return
@@ -231,9 +220,7 @@ public class ChatController {
 						
 			mv.addObject("picture", pPicVo);
 			
-
 			mv.setViewName("chatting/chat");
-			log.warn("test1--------------------------------------------------------");
 		
 		return mv;
 	}
@@ -316,9 +303,9 @@ public class ChatController {
 		
 		List<ChatVO> chat_data = new ArrayList<ChatVO>();
 		
-		for (int i = 0; i < roomList.size(); i++) {
+		for (int i = 0; i < room.size(); i++) {
 			ChatVO cVo = new ChatVO();
-			cVo = cService.chatDataRead(roomList.get(i).getRoom_id());
+			cVo = cService.chatDataRead(room.get(i).getRoom_id());
 			log.warn(cVo);
 			chat_data.add(cVo);
 		}
@@ -326,7 +313,7 @@ public class ChatController {
 
 		List<ProductPicVO> pic_data = new ArrayList<ProductPicVO>();
 		
-		for (int i = 0; i < roomList.size(); i++) {
+		for (int i = 0; i < room.size(); i++) {
 			ProductPicVO pPicVo = new ProductPicVO();
 			pPicVo = cService.readProductPicOne(room.get(i).getProduct_id());
 			pic_data.add(pPicVo);
@@ -335,6 +322,7 @@ public class ChatController {
 		}
 		model.addAttribute("room",room);
 		model.addAttribute("room_chat", chat_data);
+		log.warn(chat_data);
 		model.addAttribute("room_pic", pic_data);
 	}
 	
