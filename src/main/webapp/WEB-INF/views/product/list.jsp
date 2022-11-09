@@ -11,8 +11,13 @@ main {
 	width: 80vw;
 	margin-left: auto;
 	margin-right: auto;
+<<<<<<< HEAD
+	min-width : 1000px;
+	min-height : 600px;
+=======
 	min-width : 1200px;
 	min-height : 500px;
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 	
 }
 
@@ -139,7 +144,7 @@ input {
 	position : relative;
 	width: 270px;
 	height: 420px;
-	margin: 2px;
+	margin:  px;
 	float: left;
 	border: 1px solid #eee;
 	transition: all 300ms ease-in-out;
