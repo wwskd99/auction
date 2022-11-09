@@ -30,7 +30,7 @@ main {
 	width: 100%;
 	background-color: #FFF2AB;
 	overflow: auto;
-	height: 100%;
+	height: 90%;
 	position: relative;
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
@@ -267,7 +267,7 @@ main {
 	-webkit-backdrop-filter: blur(1.5px);
 	border-radius: 10px;
 	border: 1px solid rgba(255, 255, 255, 0.18);
-	z-index: 3;
+	z-index: 20;
 }
 
 #modal2 .modal-window {
