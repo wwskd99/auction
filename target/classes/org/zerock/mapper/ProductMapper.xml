@@ -81,19 +81,36 @@ select date from product where product_id = #{product_id};
 	
 <select id="searchListSortStartPrice"
 	resultType="org.zerock.domain.ProductVO">
-	select * from product WHERE title like concat ('%',#{cri.keyword},'%') order by start_price;
+	select * from product WHERE title like concat ('%',#{cri.keyword},'%') order by start_price asc;
 </select>
 <select id="listSortStartPrice"
 	resultType="org.zerock.domain.ProductVO">
-	select * from product order by start_price;
+	select * from product order by start_price asc;
 </select>
 <select id="searchListSortDate"
 	resultType="org.zerock.domain.ProductVO">
-	select * from product WHERE title like concat ('%',#{cri.keyword},'%') order by date;
+	select * from product WHERE title like concat ('%',#{cri.keyword},'%') order by date asc;
 </select>
 <select id="listSortDate"
 	resultType="org.zerock.domain.ProductVO">
-	select * from product order by date;
+	select * from product order by date asc;
+</select>
+
+<select id="searchListSortStartPrice_desc"
+	resultType="org.zerock.domain.ProductVO">
+	select * from product WHERE title like concat ('%',#{cri.keyword},'%') order by start_price desc;
+</select>
+<select id="listSortStartPrice_desc"
+	resultType="org.zerock.domain.ProductVO">
+	select * from product order by start_price desc;
+</select>
+<select id="searchListSortDate_desc"
+	resultType="org.zerock.domain.ProductVO">
+	select * from product WHERE title like concat ('%',#{cri.keyword},'%') order by date desc;
+</select>
+<select id="listSortDate_desc"
+	resultType="org.zerock.domain.ProductVO">
+	select * from product order by date desc;
 </select>
 
 <select id="distanceYES"

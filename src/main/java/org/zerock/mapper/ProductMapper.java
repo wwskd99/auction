@@ -38,6 +38,11 @@ public interface ProductMapper {
 	public List<ProductVO> searchListSortDate(@Param("cri")Criteria cri);
 	public List<ProductVO> listSortDate();
 	
+	public List<ProductVO> searchListSortStartPrice_desc(@Param("cri")Criteria cri);
+	public List<ProductVO> listSortStartPrice_desc();
+	public List<ProductVO> searchListSortDate_desc(@Param("cri")Criteria cri);
+	public List<ProductVO> listSortDate_desc();
+	
 	public ProductVO distanceYES(int product_id);
 	
 	// 아래 동길
