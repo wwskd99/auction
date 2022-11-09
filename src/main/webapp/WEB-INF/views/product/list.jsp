@@ -144,7 +144,7 @@ input {
 	position : relative;
 	width: 270px;
 	height: 420px;
-	margin:  px;
+	margin: 15px;
 	float: left;
 	border: 1px solid #eee;
 	transition: all 300ms ease-in-out;

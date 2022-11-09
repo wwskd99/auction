@@ -446,7 +446,7 @@ main {
 
 	function wsOpen(){
 		//웹소켓 전송시 현재 방의 번호를 넘겨서 보낸다.
-		ws = new WebSocket("ws://" + location.host + "/chatting/chating/"+$("#room_id").val());
+		ws = new WebSocket("wss://" + location.host + "/chatting/chating/"+$("#room_id").val());
 		wsEvt();
 	}
 		
