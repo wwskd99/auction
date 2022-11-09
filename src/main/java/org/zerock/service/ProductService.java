@@ -5,7 +5,7 @@ import java.util.List;
 
 
 import org.zerock.domain.Criteria;
-
+import org.apache.ibatis.annotations.Param;
 import org.zerock.domain.Bid_historyVO;
 import org.zerock.domain.GPSVO;
 
@@ -30,7 +30,13 @@ public interface ProductService {
 	public List<ProductVO> startPriceSortSearchList(Criteria cri);
 	public List<ProductVO> startPriceSortList();
 	public List<ProductVO> dateSortSearchList(Criteria cri);
-	public List<ProductVO> dateSortList();
+	public List<ProductVO> dateSortList();	
+	
+	public List<ProductVO> startPriceSortSearchList_desc(Criteria cri);
+	public List<ProductVO> startPriceSortList_desc();
+	public List<ProductVO> dateSortSearchList_desc(Criteria cri);
+	public List<ProductVO> dateSortList_desc();	
+
 	public ProductVO yesDistance(int product_id);
 	
 	// 아래 동길

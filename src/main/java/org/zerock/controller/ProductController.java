@@ -37,6 +37,8 @@ import org.zerock.service.MemberService;
 import org.zerock.service.ProductService;
 import org.zerock.service.RoomService;
 
+import com.mchange.v2.cfg.PropertiesConfigSource.Parse;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
@@ -323,15 +325,23 @@ public class ProductController {
 	public void ajaxList(Criteria cri, @RequestParam("sort")String sort, Model model, HttpServletRequest request) {
 		
 		List<ProductVO> list = new ArrayList<ProductVO>();
-				
-				
+		int count = Integer.parseInt(request.getParameter("count"));
+		
 		if(cri != null) {
 			
 			if(request.getParameter("latitude") != null) {
 				if(sort.equals("start_price")) {
-					list = pService.startPriceSortSearchList(cri);
+					if(count == 0) {
+						list = pService.startPriceSortSearchList(cri);
+					} else {
+						list = pService.startPriceSortSearchList_desc(cri);
+					}
 				}else {
-					list = pService.dateSortSearchList(cri);
+					if(count == 0) {
+						list = pService.dateSortSearchList(cri);
+					} else {
+						list = pService.dateSortSearchList_desc(cri);
+					}
 				}
 				
 				
@@ -379,9 +389,17 @@ public class ProductController {
 				
 			}else {
 				if(sort.equals("start_price")) {
+					if(count==0) {
 					list = pService.startPriceSortSearchList(cri);
+					} else {
+						list = pService.startPriceSortSearchList_desc(cri);
+					}
 				}else {
+					if(count==0) {
 					list = pService.dateSortSearchList(cri);
+					} else {
+						list = pService.dateSortSearchList_desc(cri);
+					}
 				}
 				
 				List<ProductPicVO> pPic = new ArrayList<ProductPicVO>();
@@ -402,9 +420,17 @@ public class ProductController {
 			
 			if(request.getParameter("latitude") != null) {
 				if(sort.equals("start_price")) {
+					if(count==0) {
 					list = pService.startPriceSortList();
+					} else {
+						list = pService.startPriceSortList_desc();
+					}
 				}else {
+					if(count==0) {
 					list = pService.dateSortList();
+					} else {
+						list = pService.dateSortList_desc();
+					}
 				}
 				List<ProductVO> pdist = new ArrayList<ProductVO>();
 				
@@ -449,9 +475,17 @@ public class ProductController {
 			}else {
 				
 				if(sort.equals("start_price")) {
+					if(count == 0) {
 					list = pService.startPriceSortList();
+					} else {
+						list = pService.startPriceSortList_desc();
+					}
 				}else {
+					if(count == 0) {
 					list = pService.dateSortList();
+					} else {
+						list = pService.dateSortList_desc();
+					}
 				}
 				
 				List<ProductPicVO> pPic = new ArrayList<ProductPicVO>();
