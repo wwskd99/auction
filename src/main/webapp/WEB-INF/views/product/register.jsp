@@ -97,6 +97,8 @@ p textarea:valid + label::after {
 main{
 width : 100%;
 height : 50vw;
+min-width : 1000px;
+min-height : 500px;
 }
 
 .main_wrap {

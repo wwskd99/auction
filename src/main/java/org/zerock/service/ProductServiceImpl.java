@@ -104,6 +104,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void productDelete(int product_id) {
 		
+		pPicMapper.DeleteProductPic(product_id);
 		gpsMapper.deleteGPS(product_id);
 		pMapper.deleteProduct(product_id);
 		
