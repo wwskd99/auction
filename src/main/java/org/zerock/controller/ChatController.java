@@ -198,9 +198,8 @@ public class ChatController {
 				
 				Date chatting_date = chat_log.get(i).getChat_date();
 
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(" HH시 MM분 ");
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy년 MM월 dd일 HH시 mm분 ss초");
 				String a = simpleDateFormat.format(chatting_date);
-				chat_date.add(a);
 
 				String chat_message;
 				
@@ -209,14 +208,14 @@ public class ChatController {
 				long chat_time = chatting_date.getTime();
 				
 				if(current_time - chat_time > 0 && current_time - chat_time < 60000 ) {
-					chat_message = "몇초전";	
+					chat_message = "방금전";	
 					
 				}else if (current_date.getDate() == chatting_date.getDate()){
 					
 				    simpleDateFormat = new SimpleDateFormat("a h시 mm분");
 					chat_message = simpleDateFormat.format(chatting_date);	
 				} else {
-					 simpleDateFormat = new SimpleDateFormat("a MM월 dd일 h시 mm분");
+					 simpleDateFormat = new SimpleDateFormat("MM월 dd일 a h시 mm분");
 					chat_message = simpleDateFormat.format(chatting_date);
 					
 				}
@@ -349,18 +348,14 @@ public class ChatController {
 		List<String> chat_date = new ArrayList<String>();
 		
 
-		for (int i = 0; i < chat_log.size(); i++) {
-
-			Date chatting_date = chat_log.get(i).getChat_date();
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(" HH시 MM분 ");
-			String a = simpleDateFormat.format(chatting_date);
-			chat_date.add(a);
-		}
-
 		
 		for (int i = 0; i < chat_log.size(); i++) {
 			
 			Date chatting_date = chat_log.get(i).getChat_date();
+
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy년 MM월 dd일 HH시 mm분 ss초");
+			String a = simpleDateFormat.format(chatting_date);
+
 			String chat_message;
 			
 			Date current_date = new Date();
@@ -368,14 +363,14 @@ public class ChatController {
 			long chat_time = chatting_date.getTime();
 			
 			if(current_time - chat_time > 0 && current_time - chat_time < 60000 ) {
-				chat_message = "몇초전";	
+				chat_message = "방금전";	
 				
 			}else if (current_date.getDate() == chatting_date.getDate()){
 				
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("a h시 mm분");
+			    simpleDateFormat = new SimpleDateFormat("a h시 mm분");
 				chat_message = simpleDateFormat.format(chatting_date);	
 			} else {
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("a MM월 dd일 h시 mm분");
+				 simpleDateFormat = new SimpleDateFormat("MM월 dd일 a h시 mm분");
 				chat_message = simpleDateFormat.format(chatting_date);
 				
 			}

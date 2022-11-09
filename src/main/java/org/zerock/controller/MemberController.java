@@ -217,4 +217,8 @@ public class MemberController {
 			return "redirect:/main";
 		}
 	}
+	@RequestMapping("/NewFile")
+	public void test() {
+		
+	}
 }
