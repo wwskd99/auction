@@ -12,4 +12,8 @@ insert into picture (picture_name, picture_path, product_id) values (#{picture_n
 select * from picture where product_id = #{product_id} order by picture_id limit 1;
 </select>
 
+<delete id="DeleteProductPic">
+  delete from picture where product_id = #{product_id};
+</delete>
+
 </mapper>

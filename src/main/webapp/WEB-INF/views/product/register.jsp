@@ -97,7 +97,11 @@ p textarea:valid + label::after {
 main{
 width : 100%;
 height : 50vw;
+<<<<<<< HEAD
+min-width : 1000px;
+=======
 min-width: 1000px;
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 min-height : 500px;
 }
 

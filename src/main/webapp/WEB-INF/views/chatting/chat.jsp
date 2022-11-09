@@ -219,7 +219,11 @@ main {
 	border-radius: 10px;
 	border: 1px solid rgba(255, 255, 255, 0.18);
 	width: 400px;
+<<<<<<< HEAD
+	height: 600px;
+=======
 	height: 570px;
+>>>>>>> branch 'master' of https://github.com/wwskd99/auction.git
 	position: relative;
 	top: 0px;
 	padding: 10px;
