@@ -77,10 +77,6 @@ public class ProductController {
 		int picCount = pService.picCountRead(product_id);
 
 		model.addAttribute("piccount", picCount);
-
-		log.info("----- view page controller end -----");
-
-		model.addAttribute("piccount", picCount);
 		
 		model.addAttribute("productView", pVo);
 
