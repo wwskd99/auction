@@ -251,7 +251,8 @@ main {
 	color: white;
 }
 
-#modal2.modal-overlay2 {
+/*모달2*/
+.modal-overlay2 {
 	width: 100%;
 	height: 100%;
 	position: absolute;
@@ -261,38 +262,29 @@ main {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background: rgba(255, 255, 255, 0.25);
 	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 	backdrop-filter: blur(1.5px);
 	-webkit-backdrop-filter: blur(1.5px);
 	border-radius: 10px;
 	border: 1px solid rgba(255, 255, 255, 0.18);
+	z-index: 3;
 }
 
 #modal2 .modal-window {
-	background: #FFBB00;
+	background : #FFFAE6;
 	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 	backdrop-filter: blur(13.5px);
 	-webkit-backdrop-filter: blur(13.5px);
 	border-radius: 10px;
 	border: 1px solid rgba(255, 255, 255, 0.18);
-	width: 400px;
-	height: 500px;
+	width: 1000px;
+	height: 700px;
 	position: relative;
 	top: 0px;
 	padding: 10px;
 }
 
-#modal2 .title {
-	padding-left: 10px;
-	display: inline;
-	text-shadow: 1px 1px 2px gray;
-	color: white;
-}
 
-#modal2 .title h2 {
-	display: inline;
-}
 
 #modal2 .close-area {
 	display: inline;
@@ -303,12 +295,9 @@ main {
 	color: white;
 }
 
-#modal2 .content {
-	margin-top: 20px;
-	padding: 0px 10px;
-	text-shadow: 1px 1px 2px gray;
-	color: white;
-}
+
+
+
 
 .info_img {
 
@@ -316,6 +305,133 @@ main {
 	height: 50%;
 	
 }
+
+.user_icon_div{
+	position: relative;
+	overflow: hidden;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	margin: 5px;
+	margin-right: 20px;
+	margin-left: 20px;
+	
+}
+.user_icon_img{
+	width: 70px;
+	height: 70px;
+	position: absolute;
+	background: white;
+	left: 50%;
+	top: -20%;
+	transform: translateX(-50%);
+}
+.modal_info_wrap{
+	width : 50%;
+	height : 80%;
+	margin : 0 auto;
+	color : #464646;
+	float:left
+}
+.modal_info_wrap2{
+	width : 50%;
+	height : 80%;
+	margin : 0 auto;
+	float : left;
+}
+
+.modal_info_id{
+	display : flex;
+	margin-top : 10%;
+	margin-left : 20%;
+
+}
+
+.modal_info_point{
+	width : 100%;
+	height :20%;	
+}
+
+.modal_info_point div{
+	margin-top : 5%;
+	text-align : center;
+}
+
+.modal_info_point span{
+	font-size : 20px;
+	font-weight : 700;
+	color : #FF8900;
+}
+
+.grade_icon{
+	width : 100px;
+	height : 100px;
+}
+
+.grade_icon2{
+	width : 30px;
+	height : 30px;
+}
+
+.modal_info_des{
+	margin : 0 auto;
+	margin-top : 5%;
+	display : flex;
+	flex-direction : column;
+	width : 70%;
+	height : 70%;
+	justify-content : space-around;
+	
+}
+.modal_info_des img {
+	
+}
+.modal_info_des div{
+	margin-left : 10%;
+	
+}
+
+.page-nav img{
+	width : 50px;
+	height : 50px;
+}
+
+
+.modal2_info_id {
+	margin-top : 15%;
+	display : flex;
+	justify-content : center;
+	color : #464646;
+}
+
+.modal2_info_des2{
+	text-align : center;
+	width : 100%;
+	height : 20%;
+	line-height : 100px;
+	color : #464646;
+}
+.modal2_info_des{
+	
+	width : 100%;
+	height : 70%;
+	text-align : center;
+	margin : 0 auto;
+	border-top : 1px dotted #D8D8D8;
+}
+
+.modal2_info_des p{
+	padding-top : 30px;
+	font-size : 20px;
+	font-weight : 700;
+	color : #FF8000;
+}
+.modal2_info_des img{
+	margin-top : 20px;
+	width : 250px;
+	height : 250px;
+}
+
 </style>
 </head>
 
@@ -532,51 +648,77 @@ main {
 			</div>
 		</div>
 	
-		<div id="modal2" class="modal-overlay2">
-			<div class="modal-window">
-				<div class="close-area">×</div>
-				<div>
-					<p>아이디 : <c:choose>
-							<c:when test="${seller == sessionScope.userid}">
-					${buyer}
-				</c:when>
-							<c:otherwise>
-					${seller}
-				</c:otherwise>
+
+<div id="modal2" class="modal-overlay2">
+	<div class="modal-window">
+		<div class="close-area">×</div>
+		<div class = "modal_info_wrap">
+			<div class = "modal_info_id">
+				<div class = "user_icon_div"><img class = "user_icon_img" src = "../../resources/img/chatting/user_icon.jpg"></div>
+				<p>
+					<c:choose>
+						<c:when test="${seller == sessionScope.userid}">${buyer} 님의 등급</c:when>
+						<c:otherwise>${seller} 님의 등급</c:otherwise>
 						</c:choose></p>
-					<p>이름 : ${member.name}</p>
-					<p>
-						평점 :
-						<c:choose>
-							<c:when test="${not empty info_msg}">
-					${info_msg}
-				</c:when>
-							<c:otherwise>
-					${average}
-				</c:otherwise>
-						</c:choose>
-					</p>
-					<p>전화번호 : ${member.phone}</p>
-					<p>
-						제품 사진 : 
-						<c:choose>
-						<c:when test="${empty picture.picture_name}">
-							<img class="info_img"
-							src="../../resources/img/list/noImage.png">
-						</c:when>
-						<c:otherwise>
-							<img class="info_img"
-							src="/productUpload/${picture.picture_name}">
-						</c:otherwise>
-						</c:choose>
-					</p>
-					<p>
-					</p>
-				</div>
+					
 			</div>
+			<div class = "modal_info_point">
+				<c:choose> 
+			
+						<c:when test="${not empty info_msg}"><div><img class = "grade_icon"src = "../../resources/img/icon/g.png"><span>등급 회원</span></div></c:when>
+						<c:when test="${average == 0}"><div><img class = "grade_icon"src = "../../resources/img/icon/f.png"><span>등급 회원</span></div></c:when>
+						<c:when test="${average > 0 && average <= 1}"><div><img class = "grade_icon"src = "../../resources/img/icon/e.png"><span>등급 회원</span></div></c:when>
+						<c:when test="${average > 1 && average <= 2}"><div><img class = "grade_icon"src = "../../resources/img/icon/d.png"><span>등급 회원</span></div></c:when>
+						<c:when test="${average > 2 && average <= 3}"><div><img class = "grade_icon"src = "../../resources/img/icon/c.png"><span>등급 회원</span></div></c:when>
+						<c:when test="${average > 3 && average <= 4}"><div><img class = "grade_icon"src = "../../resources/img/icon/b.png"><span>등급 회원</span></div></c:when>
+						<c:when test="${average > 4 && average <= 5}"><div><img class = "grade_icon"src = "../../resources/img/icon/a.png"><span>등급 회원</span></div></c:when>	
+			
+				</c:choose>
+				
+			</div>
+			<div class = "modal_info_des">
+			
+				<div><img class = "grade_icon2"src = "../../resources/img/icon/a.png"><span> 등급 : 평균 평점 4~5점 사이인 회원</span></div>
+				<div><img class = "grade_icon2"src = "../../resources/img/icon/b.png"><span> 등급 : 평균 평점 3~4점 사이인 회원</span></div>
+				<div><img class = "grade_icon2"src = "../../resources/img/icon/c.png"><span> 등급 : 평균 평점 2~3점 사이인 회원</span></div>
+				<div><img class = "grade_icon2"src = "../../resources/img/icon/d.png"><span> 등급 : 평균 평점 1~2점 사이인 회원</span></div>
+				<div><img class = "grade_icon2"src = "../../resources/img/icon/e.png"><span> 등급 : 평균 평점 1~0점 사이인 회원</span></div>
+				<div><img class = "grade_icon2"src = "../../resources/img/icon/f.png"><span> 등급 : 평균 평점 0점인 회원</span></div>
+				<div><img class = "grade_icon2"src = "../../resources/img/icon/g.png"><span> 등급 : 한번도 거래를 하지 않은 회원</span></div>		
+			</div>
+			
 		</div>
-	
-	
+		<div class = "modal_info_wrap2">
+			<div class = "modal2_info_id">
+				<div class = "user_icon_div"><img class = "user_icon_img" src = "../../resources/img/chatting/user_icon.jpg"></div>
+				<p>
+					<c:choose>
+						<c:when test="${seller == sessionScope.userid}">${buyer} 님의 기타 정보</c:when>
+						<c:otherwise>${seller} 님의 기타 정보</c:otherwise>
+						</c:choose></p>
+					
+			</div>
+			<div class = "modal2_info_des2">
+					<p>전화번호 : ${member.phone}</p>
+			</div>
+			<div class = "modal2_info_des">
+				<c:choose>
+					<c:when test="${empty picture.picture_name}">
+						<p>이 채팅방에서 거래중인 물품이에요</p>
+						<img class="info_img"src="../../resources/img/list/noImage.png">
+					</c:when>
+					<c:otherwise>
+						<p>이 채팅방에서 거래중인 물품이에요</p>
+						<img class="info_img"src="/productUpload/${picture.picture_name}">
+					</c:otherwise>
+				</c:choose>	
+				
+							
+			</div>
+			
+		</div>
+	</div>
+</div>	
 	</main>
 </body>
 <script type="text/javascript">
@@ -649,7 +791,7 @@ closeBtn2.addEventListener("click", e => {
 })
 modal2.addEventListener("click", e => {
     const evTarget = e.target
-    if(evTarget.classList.contains("modal-overlay")) {
+    if(evTarget.classList.contains("modal-overlay2")) {
         modalOff2()	// 외부 클릭 시
     }
 })
