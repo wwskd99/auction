@@ -11,6 +11,8 @@ main {
 	width: 80vw;
 	margin-left: auto;
 	margin-right: auto;
+	min-width : 1200px;
+	min-height : 500px;
 	
 }
 
@@ -91,7 +93,9 @@ input {
 	line-height : 42px;
 	
 }
-
+#search_product{
+	cursor : pointer;
+}
 .sort_price {
 	width: 30%;
 	height: 42px;
@@ -100,6 +104,7 @@ input {
 	outline: none;
 	color: #ffffff;
 	margin-right : 20px;
+	cursor : pointer;
 }
 
 .sort_new {
@@ -109,6 +114,7 @@ input {
 	background: #FF6666;
 	outline: none;
 	color: #ffffff;
+	cursor : pointer;
 }
 
 .pro_wrap {

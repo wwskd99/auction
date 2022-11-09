@@ -219,7 +219,7 @@ main {
 	border-radius: 10px;
 	border: 1px solid rgba(255, 255, 255, 0.18);
 	width: 400px;
-	height: 500px;
+	height: 570px;
 	position: relative;
 	top: 0px;
 	padding: 10px;
